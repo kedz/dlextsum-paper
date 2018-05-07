@@ -1,0 +1,29 @@
+The goal of extractive text summarization is to select a subset of a document's
+text to use as a summary, i.e. a short gist or excerpt of the central content.
+Typically, we impose a budget on the length of the summary in either 
+words or bytes.
+
+In this paper, we model this task as a sequence tagging problem, 
+i.e. given a document containing $\docsize$ sentences $\sent_1, \ldots, 
+\sent_{\docsize}$ we want to predict a corresponding label sequence $\slabel_1,
+\ldots, \slabel_{\docsize} \in \{0, 1\}^{\docsize}$ where $\slabel_i = 1$ 
+indicates the $i$-th sentence is to be included in the summary.
+
+Unlike sequence tagging, however, we do not evaluate model performance 
+by label accuracy or F-measure but ROUGE \cite{rouge} which measures the ngram
+overlap of our predicted extract summary with one or more human abstracts.
+While this metric has many shortcomings, ROUGE-2 recall (i.e. bigram recall)
+has been empirically demonstrated to have high correlation with human 
+content selection decisions for summarization \cite{ducrouge}.
+
+Since we do not typically have ground truth extract summaries from which to
+create the labels $\slabel_i$, we construct gold label sequences for training
+by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
+\null \emptyset$, we add the sentence $\hat{\sent} = 
+{\argmax}_{ \sent \in \{\sent_1, \ldots, \sent_{\docsize}\},
+\; \sent \notin \summary} \operatorname{ROUGE-1}(\summary \cup \sent)$
+to $\summary$ stopping when the ROUGE-1 score no longer increases or the 
+length budget is reached. We choose to optimize for ROUGE-1 rather than 
+ROUGE-2 similarly to other optimization based approaches to summarization
+\cite{durret,joachims,nallapati,maybe_learning_submod_sum} which found this
+be the easier optimization target.

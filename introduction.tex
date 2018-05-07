@@ -1,0 +1,56 @@
+
+
+While there has a been a recent flurry of work on abstractive summarization
+\cite{paulus,see,chenglapata,nallapati},
+these papers treat this problem as a pure sequence to sequence 
+transduction task. Admittedly, this view allows us to apply very powerful, 
+general-purpose deep learning archictures to generate summaries.
+At the same time, it obscures a principal subtask in summarization, the 
+process of selecting the most salient units of meaning in the source material,
+i.e. the key ingredients in the final summary, a process which we 
+broadly refer to as content selection \cite{possiblyMcKeownAndNenkova}.
+
+As is also the case in other NLP tasks, it is not immediately obvious how a
+deep learning model is making its predictions, or what correlations 
+are being exploited. There is a concerning and growing list of papers that 
+find models functioning as mere nearest neighbors search 
+\cite{liang,danqichen}, exploiting annotator artifacts 
+\cite{recentNaaclPapersOnSNLI}, or open to adversarial exploitation \cite{findExampleYouNoMemoryDumbDumb}. 
+These lines of research are critical for finding model shortcomings, and over
+time, guiding improvements in technique. Unfortunately,
+to the best of our knowledge, there has been
+no such undertaking for the summarization task. 
+
+In this paper, we seek to better understand how deep learning models of 
+summarization are performing content selection. We perform an analysis 
+of several recent sentence extractive neural network architecures, 
+looking particulary at the impact of sentence position bias, the necessity
+of learning embeddings, the unreasonable effectiveness of averaging for 
+sentence embedding, and the cross domain generalizability of such models.
+Additionally, we propose two simpler models that are on average statistically
+indistinguishable from their more complex counterparts.
+
+While we are explicitly studying extractive summarization algorithms here,
+we think the findings will be relevant to the abstractive summarization 
+community as well. The encoder side architectures are quite similar to
+typical abstractive models, and fundamentally the model objectives are 
+the same, producing output text with high word overlap to a reference human
+abstract. 
+
+The contributions of this paper are the following:
+\begin{enumerate}
+    \item We perform an empirical study of extractive content selection in 
+        deep learning 
+        algorithms for text summarization across news, blogs, meetings, and
+         journal articles domains, and small/medium/large datasets.
+    \item Propose two simple deep learning models whose performance is on par 
+          with more complex deep learning models.
+\end{enumerate}
+In the following sections we discuss 
+(Sec. ?) related work, 
+(Sec. ?) define the problem of extractive summarization, 
+(sec. ?) formulate our proposed ad baseline models,
+(Sec. ?) describe the datasets used for experiments,
+(Sec. ?) describe the experiments themselves, and conclude with 
+results and analysis (Sec. ?).
+
