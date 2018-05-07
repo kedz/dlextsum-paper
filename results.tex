@@ -19,12 +19,12 @@ between the different sentence encoders. \textcolor{red}{In most cases,
 there is no statistical significance between the averaging encoder and either
 the RNN or CNN encoders.} 
 
-\input{table_fixed_vs_learned.tex}
+\input{tables/table_fixed_vs_learned.tex}
 \textbf{Learning Word Embeddings} Table~\ref{tab:embeddings} shows ROUGE recall
 when using fixed or updated word embeddings. \textcolor{red}{In almost all
 cases, fixed embeddings are as good or better than the learned embeddings.}
 
-\input{table_pos_ablations.tex}
+\input{tables/table_pos_ablations.tex}
 
 \textbf{POS Ablation} Table~\ref{tab:ablations} shows the results of the POS
 tag ablation experiments. The newswire domain does not appear to be sensative
@@ -34,7 +34,7 @@ The Reddit domain, which is not lead biased, is significantly effected.
 Notably, removing adjectives and adverbs results in a 1.8 point drop 
 in ROUGE-2 recall. 
 
-\input{table_inorder_vs_shuffled.tex}
+\input{tables/table_inorder_vs_shuffled.tex}
 \textbf{Sentence Shuffling} We find a similar result on the sentence order
 shuffling experiments. Table~\ref{tab:shuffle} shows the results. 
 The newswire domain suffer a significant drop in performance 

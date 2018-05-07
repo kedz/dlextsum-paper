@@ -13,11 +13,15 @@ can recover the specific implementations of \cite{cheng&lapata} and
 
 \subsection{Sentence Encoders}
 \begin{figure}
-    \center
-    \includegraphics[scale=.75]{figures/avgsentencoder.pdf}
-    \includegraphics[scale=.75]{figures/rnnsentencoder.pdf}
-    \includegraphics[scale=.75]{figures/cnnsentencoder.pdf}
-    \caption{Sentence encoder architectures: a) averaging encoder, b) RNN encoder c) CNN encoder.}
+  \center
+  \includegraphics[scale=.7]{figures/avgsentencoder.pdf}
+  \includegraphics[scale=.7]{figures/rnnsentencoder.pdf}
+  \includegraphics[scale=.7]{figures/cnnsentencoder.pdf}
+  \caption{Sentence encoder architectures: a) averaging encoder, b) RNN encoder
+           c) CNN encoder. Red indicates word embeddings, yellow indicates
+           RNN hidden states or convolutional activations, and green 
+           indicates the sentence embedding that is passed to the extractor
+           module.}
     \label{fig:encoders}
 \end{figure}
 
@@ -65,92 +69,94 @@ convolution). The CNN sentence encoding is computed as follows:
 \end{align}
 
 
-%\subsection{Sentence Extractors}
-%\begin{figure*}
-%    \center
-%    \includegraphics[scale=.75]{plots/rnnextractor.pdf}
-%    \includegraphics[scale=.75]{plots/clextractor.pdf}
-%    \includegraphics[scale=.75]{plots/rnnextractor.pdf}
-%    \includegraphics[scale=.75]{plots/clextractor.pdf}
-%    \caption{This is a figure!}
-%\end{figure*}
-%
-%
-%Given a sequence of sentence embeddings $\sentvec_i = \senc(\sent_i)$,
-%a sentence extractor produces a conditional distribution over the 
-%corresponding sentence extraction variables 
-%$p(\slabel_1,\ldots,\slabel_{\sentSize}|\sentvec_1, \ldots, \sentvec_{\sentSize})$.
-%We propose two simple recurrent neural network based sentence extractors
-%that make a strong conditional independence assumption over the labels
-%$\slabel_i$,chiefly 
-%$\explicitLikelihood= \naiveLikelihood$. This stands in contrast to our 
-%baseline models which make a weaker assumption, 
-%$\compactLikelihood = \markovLikelihood$, at the expense of greater 
-%computational complexity. 
-%
-%\textbf{RNN Extractor} Our first proposed model is a very simple bidirectional
-%RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
-%The the forward and backward outputs of each sentence are passed through a 
-%single layer perceptron with a sigmoid output to predict the probability
-%of extracting each sentence:
-%\begin{align}
-%    \rExtHidden_i &= \rgru(\sentvec_i, \rExtHidden_{i-1}) \\
-%   \lExtHidden_i &= \lgru(\sentvec_i, \lExtHidden_{i+1}) \\
-%   \logits_i &= \relu\left(U \cdot [\rExtHidden_i; \lExtHidden_i] + u \right)\\
-%   p(\slabel_i=1|\sentvec) &= \sigma\left(V\cdot \logits_i + v  \right).
-%\end{align}
-%
-%\textbf{\sts~Extractor} One shortcoming of the RNN extractor is that long range
-%information from one end of the document may not easily be able to effect 
-%extraction probabilities of sentences at the other end. To mitigate this effect
-%we introduce a \sts extractor based on the attentional seq2seq models commonly
-%used for neural machine translation \cite{badhanau} and 
-%abstractive summarization \cite{see}. The sentence embeddings are first
-%encoded by a bidirectional $\gru$. A separate decoder $\gru$ transforms each 
-%sentence into a query vector which attends to the encoder output. The
-%attention weighted encoder output and the decoder $\gru$ output are concatenated
-%and fed into a multi-layer percepron to compute the extraction probability.
-%Formally we have:
-%\begin{align}
-%    \rEncExtHidden_i &= \rgru_{enc}(\sentvec_i, \rEncExtHidden_{i-1}) \\
-%    \lEncExtHidden_i &= \lgru_{enc}(\sentvec_i, \lEncExtHidden_{i+1}) \\
-%    \rDecExtHidden_i &= \rgru_{dec}(\sentvec_i, \rDecExtHidden_{i-1}) \\
-%    \lDecExtHidden_i &= \lgru_{dec}(\sentvec_i, \lDecExtHidden_{i+1}) \\
-%    \alpha_{i,j} &= \frac{\exp \left(\rDecExtHidden_j\cdot \rEncExtHidden_i + 
-%\lDecExtHidden_j \cdot \lEncExtHidden_i \right)}{
-%    \sum_{j=1}^{\docsize} \exp \left(\rDecExtHidden_j\cdot \rEncExtHidden_i + 
-%\lDecExtHidden_j \cdot \lEncExtHidden_i \right) }\\
-%\attnExtHidden_i &= \sum_{j=1}^{\docsize} 
-%\alpha_{i,j} [\rEncExtHidden_j ;  \lEncExtHidden_j] \\
-%   \logits_i &= \relu\left(U \cdot [\attnExtHidden_i; \rDecExtHidden_i; \lDecExtHidden_i] + u \right)\\
-%   p(\slabel_i=1|\sentvec) &= \sigma\left(V\cdot \logits_i + v  \right).
-%\end{align}
-%
-%\textbf{Cheng \& Lapata Extractor} 
-%
-%\begin{align}
-%    \encExtHidden_i &= \gru_{enc}(\sentvec_i, \encExtHidden_{i-1}) \\
-%    \decExtHidden_i &= \gru_{dec}(p_{i-1} \cdot \sentvec_{i-1}, \decExtHidden_{i-1}) \\
-%   \logits_i &= \relu\left(U \cdot [\encExtHidden_i; \decExtHidden_i] + u \right)\\
-%    p_i &= p(\slabel_i=1|\slabel_{<i}, \sentvec) = \sigma\left(V\cdot \logits_i + v  \right) 
-%\end{align}
-%
-%
-%\textbf{SummaRunner Extractor}
-%\begin{align}
-%    \rEncExtHidden_i &= \rgru(\sentvec_i, \rEncExtHidden_{i-1}) \\
-%    \lEncExtHidden_i &= \lgru(\sentvec_i, \lEncExtHidden_{i+1}) \\
-%    q &= \tanh\left(b_q + W_q\frac{1}{\docsize}\sum_{i=1}^{\docsize} [\rEncExtHidden_i; \lEncExtHidden_i] \right)\\
-%    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right)
-%  \end{align}
-%  \begin{align*}
-%      p(y_i=1|y_{<i}, h) = \sigma(& W_{con}\cdot z_i \\
-%                     & + z_i^T W_{sal}\cdot q \\
-%                     & -z_i^T W_{nov} \cdot \tanh(g_i) \\
-%                     & + b_{rp_i}  \\
-%                     & + b_{ap_i} \\
-%                     & + b)     \\
-%      g_j & = \sum_{i=1}^{j-1} p(y_j=1|y_{<j},h) \cdot z_j
-%\end{align*}
+\subsection{Sentence Extractors}
+\begin{figure*}
+  \center
+  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
+  \includegraphics[scale=.7]{figures/s2s_extractor.pdf}
+  \includegraphics[scale=.7]{figures/clextractor.pdf}
+  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
+  \caption{Sentence extractor architectures: a) \modelOneBF, b) \modelTwoBF,
+            c) \baselineOneBF, and d) \baselineTwoBF. }
+  \caption{fig:extractor}
+\end{figure*}
+
+
+Given a sequence of sentence embeddings $\sentvec_i = \senc(\sent_i)$,
+a sentence extractor produces a conditional distribution over the 
+corresponding sentence extraction variables 
+$p(\slabel_1,\ldots,\slabel_{\sentSize}|\sentvec_1, \ldots, \sentvec_{\sentSize})$.
+We propose two simple recurrent neural network based sentence extractors
+that make a strong conditional independence assumption over the labels
+$\slabel_i$,chiefly 
+$\explicitLikelihood= \naiveLikelihood$. This stands in contrast to our 
+baseline models which make a weaker assumption, 
+$\compactLikelihood = \markovLikelihood$, at the expense of greater 
+computational complexity. 
+
+\textbf{RNN Extractor} Our first proposed model is a very simple bidirectional
+RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
+The the forward and backward outputs of each sentence are passed through a 
+single layer perceptron with a sigmoid output to predict the probability
+of extracting each sentence:
+\begin{align}
+    \rExtHidden_i &= \rgru(\sentvec_i, \rExtHidden_{i-1}) \\
+   \lExtHidden_i &= \lgru(\sentvec_i, \lExtHidden_{i+1}) \\
+   \logits_i &= \relu\left(U \cdot [\rExtHidden_i; \lExtHidden_i] + u \right)\\
+   p(\slabel_i=1|\sentvec) &= \sigma\left(V\cdot \logits_i + v  \right).
+\end{align}
+
+\textbf{\sts~Extractor} One shortcoming of the RNN extractor is that long range
+information from one end of the document may not easily be able to effect 
+extraction probabilities of sentences at the other end. To mitigate this effect
+we introduce a \sts extractor based on the attentional seq2seq models commonly
+used for neural machine translation \cite{badhanau} and 
+abstractive summarization \cite{see}. The sentence embeddings are first
+encoded by a bidirectional $\gru$. A separate decoder $\gru$ transforms each 
+sentence into a query vector which attends to the encoder output. The
+attention weighted encoder output and the decoder $\gru$ output are concatenated
+and fed into a multi-layer percepron to compute the extraction probability.
+Formally we have:
+\begin{align}
+    \rEncExtHidden_i &= \rgru_{enc}(\sentvec_i, \rEncExtHidden_{i-1}) \\
+    \lEncExtHidden_i &= \lgru_{enc}(\sentvec_i, \lEncExtHidden_{i+1}) \\
+    \rDecExtHidden_i &= \rgru_{dec}(\sentvec_i, \rDecExtHidden_{i-1}) \\
+    \lDecExtHidden_i &= \lgru_{dec}(\sentvec_i, \lDecExtHidden_{i+1}) \\
+    \alpha_{i,j} &= \frac{\exp \left(\rDecExtHidden_j\cdot \rEncExtHidden_i + 
+\lDecExtHidden_j \cdot \lEncExtHidden_i \right)}{
+    \sum_{j=1}^{\docsize} \exp \left(\rDecExtHidden_j\cdot \rEncExtHidden_i + 
+\lDecExtHidden_j \cdot \lEncExtHidden_i \right) }\\
+\attnExtHidden_i &= \sum_{j=1}^{\docsize} 
+\alpha_{i,j} [\rEncExtHidden_j ;  \lEncExtHidden_j] \\
+   \logits_i &= \relu\left(U \cdot [\attnExtHidden_i; \rDecExtHidden_i; \lDecExtHidden_i] + u \right)\\
+   p(\slabel_i=1|\sentvec) &= \sigma\left(V\cdot \logits_i + v  \right).
+\end{align}
+
+\textbf{Cheng \& Lapata Extractor} 
+
+\begin{align}
+    \encExtHidden_i &= \gru_{enc}(\sentvec_i, \encExtHidden_{i-1}) \\
+    \decExtHidden_i &= \gru_{dec}(p_{i-1} \cdot \sentvec_{i-1}, \decExtHidden_{i-1}) \\
+   \logits_i &= \relu\left(U \cdot [\encExtHidden_i; \decExtHidden_i] + u \right)\\
+    p_i &= p(\slabel_i=1|\slabel_{<i}, \sentvec) = \sigma\left(V\cdot \logits_i + v  \right) 
+\end{align}
+
+
+\textbf{SummaRunner Extractor}
+\begin{align}
+    \rEncExtHidden_i &= \rgru(\sentvec_i, \rEncExtHidden_{i-1}) \\
+    \lEncExtHidden_i &= \lgru(\sentvec_i, \lEncExtHidden_{i+1}) \\
+    q &= \tanh\left(b_q + W_q\frac{1}{\docsize}\sum_{i=1}^{\docsize} [\rEncExtHidden_i; \lEncExtHidden_i] \right)\\
+    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right)
+  \end{align}
+  \begin{align*}
+      p(y_i=1|y_{<i}, h) = \sigma(& W_{con}\cdot z_i \\
+                     & + z_i^T W_{sal}\cdot q \\
+                     & -z_i^T W_{nov} \cdot \tanh(g_i) \\
+                     & + b_{rp_i}  \\
+                     & + b_{ap_i} \\
+                     & + b)     \\
+      g_j & = \sum_{i=1}^{j-1} p(y_j=1|y_{<j},h) \cdot z_j
+\end{align*}
 
 
