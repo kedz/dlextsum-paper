@@ -1,0 +1,29 @@
+\begin{table*}
+    \center
+    \begin{tabular}{| c | c || c | c | c | c | c | c | c | c |}
+        \hline
+         &  & \multicolumn{2}{|c|}{cnn-dailymail} & \multicolumn{2}{|c|}{nyt} & \multicolumn{2}{|c|}{duc-sds} & \multicolumn{2}{|c|}{reddit}\\
+        Extractor & Encoder & R-1 & R-2 & R-1 & R-2 & R-1 & R-2 & R-1 & R-2\\
+        \hline
+        \multirow{3}{*}{RNN} & avg & 55.3 & 25.4 & 51.4 & 34.7 & 44.1 & 22.6 & 45.2 & 11.4\\ \cline{2-10}
+         & rnn & 55.3 & 25.4 & 51.7 & 35.0 & 44.0 & 22.6 & 44.4 & 11.4\\ \cline{2-10}
+         & cnn & 54.7 & 25.1 & 50.3 & 33.7 & 44.3 & 22.7 & 47.5 & 12.7\\
+        \hline
+        \multirow{3}{*}{Seq2Seq} & avg & \textbf{55.6} & \textbf{25.6} & 52.5 & 35.7 & 44.4 & 22.8 & \textbf{49.1} & \textbf{13.6}\\ \cline{2-10}
+                                 & rnn & 55.2 & 25.3 & 52.5 & \textbf{35.9} & 43.8 & 22.5 & 45.4 & 12.1\\ \cline{2-10}
+         & cnn & 54.8 & 25.1 & 51.7 & 35.1 & 44.0 & 22.7 & 46.8 & 13.1\\
+        \hline
+        \multirow{3}{*}{C\&L} & avg & 55.1 & 25.3 & 52.3 & 35.6 & \textbf{44.8} & \textbf{23.1} & 48.3 & 13.6\\ \cline{2-10}
+         & rnn & 54.8 & 25.0 & 52.5 & 35.8 & 44.5 & 23.0 & 46.3 & 12.6\\ \cline{2-10}
+         & cnn & 55.0 & 25.1 & 51.5 & 35.0 & 44.5 & 23.0 & 46.9 & 13.4\\
+        \hline
+        \multirow{3}{*}{SR} & avg & 55.3 & 25.4 & 52.1 & 35.4 & 44.0 & 22.3 & 48.8 & 13.4\\ \cline{2-10}
+         & rnn & 55.0 & 25.2 & 52.1 & 35.5 & 43.6 & 22.1 & 46.5 & 12.6\\ \cline{2-10}
+         & cnn & 54.6 & 25.0 & 51.0 & 34.4 & 43.6 & 22.2 & 46.6 & 12.3\\
+        \hline
+    \end{tabular}
+    \caption{Rouge Recall 1 and 2 results across all sentence encoder/extractor pairs. All results are averaged over five random initializations. Best result
+    per metric/dataset are bolded.}
+    \label{tab:results}
+\end{table*}
+

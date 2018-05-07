@@ -1,0 +1,27 @@
+\begin{table*}
+\center
+\begin{tabular}{| c | c || c | c | c | c | c | c | c | c |}
+\hline
+  &   & \multicolumn{2}{|c|}{cnn-dailymail} & \multicolumn{2}{|c|}{nyt} & \multicolumn{2}{|c|}{duc-sds} & \multicolumn{2}{|c|}{reddit} \\
+system & embeddings & R1 & R2  & R1 & R2  & R1 & R2  & R1 & R2  \\
+\hline
+\multirow{2}{*}{RNN} & fixed & 55.3 & 25.4 & 51.4 & 34.7 & 44.1 & 22.6 & 45.2 & 11.4\\ \cline{2-10}
+ & learned & 55.1 & 25.2 & 51.1 & 34.3 & 44.1 & 22.6 & 45.3 & 11.3\\
+\hline
+\multirow{2}{*}{Seq2Seq} & fixed & 55.6 & 25.6 & 52.5 & 35.7 & 44.4 & 22.8 & 49.1 & 13.6\\ \cline{2-10}
+ & learned & 55.2 & 25.3 & 52.4 & 35.7 & 44.5 & 22.9 & 49.4 & 13.8\\
+\hline
+\multirow{2}{*}{C\&L} & fixed & 55.1 & 25.3 & 52.3 & 35.6 & 44.8 & 23.1 & 48.3 & 13.6\\ \cline{2-10}
+ & learned & 54.8 & 25.0 & 52.1 & 35.4 & 44.6 & 23.0 & 48.6 & 13.5\\
+\hline
+\multirow{2}{*}{SummaRunner} & fixed & 55.3 & 25.4 & 52.1 & 35.4 & 44.0 & 22.3 & 48.8 & 13.4\\ \cline{2-10}
+ & learned & 55.0 & 25.1 & 52.0 & 35.2 & 43.8 & 22.1 & 47.8 & 12.6\\
+\hline
+\end{tabular}
+\caption{ROUGE 1 and 2 recall results across different sentence extractors
+    when using learned or pretrained embeddings. In both cases embeddings
+    are initialized with pretrained GloVe embeddings. All results are 
+averaged from five random initializations. All extractors use the averaging 
+sentence encoder.}
+\label{tab:embeddings}
+\end{table*}

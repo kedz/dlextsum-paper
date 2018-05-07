@@ -1,0 +1,80 @@
+\textbf{Extractor/Encoder} In our main experiment we compare our proposed 
+sentence extractors \modelOneBF
+and \modelTwoBF against the \baselineOneBF and \baselineTwoBF extractors.
+We test all possible sentence extractor/encoder pairs across the CNN-DailyMail,
+New York Times, DUC 2002, Reddit, AMI, and PubMed domains. We choose ROUGE-2
+recall as our main evaluation metric since it has the strongest correlation
+to human content selection decisions. In this we experiment we initialize
+the word embeddings using pretrained GloVe embeddings \cite{glove} and do 
+not update them during training.
+
+In most cases, the averaging encoder performance was as good or better than
+the RNN and CNN encoders, we use only the averaging encoder for the remainder
+of the experiments.
+
+\textbf{Word Embedding Learning} To futher understand how word 
+embeddings 
+can
+effect model performance we also compared extractors when embeddings 
+are updated during training. Both fixed and learned embedding variants are 
+initialized with GloVe embeddings. When learning embeddings, words occurring 
+three or fewer times in the training data are mapped to an \textit{unkown}
+token.
+
+\textbf{POS Tag Ablation} Additionally, we ran ablation experiments
+using part-of-speech (POS) tags. We experimented with selectively removing 
+nouns, verbs, adjectives/adverbs, numerical expressions, and miscellaneous
+tags (anything that was not in the previously mentioned groups) from each sentece. The embeddings of removed words were replaced with a zero vector,
+preserving the order and position of the non-ablated words in the sentence.
+All datasets were automatically tagged using
+the SpaCy POS tagger \cite{spacy}.   
+
+
+\textbf{Document Shuffling} In examining the outputs of the models, we found
+most of the selected sentences in the news domain came from the lead paragraph
+of the document. This is despite the fact that there is a long tail of 
+sentence extractions from later in the document in the ground truth extract 
+summaries. Because this lead bias is so strong, it is questionable whether
+the models are learning to identify important content or just find the start
+of the document. We perform a series of sentence order experiments where 
+each document's sentences are randomly shuffled during training. We then
+evaluate each model performance on the unshuffled test data, comparing to 
+the original unshuffled models. 
+
+\textbf{Cross Domain Experiments}
+
+TODO
+
+Try shuffled and no shuffled models trained on one domain, eval the remaining.
+
+
+
+
+
+%We are also interested in the effect of lead bias. It is well known that the first few sentences of a news article, often referred to as the lead, make a good summary, and this is most commonly used as the default baseline in single document summarization. This lead bias is such a strong learning signal that the learned models almost always extract sentences from the lead despite the ground truth labeling containing a significant portion of positive labels later in the document. This begs the question, are we learning a robust model of sentence salience or simply identifying linguistic style features that are indicative of the lead?
+
+%To better understand this phenomenon, 
+
+
+
+
+
+\subsection{Model Training Details}
+
+TODO: Clean up, expand, make naming consistent!
+
+We train the average pooling, biRNN, and CNN encoders with the biRNN, 
+seq2seq, SummaRunner, and C\&L decoders. We repeat experiments across the 
+CNN-DailyMail, New York Times, DUC, Reddit, and AMI corpus. 
+We use the Adam optimizer for all models with a learning rate of .0001, 
+gradient clipping, and dropout rate of .25. 
+For the C\&L model, we train for half of the maximum epochs with teacher 
+forcing, i.e. we use the gold extractive labels for each when taking the sum 
+of previous states (p(y|x)h = 1 If y = 1) during the first half of training 
+and the model value during the second. We use early stopping on the validation
+set with ROUGE2 as our evaluation criteria. All experiments are run with 5 
+different random initialization seeds and results are averaged.
+
+
+
+

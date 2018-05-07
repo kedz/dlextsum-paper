@@ -1,0 +1,44 @@
+
+
+\textbf{Choice of Extractor} Our main comparison of extractors/encoders are shown in 
+Table~\ref{tab:results}.
+\textcolor{red}{Overall we find that the \modelTwoBF~extractor achieves the 
+best ROUGE scores on three out of four domains (STILL RUNNING ON AMI AND PUBMED). 
+However, most
+differences are not signficant. (Need to discuss stat sig and how to show it).}
+On the larger CNN-DailyMail dataset, especially, 
+differences are quite smail across all extractor/encoder pairs.
+The \baselineOneBF~extractor achieves the best performance on the DUC 2002
+dataset. It is disappointing that the \baselineOneBF~and \baselineTwoBF~based 
+models do not gain any apparent advantage in conditioning on previous 
+sentence selection decisions; this result suggests the need to improve
+the representation of the summary as it is being constructed iteratively.
+
+\textbf{Choice of Encoder} We also find there to be no major advantage 
+between the different sentence encoders. \textcolor{red}{In most cases,
+there is no statistical significance between the averaging encoder and either
+the RNN or CNN encoders.} 
+
+\input{table_fixed_vs_learned.tex}
+\textbf{Learning Word Embeddings} Table~\ref{tab:embeddings} shows ROUGE recall
+when using fixed or updated word embeddings. \textcolor{red}{In almost all
+cases, fixed embeddings are as good or better than the learned embeddings.}
+
+\input{table_pos_ablations.tex}
+
+\textbf{POS Ablation} Table~\ref{tab:ablations} shows the results of the POS
+tag ablation experiments. The newswire domain does not appear to be sensative
+to these ablations; this suggests that the models are still able to identify
+the lead section of the document with the remaining word classes \textcolor{red}{(Verify this with histogram analysis)}. 
+The Reddit domain, which is not lead biased, is significantly effected.
+Notably, removing adjectives and adverbs results in a 1.8 point drop 
+in ROUGE-2 recall. 
+
+\input{table_inorder_vs_shuffled.tex}
+\textbf{Sentence Shuffling} We find a similar result on the sentence order
+shuffling experiments. Table~\ref{tab:shuffle} shows the results. 
+The newswire domain suffer a significant drop in performance 
+when the document order is shuffled. \textcolor{red}{By comparison, there is no significant difference between the shuffled and in-order models on 
+the Reddit domain.} 
+
+
