@@ -57,7 +57,7 @@ and fed into a multi-layer percepron to compute the extraction probability.
 Formally we have:
 \begin{align}
   \rEncExtHidden_i &= \rgru_{enc}(\sentvec_i, \rEncExtHidden_{i-1}) \\
-  \lEncExtHidden_i &= \lgru_{enc}(\sentvec_i, \lEncExtHidden_{i+1}) 
+  \lEncExtHidden_i &= \lgru_{enc}(\sentvec_i, \lEncExtHidden_{i+1}) \\
   \rDecExtHidden_i &= \rgru_{dec}(\sentvec_i, \rDecExtHidden_{i-1}) \\
   \lDecExtHidden_i &= \lgru_{dec}(\sentvec_i, \lDecExtHidden_{i+1}) 
 \end{align}
@@ -114,22 +114,82 @@ the decoder side GRU input is the sentence embedding from the previous time
 step weighted by its probabilitiy of extraction ($p_{i-1}$) from the 
 previous step.
 
+We refer to this extractor as the \baselineOneBF~extractor; the model 
+architecture descrbied in \cite{cl} is equaivalent to the
+\baselineOneBF~extractor paired with the \textit{CNN} encoder.
+
 
 \textbf{SummaRunner Extractor}
+Our second baseline extractor is taken from \cite{nallapati}, which like the
+\modelOneBF~extractor starts with a bidrectional GRU over the sentence 
+embeddings 
 \begin{align}
-    \rEncExtHidden_i &= \rgru(\sentvec_i, \rEncExtHidden_{i-1}) \\
-    \lEncExtHidden_i &= \lgru(\sentvec_i, \lEncExtHidden_{i+1}) \\
-    q &= \tanh\left(b_q + W_q\frac{1}{\docsize}\sum_{i=1}^{\docsize} [\rEncExtHidden_i; \lEncExtHidden_i] \right)\\
-    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right)
-  \end{align}
-  \begin{align*}
-      p(y_i=1|y_{<i}, h) = \sigma(& W_{con}\cdot z_i \\
-                     & + z_i^T W_{sal}\cdot q \\
-                     & -z_i^T W_{nov} \cdot \tanh(g_i) \\
-                     & + b_{rp_i}  \\
-                     & + b_{ap_i} \\
-                     & + b)     \\
-      g_j & = \sum_{i=1}^{j-1} p(y_j=1|y_{<j},h) \cdot z_j
-\end{align*}
+  \rEncExtHidden_i &= \rgru(\sentvec_i, \rEncExtHidden_{i-1}) \\
+  \lEncExtHidden_i &= \lgru(\sentvec_i, \lEncExtHidden_{i+1}),
+\end{align}
+for all $i \in 1,\ldots,\docsize$. 
+\textcolor{red}{The initial states $\rExtHidden_0$ and $\lExtHidden_{\docsize + 1}$ are not
+learned and are set to zero vectors.}
+
+
+Unlike \modelOneBF, however, it then creates a representation
+of the whole document $q$ by passing the averaged GRU output states through
+a fully connected layer: 
+\begin{align}
+q = \tanh\left(b_q + W_q\frac{1}{\docsize}\sum_{i=1}^{\docsize} [\rEncExtHidden_i; \lEncExtHidden_i] \right)
+\end{align}
+A concatentation of the GRU outputs at each step
+are passed through a separate fully connected layer to create a 
+sentence representation $z_i$, where
+\begin{align}
+    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right).
+\end{align}
+The extraction probability is then determined by contributions from five 
+sources,
+\textit{i)} a content score $a^{(con)}_i=W_{con}\cdot z_i$, 
+\textit{ii)} a salience score $a^{(sal)}_i = z_i^TW_{sal} \cdot q$ quantifying the 
+similarity of the sentence to the document, 
+\textit{iii)} a novelty score $a^{(nov)}_i = -z_i^TW_{nov} \cdot \tanh(g_i)$
+that tracks negative similarity to a representation of the extract summary 
+$g_i$,
+\textit{iv)} a fine-grained position score 
+$a^{(fpos)}_i = W_{fpos}\cdot p_i$ where
+$p_i$ is a sentence position embedding for the $i$-th position in the document,
+and \textit{v)} a coarse-grained position score 
+$a^{(cpos)}_i = W_{cpos}\cdot r_i$ where
+$r_i$ is a position embedding for the quarter of the document
+that sentence $i$ occurs in.
+The final extraction probability is the logistic sigmoid of the
+sum of these terms plus a bias,
+\begin{align}
+    p(y_i=1|y_{<i}, h) &= \sigma\left(\begin{array}{l}
+      a_i^{(con)} + a_i^{(sal)} + a_i^{(nov)} \\
+  + a_i^{(fpos)}  + a_i^{(cpos)} + b \end{array}\right).
+\end{align}
+Finally, the iterative summary representation $g_i$ is computed as a 
+sum of the previous $z_{<i}$ weighted by their extraction probabilities,
+\begin{align}
+g_i & = \sum_{j=1}^{i-1} p(y_j=1|y_{<j},h) \cdot z_j.
+\end{align}
+Note that the presence of this term induces dependence of each $y_i$ to 
+all $y_{j}$ for $j < i$ similarly to the \baselineOneBF~extractor.
+The combination of this extractor, which we refer to as $\baselineTwoBF$,
+and the \textit{RNN} encoder is most similar to the architecture described 
+in \cite{nallapati} with the principal difference that we are using the RNN
+final states for the sentence representation and they used the average of
+the RNN output.
+
+%\begin{align}
+%    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right)
+%  \end{align}
+%  \begin{align*}
+%      p(y_i=1|y_{<i}, h) = \sigma(& W_{con}\cdot z_i \\
+%                     & + z_i^T W_{sal}\cdot q \\
+%                     & -z_i^T W_{nov} \cdot \tanh(g_i) \\
+%                     & + b_{rp_i}  \\
+%                     & + b_{ap_i} \\
+%                     & + b)     \\
+%      g_j & = \sum_{i=1}^{j-1} p(y_j=1|y_{<j},h) \cdot z_j
+%\end{align*}
 
 
