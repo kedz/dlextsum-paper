@@ -1,0 +1,33 @@
+\begin{table*}
+\begin{tabular}{lllrrrrr}
+%\toprule
+    &     &          & cnn-dailymail &      nyt &  duc-sds &   reddit &     ami \\
+    &     &          &            R2 &       R2 &       R2 &       R2 &      R2 \\
+Source Dataset & Extractor & Doc Order &               &          &          &          &         \\
+%\midrule
+cnn-dailymail & RNN & In-Order &       25.4172 &  32.6914 &  22.7538 &  14.5222 &  4.0718 \\
+nyt & RNN & In-Order &       24.1500 &  34.6666 &  22.9564 &  11.2408 &  4.2336 \\
+duc-sds & RNN & In-Order &       23.5106 &  32.2476 &  22.6520 &  12.3368 &  3.0092 \\
+reddit & RNN & In-Order &       23.0648 &  27.9204 &  20.6258 &  11.3940 &  2.5646 \\
+ami & RNN & In-Order &        9.6806 &   7.7956 &  12.6174 &  10.7048 &  5.4958 \\
+cnn-dailymail & RNN & Shuffled &       22.8038 &  25.5584 &  21.3410 &  \textbf{14.7008} &  3.4252 \\
+nyt & RNN & Shuffled &       17.5148 &  24.9578 &  20.6572 &  10.4836 &  3.8924 \\
+duc-sds & RNN & Shuffled &       16.9730 &  18.6806 &  18.2378 &  11.7118 &  3.2894 \\
+reddit & RNN & Shuffled &       22.7654 &  27.7366 &  20.5632 &  11.8348 &  2.6030 \\
+ami & RNN & Shuffled &        9.9302 &   8.2276 &  12.7670 &  10.2996 &  5.7002 \\
+cnn-dailymail & Seq2Seq & In-Order &       \textbf{25.5560} &  32.5312 &  22.7042 &  14.3916 &  3.8886 \\
+nyt & Seq2Seq & In-Order &       24.4888 &  \textbf{35.7280} &  \textbf{23.0692} &  10.7674 &  3.5056 \\
+duc-sds & Seq2Seq & In-Order &       24.3412 &  32.7244 &  22.8384 &  12.9758 &  3.5844 \\
+reddit & Seq2Seq & In-Order &       18.7552 &  23.7096 &  19.8706 &  13.7194 &  3.0072 \\
+ami & Seq2Seq & In-Order &       12.1790 &   9.7512 &  13.7606 &   9.9028 &  5.5226 \\
+cnn-dailymail & Seq2Seq & Shuffled &       21.6618 &  22.6544 &  19.9770 &  14.0084 &  3.8104 \\
+nyt & Seq2Seq & Shuffled &       18.2358 &  25.6094 &  20.5528 &  12.0216 &  3.6208 \\
+duc-sds & Seq2Seq & Shuffled &       19.6998 &  25.5266 &  21.2116 &  12.0884 &  3.4744 \\
+reddit & Seq2Seq & Shuffled &       19.4136 &  23.8588 &  19.8218 &  13.4550 &  2.8182 \\
+ami & Seq2Seq & Shuffled &       13.5160 &  13.3164 &  15.6102 &  10.2888 &  \textbf{5.9806} \\
+%\bottomrule
+\end{tabular}
+
+
+
+\end{table*}
