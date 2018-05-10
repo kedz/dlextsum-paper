@@ -1,5 +1,32 @@
-cnn-dailymail\\
-nyt\\
+We perform our experiments across six corpora from varying domains to 
+understand how different biases with each domain can effect content 
+selection. The corpora come from the news domain
+(CNN-DM, NYT, DUC), personal narratives domain (Reddit),
+workplace meetings (AMI), and medical journal articles (PubMed).
+
+\textbf{CNN-DailyMail} The CNN-DailyMail (CNN-DM) corpus was first used 
+for the summarization task by \cite{cl}, when it was noted that the bulleted
+highlights associated with each article could serve as a document summary.
+We use the preprocessing and training, validation and test splits
+of \cite{see} yielding ?/?/? documents respectively, each with one reference
+abstract. This corpus is a mix of news on different topics including politics,
+sports, and celebrity news.
+
+\textbf{New York Times} The New York Times (NYT) corpus \cite{nyt} contains
+ two types of abstracts for a subset of its articles. The first summary is
+an abstract \textcolor{red}{produced by an archival librarian} and the 
+second is an online teaser meant to elicit a viewer on the webpage to
+click to read more. From this collection we take all articles that have 
+a combined summary length of at least 100 words. This collection
+includes both hard newswire as well as opinion and long-form journalism.
+We create training, validation, test splits by partitioning on dates
+yield ?/?/? documents.
+
+
+
+
+
+
 duc\\
 ami \\
 reddit \\
