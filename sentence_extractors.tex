@@ -9,16 +9,15 @@
   \label{fig:extractors}
 \end{figure*}
 
-
 Given a sequence of sentence embeddings $\sentvec_i = \senc(\sent_i)$,
 a sentence extractor produces a conditional distribution over the 
 corresponding sentence extraction variables 
 $p(\slabel_1,\ldots,\slabel_{\sentSize}|\sentvec_1, \ldots, \sentvec_{\sentSize})$.
 We propose two simple recurrent neural network based sentence extractors
 that make a strong conditional independence assumption over the labels
-$\slabel_i$,chiefly 
+$\slabel_i$, namely
 $\explicitLikelihood= \naiveLikelihood$. This stands in contrast to our 
-baseline models which make a weaker assumption, 
+baseline models which make a weaker assumption, \hal{this is really confusing cuz i don't think you've specified this yet, and it's still hard to understand what's new/yours and what's old/baseline.}
 $\compactLikelihood = \markovLikelihood$, at the expense of greater 
 computational complexity. See Figure~\ref{fig:extractors} for a diagram of the 
 four sentence extractor architectures.
@@ -29,6 +28,7 @@ The the forward and backward outputs of each sentence are passed through a
 single layer perceptron with a logsitic sigmoid output (denoted by $\sigma$)
 to predict the probability
 of extracting each sentence:
+\hal{i'd sugest following the same notation as before to remove the zero comment}
 \begin{align}
     \rExtHidden_i &= \rgru(\sentvec_i, \rExtHidden_{i-1}) \\
    \lExtHidden_i &= \lgru(\sentvec_i, \lExtHidden_{i+1}) \\
@@ -118,6 +118,7 @@ We refer to this extractor as the \baselineOneBF~extractor; the model
 architecture descrbied in \cite{cl} is equaivalent to the
 \baselineOneBF~extractor paired with the \textit{CNN} encoder.
 
+\hal{i'd use full names throughout if possible, so just \textbf{Chang\&Lapata} and \textbf{SummaRunner} and...}
 
 \textbf{SummaRunner Extractor}
 Our second baseline extractor is taken from \cite{nallapati}, which like the
@@ -193,3 +194,8 @@ the RNN output.
 %\end{align*}
 
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:

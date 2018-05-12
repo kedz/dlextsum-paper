@@ -1,6 +1,9 @@
-At a high level, all of our models share the same two part structure: 
-\textit{i) a sentence encoder} which maps an arbitrary sequence of tokens to 
-an embedding $\sentvec \in \mathcal{R}^d$, and 
+\hal{i'm having a hard time understanding what's new and what's prior work here.}
+
+
+At a high level, all the models considered in this paper share the same two part structure: 
+\textit{i) a sentence encoder} which each sentence $\sent_i$ (treated as a sequence of tokens) to 
+an embedding $\sentvec_i \in \mathcal{R}^d$, \hal{notation class, you used $d$ already for number of sentences} and 
 \textit{ii) a sentence extractor} which takes as input all of a document's 
 sentence embeddings and predicts which sentences to extract to produce the 
 extract summary. The sentence extractor is essentially a discriminative 
@@ -15,3 +18,9 @@ can recover the specific implementations of \cite{cheng&lapata} and
 
 \subsection{Sentence Extractors}
 \input{sentence_extractors.tex}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:

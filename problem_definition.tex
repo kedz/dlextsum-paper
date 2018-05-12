@@ -1,3 +1,9 @@
+\hal{i would reframe this as:
+  1) the goal of summarization is ...;
+  2) we measure quality of summaries by ...;
+  3) in the sentence extraction approach, we ...;
+  and then i would move the ``ground truth'' part to the experimental section; that's part of how you get data, not part of the problem definition.}
+
 The goal of extractive text summarization is to select a subset of a document's
 text to use as a summary, i.e. a short gist or excerpt of the central content.
 Typically, we impose a budget on the length of the summary in either 
@@ -27,3 +33,9 @@ length budget is reached. We choose to optimize for ROUGE-1 rather than
 ROUGE-2 similarly to other optimization based approaches to summarization
 \cite{durret,joachims,nallapati,maybe_learning_submod_sum} which found this
 be the easier optimization target.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:

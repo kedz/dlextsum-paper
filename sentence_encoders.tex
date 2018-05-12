@@ -11,19 +11,21 @@
     \label{fig:encoders}
 \end{figure}
 
+\hal{these descriptions are inconsistent in notation. in the first you use enc(s) but before you say h, and in other palces you say h below. h also switches between hidden state of the encoder and the output of the encoder. you'll also need to say somewhere that $w$ represents the word embedding of a word.}
+
 We treat each sentence $\sent = \{\wemb_1, \ldots, \wemb_{|\sent|}\}$ 
 as a sequence of word embeddings, where $|\sent|$ is the total number of words
 in the sentence. We experiment with three architectures for mapping sequences
 of word embeddings to a fixed length vector: average pooling, RNNs, and CNNs.
 See Figure~\ref{fig:encoders} for a diagram of the three encoders.
 
-\textbf{Averaging Encoder} The averaging encoder (\textit{AVG}) is the simplest
+\paragraph{Averaging Encoder} The averaging encoder (\textit{AVG}) is the simplest
 method and has the added benfit of being parameter free. 
 A sentence encoding is simply the average of its word embeddings: 
 $\operatorname{enc}(\sent) = \frac{1}{|\sent|} \sum_{\wemb \in \sent} \wemb$.
+\hal{probably better to write $\frac 1 {|s|} \sum_{i=1}^{|s|} w_i$ since set notation makes me wonder about words that appear more than once.}
 
-
-\textbf{RNN Encoder} The \textit{RNN} sentence encoder uses the concatenation 
+\paragraph{RNN Encoder} The \textit{RNN} sentence encoder uses the concatenation 
 of the
 final output states of a forward and backward RNN over the sentence's word
 embeddings. We use a Gated Recurrent Unit (GRU) \cite{cho} for the RNN cell,
@@ -41,7 +43,16 @@ parameters.
 The initial states $\rSentVec_0$ and $\lSentVec_{\sentSize + 1}$ are not 
 learned and are set to zero vectors.
 
-\textbf{CNN Encoder} The \textit{CNN} sentence encoder uses a series of 
+\hal{
+  maybe you can make this more brief by saying sth like:
+  \begin{align}
+    \rSentVec_0 = \mathbf{0} &;\quad \rSentVec_{i+1} = \dots \\
+    \lSentVec_{|s|+1} = \mathbf{0} &;\quad \lSentVec_{i-1} = \dots
+  \end{align}
+  then you don't need to spe
+  }
+
+\paragraph{CNN Encoder} The \textit{CNN} sentence encoder uses a series of 
 convolutional feature maps to encode each sentence. This encoder is similar
 to the convolutional architecture of \cite{kim} used for text classification
 tasks and performs a series of ``one-dimensional'' convolutions over 
@@ -69,3 +80,8 @@ weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
 linear unit \cite{relu}.
 
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:
