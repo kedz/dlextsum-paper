@@ -69,26 +69,26 @@
 \section{Experiments}
 \input{experiments}
 
-\hal{i would suggest formatting the table like what's the dlextsum.emnlp18.tex below. also please bold not just the best but also anything that's not statistically significantly worst than the best. i'd be tempted to remove the R1 scores; i think it just makes it really hard to comprehend}
-
-\newcolumntype{g}{>{\columncolor{black!10}}c}
-
-\begin{table*}[h]
-\begin{tabular}{ccggccggccgg}
-  \toprule
-  \multirow{2}{*}{\textbf{Extractor}} & \multirow{2}{*}{\textbf{Encoder}} & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}}  & \multicolumn{2}{g}{\textbf{DUC-SDS}} & \multicolumn{2}{c}{\textbf{Reddit}} \\
-  && R-1 & R-2 & R-1 & R-2 & R-1 & R-2 & R-1 & R-2 \\
-  \hline
-  \multirow{3}{*}{RNN} & Avg & 00.00 & 01.00 & 02.00 & 03.00 \\
-  & RNN & 00.00 & 01.00 & 02.00 & 03.00 \\
-  & CNN & 00.00 & 01.00 & 02.00 & 03.00 \\
-  \hline
-  \multirow{3}{*}{Seq2Seq} & Avg & 00.00 & 01.00 & 02.00 & 03.00 \\
-  & RNN & 00.00 & 01.00 & 02.00 & 03.00 \\
-  & CNN & 00.00 & 01.00 & 02.00 & 03.00 \\
-  \bottomrule
-\end{tabular}
-\end{table*}
+%\hal{i would suggest formatting the table like what's the dlextsum.emnlp18.tex below. also please bold not just the best but also anything that's not statistically significantly worst than the best. i'd be tempted to remove the R1 scores; i think it just makes it really hard to comprehend}
+%
+\newcolumntype{g}{>{\columncolor{black!5}}c}
+%
+%\begin{table*}[h]
+%\begin{tabular}{ccggccggccgg}
+%  \toprule
+%  \multirow{2}{*}{\textbf{Extractor}} & \multirow{2}{*}{\textbf{Encoder}} & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}}  & \multicolumn{2}{g}{\textbf{DUC-SDS}} & \multicolumn{2}{c}{\textbf{Reddit}} \\
+%  && R-1 & R-2 & R-1 & R-2 & R-1 & R-2 & R-1 & R-2 \\
+%  \hline
+%  \multirow{3}{*}{RNN} & Avg & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  & RNN & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  & CNN & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  \hline
+%  \multirow{3}{*}{Seq2Seq} & Avg & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  & RNN & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  & CNN & 00.00 & 01.00 & 02.00 & 03.00 \\
+%  \bottomrule
+%\end{tabular}
+%\end{table*}
 
 \input{tables/table_overall_results.tex}
 \section{Results}
