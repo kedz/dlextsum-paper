@@ -1,8 +1,28 @@
+\newcommand{\sent}[1][]{%
+  \ifthenelse{ \equal{#1}{} }
+     {\ensuremath{s}}
+     {\ensuremath{s_{#1}}}
+}
+\newcommand{\sentEmb}[1][]{%
+  \ifthenelse{ \equal{#1}{} }
+     {\ensuremath{h}}
+     {\ensuremath{h_{#1}}}
+}
+\newcommand{\sentEmbSize}{\ensuremath{d}}
+
+
+\newcommand{\docSize}{\ensuremath{n}}
+
+\newcommand{\slabel}[1][]{%
+  \ifthenelse{ \equal{#1}{} }
+     {\ensuremath{y}}
+     {\ensuremath{y_{#1}}}
+}
+
 \newcommand{\doc}{d}
 \newcommand{\docsize}{d}
-\newcommand{\sent}{s}
+%\newcommand{\sent}{s}
 \newcommand{\sentvec}{h}
-\newcommand{\slabel}{y}
 \newcommand{\summary}{S}
 \newcommand{\wemb}{w}
 \newcommand{\wembdim}{n}

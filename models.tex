@@ -1,17 +1,49 @@
 \hal{i'm having a hard time understanding what's new and what's prior work here.}
 
+For a typical deep learning model of extractive 
+summarization there are two main design decisions:
+%At a high level, all the models considered in this paper share the same two part structure: 
+\textit{i)}  the choice of \textit{sentence encoder} 
+which maps each sentence \sent[i] 
+%(treated as a sequence of word embeddings) 
+to an embedding $\sentEmb[i] \in \mathcal{R}^{\sentEmbSize}$, 
+%\hal{notation class, you used $d$ already for number of sentences} 
+and 
+\textit{ii)} the choice of \textit{sentence extractor} 
+which maps a sequence of sentence embeddings 
+$\sentEmb = \sentEmb[1],\ldots, \sentEmb[\docSize]$  
+to a sequence of extraction
+decisions $\slabel = \slabel_1,\ldots,\slabel_{\docSize}$.
+The sentence extractor is then a discriminative 
+classifier $p(\slabel | \sentEmb)$.
+%and predicts which sentences to extract to produce the 
+%extract summary. 
 
-At a high level, all the models considered in this paper share the same two part structure: 
-\textit{i) a sentence encoder} which each sentence $\sent_i$ (treated as a sequence of tokens) to 
-an embedding $\sentvec_i \in \mathcal{R}^d$, \hal{notation class, you used $d$ already for number of sentences} and 
-\textit{ii) a sentence extractor} which takes as input all of a document's 
-sentence embeddings and predicts which sentences to extract to produce the 
-extract summary. The sentence extractor is essentially a discriminative 
-classifier $p(\slabel_1, \ldots, \slabel_{\docsize}| \sentvec_1, \ldots, \sentvec_{\docsize})$.
+We study three architectures for the sentence encoders, namely, 
+embedding averaging, RNNs, and 
+CNNs.
+We also propose two simple models for the sentence extractor and compare
+to the previously proposed extractors of 
+\citet{cheng2016neural} and \citet{nallapati2017summarunner}.
+The prior works differ significantly but make the same semi-Markovian
+factorization of the extraction decisions, i.e. 
+$p(\slabel|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\slabel[<i],\sentEmb)$,
+where each prediction \slabel[i] is dependent on all previous \slabel[j] for
+all $j < i$.
+By contrast, our extractors make a stronger conditional independence 
+assumption $p(\slabel|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\sentEmb)$,
+essentially making independent predictions conditioned on $\sentEmb$.
+In theory, our models should perform worse because of this, however, as
+we later show, this is not the case empirically.
 
-Depending on the architectural choices of each component we propose we 
-can recover the specific implementations of \cite{cheng&lapata} and 
-\cite{nallapati}, which we outline below.
+
+
+
+
+
+%Depending on the architectural choices of each component we propose we 
+%can recover the specific implementations of \cite{cheng&lapata} and 
+%\cite{nallapati}, which we outline below.
 
 \subsection{Sentence Encoders}
 \input{sentence_encoders.tex}
