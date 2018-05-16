@@ -1,35 +1,70 @@
 
-\hal{i feel like you can restructure the intro to focus on you stuff, rather than focusing on how it relates to other people's stuff. just lead with context selection is important for generation, summarization, etc., and is a key compontent both in extractive *and* abstractive techniques. then go to the third paragraph about what you do. you can then relate back to deep learning predictions in the related work section.}
+%\hal{i feel like you can restructure the intro to focus on you stuff, rather than focusing on how it relates to other people's stuff. just lead with context selection is important for generation, summarization, etc., and is a key compontent both in extractive *and* abstractive techniques. then go to the third paragraph about what you do. you can then relate back to deep learning predictions in the related work section.}
 
-While there has a been a recent flurry of work on abstractive summarization
-\cite{paulus,see,chenglapata,nallapati},
-these papers treat this problem as a pure sequence to sequence 
-transduction task. Admittedly, this view allows us to apply very powerful, 
-general-purpose deep learning archictures to generate summaries.
-At the same time, it obscures a principal subtask in summarization, the 
-process of selecting the most salient units of meaning in the source material,
-i.e. the key ingredients in the final summary, a process which we 
-broadly refer to as content selection \cite{possiblyMcKeownAndNenkova}.
+%While there has a been a recent flurry of work on abstractive summarization
+%\cite{paulus,see,chenglapata,nallapati},
+%these papers treat this problem as a pure sequence to sequence 
+%transduction task. Admittedly, this view allows us to apply very powerful, 
+%general-purpose deep learning archictures to generate summaries.
+%At the same time, it obscures a principal subtask in summarization, the 
+%process of selecting the most salient units of meaning in the source material,
+%i.e. the key ingredients in the final summary, a process which we 
+%broadly refer to as content selection \cite{possiblyMcKeownAndNenkova}.
 
-As is also the case in other NLP tasks, it is not immediately obvious how a
-deep learning model is making its predictions, or what correlations 
-are being exploited. There is a concerning and growing list of papers that 
-find models functioning as mere nearest neighbors search 
-\cite{liang,danqichen}, exploiting annotator artifacts 
-\cite{recentNaaclPapersOnSNLI}, or open to adversarial exploitation \cite{findExampleYouNoMemoryDumbDumb}. 
-These lines of research are critical for finding model shortcomings, and over
-time, guiding improvements in technique. Unfortunately,
-to the best of our knowledge, there has been
-no such undertaking for the summarization task. 
+%As is also the case in other NLP tasks, it is not immediately obvious how a
+%deep learning model is making its predictions, or what correlations 
+%are being exploited. There is a concerning and growing list of papers that 
+%find models functioning as mere nearest neighbors search 
+%\cite{liang,danqichen}, exploiting annotator artifacts 
+%\cite{recentNaaclPapersOnSNLI}, or open to adversarial exploitation \cite{findExampleYouNoMemoryDumbDumb}. 
+%These lines of research are critical for finding model shortcomings, and over
+%time, guiding improvements in technique. Unfortunately,
+%to the best of our knowledge, there has been
+%no such undertaking for the summarization task. 
+
+
+Content selection is an important sub-task in many natural language generation
+problems, i.e. given some context, determine which information
+needs to be expressed in output text \cite{gatt2018survey}. While it is a key component of 
+extractive and abstractive summarization systems, it is not generally well 
+understood, with frequency and information theortic measures used as proxies
+for content salience \cite{hong2014improving}. 
+
 
 In this paper, we seek to better understand how deep learning models of 
-summarization are performing content selection. We perform an analysis 
-of several recent sentence extractive neural network architecures, 
-looking particulary at the impact of sentence position bias, the necessity
-of learning embeddings, the unreasonable effectiveness of averaging for 
-sentence embedding, and the cross domain generalizability of such models.
-Additionally, we propose two simpler models that are on average statistically
-indistinguishable from their more complex counterparts.
+summarization are performing content selection across a variety of domains.
+We perform an analysis 
+of several recent sentence extractive neural network architectures, 
+looking particulary at the choice of sentence encoder and sentence 
+extractor design. 
+
+Our experiments reveal several worrying obstacles for learning such models. 
+For instance, the sentence position bias dominates the learning signal in the 
+news domain; this can be corrected for by shuffling a document's sentence
+order but not without adverse effects on performance.
+
+In our study of sentence encoder architectures, we find that word embedding
+averaging is as good or better than more sophisticated recurrent neural 
+network (RNN) and convolutional neural network (CNN) encoders.
+Additionally fixed pre-trained word embeddings are as good or better than 
+learned embeddings in the majority of cases. 
+
+We also propose two simple extractor methods that make sentence selection
+decisions independently in contrast to two previously published architectures
+where previous selection decisions inform future sentence selection probabilities. 
+Oddly we find that the independent predictions are as good as sequential 
+predictions.
+
+Taken together, these and other results in the paper suggest that we are 
+overestimating the ability of deep learning models to learn robust and 
+meaningful features for summarization. 
+
+
+%?impact of sentence position bias, the necessity
+%?of learning embeddings, the unreasonable effectiveness of averaging for 
+%?sentence embedding, and the cross domain generalizability of such models.
+%?Additionally, we propose two simpler models that are on average statistically
+%?indistinguishable from their more complex counterparts.
 
 While we are explicitly studying extractive summarization algorithms here,
 we think the findings will be relevant to the abstractive summarization 
@@ -42,10 +77,12 @@ The contributions of this paper are the following:
 \begin{enumerate}
     \item We perform an empirical study of extractive content selection in 
         deep learning 
-        algorithms for text summarization across news, blogs, meetings, and
-         journal articles domains, and small/medium/large datasets.
-    \item Propose two simple deep learning models whose performance is on par 
-          with more complex deep learning models.
+        algorithms for text summarization across news, personal narratives, 
+         meetings, and
+         medical journal domains using both automatic and manual evaluation.
+    \item We propose two simple sentence extractor models whose performance is 
+          on par 
+          with more complex models.
 \end{enumerate}
 In the following sections we discuss 
 (Sec. ?) related work, 

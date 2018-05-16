@@ -77,6 +77,19 @@ and the model value during the second. We use early stopping on the validation
 set with ROUGE2 as our evaluation criteria. All experiments are run with 5 
 different random initialization seeds and results are averaged.
 
+Since we do not typically have ground truth extract summaries from which to
+create the labels $\slabel_i$, we construct gold label sequences for training
+by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
+\null \emptyset$, we add the sentence $\hat{\sent} = 
+{\argmax}_{ \sent \in \{\sent_1, \ldots, \sent_{\docsize}\},
+\; \sent \notin \summary} \operatorname{ROUGE-1}(\summary \cup \sent)$
+to $\summary$ stopping when the ROUGE-1 score no longer increases or the 
+length budget is reached. We choose to optimize for ROUGE-1 rather than 
+ROUGE-2 similarly to other optimization based approaches to summarization 
+\textcolor{red}{
+\cite{durrett2016learning,sipos2012large,nallapati2017summarunner} which found this
+be the easier optimization target.}
+
 
 
 

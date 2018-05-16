@@ -22,13 +22,31 @@ includes both hard newswire as well as opinion and long-form journalism.
 We create training, validation, test splits by partitioning on dates
 yield ?/?/? documents.
 
+\paragraph{DUC}{We use the single document summarization data from the 2001
+and 2002
+Document Understanding Conferences (DUC). We split the 2001 data into training
+and validation splits and reserve the 2002 data for tesing, resulting in
+?/?/? documents for training, validation, and test respectively. 
+The test set has two or three human abstracts rougly 100 words in length per 
+articles.}
 
+\paragraph{AMI}{The AMI corpus \cite{ami} 
+is collection real and staged office meetings
+annotated with text transcriptions, along with abstractive
+summaries. We use the proscribed splits to get ?/?/? training, validation,
+and test examples with one human abstract summary per meeting. 
+We ignore any speaker information since we are primarily
+interested in studying content selection in a domain agnostic way.
+The summaries are about 290 words long on average and so we target this length
+for summary generation.
+}
 
+\paragraph{Reddit}{\cite{jessica} collected a corpus a personal stories shared
+ on Reddit\footnote{\url{www.reddit.com}}.
 
+We use a collection of personal stories paired 
+with multiple abstractive and extractive summaries. As in \cite{jessica}
 
-
-duc\\
-ami \\
 reddit \\
 pubmed \\
 

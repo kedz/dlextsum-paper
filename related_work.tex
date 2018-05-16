@@ -1,23 +1,109 @@
 
-\textbf{Extractive Deep Learning Based Summarization}
 
-Nallapati et. al\\
-Cheng and Lapata\\
+%Extractive summarization has been extensively studied, although typically 
+%in the multi-document setting. 
+Approaches to single document summarization
+are often formulated as graph-based ranking problems, where
+sentences are nodes in a graph and edges are determined by pairwise 
+similarity of bag-of-words (BOW) representations 
+\cite{erkan2004lexrank,mihalcea2005language}. 
+More recently \citet{wan2010towards}
+jointly performed single and multi-document summarization in this framework. 
+Generally, this line of work does not learn sentence representations for 
+computing the underlying graph structures, which is the focus of this paper.
 
-\textbf{Abstractive Deep Learning Based Summarization}
+An notable exception is that of
+\cite{yasunaga2017graph} which learns a graph-convolutional network for
+multi-document summarization, however, they do not extensively study the 
+choice of sentence encoder, focusing more on the importance of the 
+graph structure which is orthogonal to this work.
 
-Rush\\
-Chopra\\
-See at al.\\ 
-Socher\\
+To the extent that learning based approaches have been applied
+to summarization, typically they have involved learning ngram feature weights 
+in linear models along with other non-lexical word or structure features 
+\cite{berg2011jointly,sipos2012large,durrett2016learning}.
 
-\textbf{Extractive Single Doc Summarization}
-Durret et. al\\
+The introduction of the CNN-DailyMail corpus by \cite{nips15_hermann}
+allowed for the application of large-scale training of deep learning models,
+initially by \citep{cheng2016neural} who present both a sentence and word
+extractive model of single document summarization. The sentence extractive
+model uses a word level convolutional neural network (CNN) to encode 
+sentences and a sentence level sequence-to-sequence model to predict 
+which sentences to include in the summary. \citet{nallapati2017summarunner}
+proposed different model using word-level bidirectional recurrent neural 
+networks (RNNs) along with a sentence level bidirectinoal RNN for 
+predicting which sentences should be extractive. 
+Additionally, the sentence
+extractor creates representations of the whole document computes 
+separate scores for salience, novelty, and location.
 
-\textbf{Non Newswire Summarization}
-meeting summarization\\
-reddit stories \\
-journal articles/pubmed \\
+Since these two models are very different in design, it is unclear 
+what model choices are most important for indentifying summary content 
+in the input document. We use the sentence extractor designs of 
+\citep{cheng2016neural} and \citep{nallapati2017summarunner} as points of 
+comparison in our experiments presented in Section~\ref{models}.
+
+All of the previous works have focused on news summarization. To further
+understand the content selection process, we also explore other domains 
+of summarization. In particular, we explore personal narratives shared
+on the website Reddit \cite{ouyang2017crowd}, workplace meeting summarization
+\cite{carletta2005ami}, and medical journal article summarization 
+\cite{mishra2014text}. While most work on these summarization tasks
+ often exploit 
+features relevant
+to the domain, e.g. speaker identification in meeting summarization \cite{gillick2009global},
+we eschew such features in this work in order to understand generally how 
+content
+selection is learned.
 
 
+
+
+
+
+
+
+
+
+%Extractive single document summarization 
+%Cheng and Lapata\\
+%
+%\textbf{Abstractive Deep Learning Based Summarization}
+%
+%Rush\\
+%Chopra\\
+%See at al.\\ 
+%Socher\\
+%
+%\textbf{Extractive Single Doc Summarization}
+%Durret et. al\\
+%
+%\textbf{Non Newswire Summarization}
+%meeting summarization\\
+%reddit stories \\
+%journal articles/pubmed \\
+
+
+%?While there has a been a recent flurry of work on abstractive summarization
+%?\cite{paulus,see,chenglapata,nallapati},
+%?these papers treat this problem as a pure sequence to sequence 
+%?transduction task. Admittedly, this view allows us to apply very powerful, 
+%?general-purpose deep learning archictures to generate summaries.
+%?At the same time, it obscures a principal subtask in summarization, the 
+%?process of selecting the most salient units of meaning in the source material,
+%?i.e. the key ingredients in the final summary, a process which we 
+%?broadly refer to as content selection \cite{possiblyMcKeownAndNenkova}.
+
+As is also the case in other NLP tasks, it is not immediately obvious how a
+deep learning model is making its predictions, or what correlations 
+are being exploited. There is a concerning and growing list of papers that 
+find models functioning as mere nearest neighbors search 
+\cite{chen2016thorough}, 
+exploiting annotator artifacts 
+\cite{gururangan2018annotation}, or open to fairly trivial adversarial 
+exploitation \cite{jia2017adversarial}. 
+These lines of research are critical for finding model shortcomings, and over
+time, guiding improvements in technique. Unfortunately,
+to the best of our knowledge, there has been
+no such undertaking for the summarization task. 
 
