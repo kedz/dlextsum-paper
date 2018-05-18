@@ -34,6 +34,7 @@
 
 \newcommand{\hal}[1]{\textcolor{blue!50!red!70!white}{\textbf{[[Hal: #1]]}}}
 \newcommand{\kathy}[1]{\textcolor{blue!70!red!50!white}{\textbf{[[Kathy: #1]]}}}
+\newcommand{\hidey}[1]{\textcolor{green}{\textbf{[[Hidey: #1]]}}}
 
 \title{Content Selection in Deep Learning Models of Summarization}
 
@@ -104,41 +105,13 @@
 \input{results}
 
 \section{Discussion}
-The lack of distinction amongst sentence encoders is interesting because 
-it echoes findings in the generic sentence embedding literature 
-where word embedding averaging is frustratingly difficult to 
-outperform  \cite{wieting2015towards,arora2016simple,wieting2017revisiting}.
-The inability to learn useful sentence representations is also 
-borne out in the 
-SummaRunner model, where there are explicit similarity computations
-between document or summary representations and sentence embeddings;
-these computations do not seem to add much to the performance as the 
-Cheng \& Lapata and Seq2Seq models which lack these features generally
-perform as well or better.
-
-Learning in the news domain is severely inhibited by the lead bias. 
-The similaritiy of the 
-
-
-We see evidence for this both in the embedding learning experiments and
-ablation study,
-
-
-
-
-
-where explicitly forming document representations
-from sentence embeddings
-
-
-
+\input{discussion}
 
 
 \section{Conclusion}
 We have presented an empirical study of deep learning based content selection
 algorithms for summarization. Our findings suggest more work is needed 
 on sentence representation.
-
 
 
 

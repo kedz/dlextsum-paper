@@ -2,7 +2,7 @@
 
 %Extractive summarization has been extensively studied, although typically 
 %in the multi-document setting. 
-\kathy{Might want to indicate that this is not recent.}
+%\kathy{Might want to indicate that this is not recent.}
 Pre-neural network
 approaches to single document summarization
 are often formulated as graph-based ranking problems, where
@@ -15,30 +15,35 @@ Generally, this line of work does not learn sentence representations for
 computing the underlying graph structures, which is the focus of this paper.
 
 An notable exception is that of
-\cite{yasunaga2017graph}
+\citet{yasunaga2017graph}
 %KM - I think you should use \namecite or \citet to have the name appear in text and then use ``who''
 % which 
 who
-learns a graph-convolutional network for
+learn a graph-convolutional network for
 %KM Inserted sentence boundary.
 multi-document summarization. However, they do not extensively study the 
 choice of sentence encoder, focusing more on the importance of the 
 graph structure which is orthogonal to this work.
 
-\kathy{Again, you need to signal that this was earlier work. Not really sure you need this paragraph. Doesn't seem very relevant.}
+%\kathy{Again, you need to signal that this was earlier work. Not really sure you need this paragraph. Doesn't seem very relevant.}
 To the extent that learning based approaches have been applied
 to summarization prior to the use of neural networks, typically they have involved learning ngram feature weights 
 in linear models along with other non-lexical word or 
 %KM ``structure''? or ``structural''?
 structure features 
 \cite{berg2011jointly,sipos2012large,durrett2016learning}.
+In this paper, we study representation learning in highly non-linear
+neural networks that can capture more complex word level feature interactions
+and whose dense representations are more compatible with current practices
+in NLP.
 
 The introduction of the CNN-DailyMail corpus by \cite{nips15_hermann}
 %KM - added ``for summarization''
-allowed for the application of large-scale training of deep learning models for summarization,
-\kathy{This is a wordy way to cite. Couldn't you just put the citation after the appropriate pphrase? If you say ``by'' then I think you have to use \citet so that the name appears in the text.}
-initially by \citep{cheng2016neural} who present both a sentence and word
-extractive model of single document summarization. The sentence extractive
+allowed for the application of large-scale training of deep learning models for summarization.
+%\kathy{This is a wordy way to cite. Couldn't you just put the citation after the appropriate pphrase? If you say ``by'' then I think you have to use \citet so that the name appears in the text.}
+\citet{cheng2016neural} %wpresent both a sentence and word
+%extractive model of single document summarization
+developed a sentence extractive
 model uses a word level convolutional neural network (CNN) to encode 
 sentences and a sentence level sequence-to-sequence model to predict 
 which sentences to include in the summary. \citet{nallapati2017summarunner}
@@ -73,10 +78,11 @@ on the website Reddit \cite{ouyang2017crowd}, workplace meeting summarization
  often exploit 
 features relevant
 to the domain, e.g. speaker identification in meeting summarization \cite{gillick2009global},
-\kathy{``eschew'' has a negative connotation. Implies you think this is the wrong way to go. I don't think you mean that. I think what you really mean is you want to understand whether general neural net features can control content selection without adding domain specific features. People will otherwise argue with ``understand generally'' since such features may play an important role.}
-we eschew such features in this work in order to understand generally how 
-content
-selection is learned.
+%\kathy{``eschew'' has a negative connotation. Implies you think this is the wrong way to go. I don't think you mean that. I think what you really mean is you want to understand whether general neural net features can control content selection without adding domain specific features. People will otherwise argue with ``understand generally'' since such features may play an important role.}
+we purposefully avoid such features in this work in order to understand 
+the extent to which deep learning models can learn useful content 
+selection features.
+%generally how content selection is learned.
 
 
 

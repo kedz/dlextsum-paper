@@ -4,13 +4,15 @@
 %  3) in the sentence extraction approach, we ...;
 %  and then i would move the ``ground truth'' part to the experimental section; that's part of how you get data, not part of the problem definition.}
 %
-\kathy{Overall, this quite a short section. Is it needed? Or should it be morged somewhere else?}
+%\kathy{Overall, this quite a short section. Is it needed? Or should it be morged somewhere else?}
 
-\kathy{Again, I think you have to state that the unit for extraction is the sentence.}
+%\kathy{Again, I think you have to state that the unit for extraction is the sentence.}
 The goal of extractive text summarization is to select a subset of a document's
 text to use as a summary, i.e. a short gist or excerpt of the central content.
 Typically, we impose a budget on the length of the summary in either 
-words or bytes.
+words or bytes. In this work, we focus on \textit{sentence} extractive 
+summarization, 
+where the basic unit of extraction is a sentence.
 
 We evaluate summary quality using ROUGE \cite{lin2004rouge} 
 which measures the ngram
@@ -20,11 +22,6 @@ We use ROUGE-2 recall (i.e. bigram recall) as our main evaluation metric
 We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014}
 which measures precision and recall of reference words, while allowing for
 more complicated word matchings (e.g. via synonymy or morphology).
-
-
-
-
-
 
 In this paper, we model this task as a sequence tagging problem, 
 i.e. given a document containing $\docsize$ sentences $\sent_1, \ldots, 
