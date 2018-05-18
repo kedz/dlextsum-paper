@@ -1,0 +1,42 @@
+Learning in the news domain is severely inhibited by the lead bias. 
+The output of all systems is highly similar to the lead baseline,
+with \textcolor{red}{??\% of all system output sentences also occurring
+in the lead summary.} Shuffling improves this 
+\textcolor{red}{(reducing to ??\%)} but the overall system performance drops
+    significantly.
+    The relative robustness of the news domain to POS ablation also suggests
+    suggests that models are mostly learning to recognize the stylistic 
+    features unique to the beggining of the article, and not the content.
+    Additionally, drop in performance when learning word embeddings on 
+    the news domain suggests that word embeddings alone do not provide 
+    very generalizable content features compared to recognizing the lead.
+
+The picture is rosier for non-news summarization where POS ablation leads
+to larger performance differences and shuffling either does not inhibit content
+selection significantly or leads to modest gains. In order to learn better
+word-level representations on these domains will likely require much
+larger corpora, somthing which might remain unlikely for personal narratives
+and meetings.
+
+
+
+The lack of distinction amongst sentence encoders is interesting because 
+it echoes findings in the generic sentence embedding literature 
+where word embedding averaging is frustratingly difficult to 
+outperform  \cite{wieting2015towards,arora2016simple,wieting2017revisiting}.
+The inability to learn useful sentence representations is also 
+borne out in the 
+SummaRunner model, where there are explicit similarity computations
+between document or summary representations and sentence embeddings;
+these computations do not seem to add much to the performance as the 
+Cheng \& Lapata and Seq2Seq models which lack these features generally
+perform as well or better.
+Furthermore, the Cheng \& Lapata and SummaRunner extractors both construct
+a history of previous selection decisions to inform future choices but this
+does not seem to significantly improve performance over the Seq2Seq extractor 
+which does not, suggesting that we need to rethink or find novel forms 
+of sentence representation for the summarization task.
+
+
+
+
