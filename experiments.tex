@@ -1,4 +1,4 @@
-
+\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
 We train all models to minimize the weighted negative log likelihood
 \[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
 \operatorname{enc}(\sent)\right)\]
@@ -11,6 +11,7 @@ using stochastic gradient descent with the ADAM optimizer
     positive examples proportionally to the ratio of negative to positive
     examples in the training data in order to compensate for the sparsity
     of the positive class.
+\kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
     We use a learning rate of .0001 and a dropout rate of .25 for all dropout
     layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$). 
     We train for a maximum of 30 epochs and the best
@@ -25,6 +26,7 @@ using stochastic gradient descent with the ADAM optimizer
     embedding.
     We use a batch size of 32 for all datasets except AMI and PubMed for
     which we use sizes two and four respectively. 
+\kathy{why? Say.}
     For the Cheng \& Lapata model, we train for half of the maximum epochs 
     with teacher forcing, i.e. we set $p_i = 1$
     if $y_i = 1$ in the gold data and 0 otherwise 
@@ -62,10 +64,10 @@ described in Section~\ref{sec:datasets}.}
 %recall as our main evaluation metric since it has the strongest correlation
 %to human content selection decisions.
 
-
-In most cases, the averaging encoder performance was as good or better than
-the RNN and CNN encoders, we use only the averaging encoder for the remainder
-of the experiments.
+\kathy{Save all results for results section. I deleted your sentence.}
+%In most cases, the averaging encoder performance was as good or better than
+%the RNN and CNN encoders, we use only the averaging encoder for the remainder
+%of the experiments.
 
 \paragraph{Word Embedding Learning}{To futher understand how word 
 embeddings 
@@ -80,6 +82,7 @@ token.}
 using part-of-speech (POS) tags. 
 All datasets were automatically tagged using
 the SpaCy POS tagger \footnote{https://github.com/explosion/spaCy}.   
+\kathy{I'm still curious what would happen if you separately removed all conjunction tags and later remaining POS.}
 We experimented with selectively removing 
 \begin{itemize}
     \item nouns (NOUN and PROPN tags), 
@@ -101,6 +104,9 @@ summaries. Because this lead bias is so strong, it is questionable whether
 the models are learning to identify important content or just find the start
 of the document. We perform a series of sentence order experiments where 
 each document's sentences are randomly shuffled during training. We then
+%KM - I think below should be shuffled. I changed.
+%CK - models are trained on shuffled data but evaluated on in order models.
+%evaluate each model performance on the unshuffled test data, comparing to 
 evaluate each model performance on the unshuffled test data, comparing to 
 the original unshuffled models. 
 

@@ -1,5 +1,5 @@
 We perform our experiments across six corpora from varying domains to 
-understand how different biases with each domain can effect content 
+understand how different biases within each domain can affect content 
 selection. The corpora come from the news domain
 (CNN-DailyMail, New York Times, DUC), personal narratives domain (Reddit),
 workplace meetings (AMI), and medical journal articles (PubMed).
@@ -11,13 +11,14 @@ abstract. This corpus is a mix of news on different topics including politics,
 sports, and celebrity news.
 
 \paragraph{New York Times}{The New York Times (NYT) corpus \cite{sandhaus2008new} contains
+\kathy{Not sure why you have this in red? Assume it won't stay in red for the final version?}
  two types of abstracts for a subset of its articles. The first summary is
 an abstract \textcolor{red}{produced by an archival librarian} and the 
 second is an online teaser meant to elicit a viewer on the webpage to
 click to read more. From this collection we take all articles that have 
 a combined summary length of at least 100 words. This collection
 includes both straight newswire as well as opinion and long-form journalism.
-We create training, validation, test splits by partitioning on dates;
+We create training, validation, and test splits by partitioning on dates;
 we use the year 2005 as the validation data, with training and test partitions
 including documents before and after 2005 respectively,
 yielding 44,382/5,523/6,495 documents.}
@@ -27,11 +28,11 @@ and 2002
 Document Understanding Conferences (DUC) \cite{over2002introduction}. We split the 2001 data into training
 and validation splits and reserve the 2002 data for testing, resulting in
 516/91/657 documents for training, validation, and test respectively. 
-The test set has two or three human abstracts rougly 100 words in length per 
+The test set has two or three human abstracts roughly 100 words in length per 
 articles.}
 
 \paragraph{AMI}{The AMI corpus \cite{carletta2005ami} 
-is collection real and staged office meetings
+is collection of real and staged office meetings
 annotated with text transcriptions, along with abstractive
 summaries. We use the proscribed splits to get 98/19/20 training, validation,
 and test examples with one human abstract summary per meeting. 
@@ -41,11 +42,12 @@ The summaries are about 290 words long on average and so we target this length
 for summary generation.
 }
 
-\paragraph{Reddit}{\cite{ouyang2017crowd} collected a corpus a personal 
+\paragraph{Reddit}{\citet{ouyang2017crowd} collected a corpus of personal 
     stories shared
  on Reddit\footnote{\url{www.reddit.com}} along with multiple extractive 
  and abstractive summaries. These stories are relatively short compared
  to the other corpora with an average sentence length of ??. 
+\kathy{Why didn't you use theirs?}
  We created our own train, validation, and test splits resulting in 
 404/24/48 documents respectively. 
 }

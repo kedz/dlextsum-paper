@@ -42,7 +42,7 @@ four sentence extractor architectures.
 \paragraph{RNN Extractor}{
     Our first proposed model is a very simple bidirectional
 RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
-The the forward and backward outputs of each sentence are passed through a 
+The  forward and backward outputs of each sentence are passed through a 
 multi-layer perceptron with a logsitic sigmoid output (denoted by $\sigma$)
 to predict the probability
 of extracting each sentence:
@@ -91,7 +91,7 @@ Formally we have:
    p(\slabel_i=1|\sentvec) = \sigma\left(V\cdot \logits_i + v  \right).
 \end{align}
 The final outputs of each encoder direction are passed to the first decoder
-steps; additionally, the first step of the decoder GRUs are learened 
+steps; additionally, the first step of the decoder GRUs are learned 
 ``begin decoding'' vectors $\rDecExtHidden_0$ and $\lDecExtHidden_0$ 
 (see Figure~\ref{fig:extractors}.b).
 Each GRU has separate learned 
@@ -124,6 +124,8 @@ the decoder side GRU input is the sentence embedding from the previous time
 step weighted by its probabilitiy of extraction ($p_{i-1}$) from the 
 previous step, inducing dependence of each output $y_i$ on all previous 
 outputs $y_{<i}$.
+
+\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
 
 Note that in the original paper, the Cheng \& Lapata extractor was paired 
 with
