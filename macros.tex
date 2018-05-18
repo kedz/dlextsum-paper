@@ -19,6 +19,29 @@
      {\ensuremath{y_{#1}}}
 }
 
+\newcommand{\wordEmb}[1][]{%
+  \ifthenelse{ \equal{#1}{} }
+     {\ensuremath{w}}
+     {\ensuremath{w_{#1}}}
+}
+
+\newcommand{\sentSize}{\ensuremath{|\sent|}}
+\newcommand{\wordEmbSize}{\ensuremath{{n^\prime}}}
+\newcommand{\rSentEmb}[1][]{
+  \ifthenelse{ \equal{#1}{} }
+  {\ensuremath{\overrightarrow{\sentEmb}}}
+  {\ensuremath{\overrightarrow{\sentEmb}_{#1}}}
+}
+\newcommand{\lSentEmb}[1][]{
+  \ifthenelse{ \equal{#1}{} }
+  {\ensuremath{\overleftarrow{\sentEmb}}}
+  {\ensuremath{\overleftarrow{\sentEmb}_{#1}}}
+}
+%\newcommand{\lSentVec}{\overleftarrow{\sentvec}}
+
+
+
+
 \newcommand{\doc}{d}
 \newcommand{\docsize}{d}
 %\newcommand{\sent}{s}
@@ -52,7 +75,7 @@
 \newcommand{\rExtHidden}{\overrightarrow{\extHidden}}
 \newcommand{\lExtHidden}{\overleftarrow{\extHidden}}
 \newcommand{\senc}{\operatorname{enc}}
-\newcommand{\sentSize}{|\sent|}
+%\newcommand{\sentSize}{|\sent|}
 \newcommand{\explicitLikelihood}{p(\slabel_1,\ldots,\slabel_{\sentSize}|
                                    \sentvec_1, \ldots, \sentvec_{\sentSize})}
 \newcommand{\compactLikelihood}{p(\slabel|\sentvec)}

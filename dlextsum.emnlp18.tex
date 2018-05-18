@@ -10,8 +10,11 @@
 \usepackage{xcolor}
 \usepackage{colortbl}
 \usepackage{xspace}
+\usepackage{bbm}
+
 
 \usepackage{ifthen}
+\newcolumntype{g}{>{\columncolor{black!5}}c}
 
 %\aclfinalcopy % Uncomment this line for the final submission
 %\def\aclpaperid{***} %  Enter the acl Paper ID here
@@ -30,6 +33,7 @@
 \newcommand\conforg{SIGDAT}
 
 \newcommand{\hal}[1]{\textcolor{blue!50!red!70!white}{\textbf{[[Hal: #1]]}}}
+\newcommand{\kathy}[1]{\textcolor{blue!70!red!50!white}{\textbf{[[Kathy: #1]]}}}
 
 \title{Content Selection in Deep Learning Models of Summarization}
 
@@ -65,15 +69,19 @@
 \section{Models and Methods}
 \input{models}
 
+\input{tables/table_overall_results.tex}
+\input{tables/table_fixed_vs_learned.tex}
+
 \section{Datasets}
+\label{sec:datasets}
 \input{datasets}
+
 
 \section{Experiments}
 \input{experiments}
 
 %\hal{i would suggest formatting the table like what's the dlextsum.emnlp18.tex below. also please bold not just the best but also anything that's not statistically significantly worst than the best. i'd be tempted to remove the R1 scores; i think it just makes it really hard to comprehend}
 %
-\newcolumntype{g}{>{\columncolor{black!5}}c}
 %
 %\begin{table*}[h]
 %\begin{tabular}{ccggccggccgg}
@@ -92,9 +100,47 @@
 %\end{tabular}
 %\end{table*}
 
-\input{tables/table_overall_results.tex}
 \section{Results}
 \input{results}
+
+\section{Discussion}
+The lack of distinction amongst sentence encoders is interesting because 
+it echoes findings in the generic sentence embedding literature 
+where word embedding averaging is frustratingly difficult to 
+outperform  \cite{wieting2015towards,arora2016simple,wieting2017revisiting}.
+The inability to learn useful sentence representations is also 
+borne out in the 
+SummaRunner model, where there are explicit similarity computations
+between document or summary representations and sentence embeddings;
+these computations do not seem to add much to the performance as the 
+Cheng \& Lapata and Seq2Seq models which lack these features generally
+perform as well or better.
+
+Learning in the news domain is severely inhibited by the lead bias. 
+The similaritiy of the 
+
+
+We see evidence for this both in the embedding learning experiments and
+ablation study,
+
+
+
+
+
+where explicitly forming document representations
+from sentence embeddings
+
+
+
+
+
+\section{Conclusion}
+We have presented an empirical study of deep learning based content selection
+algorithms for summarization. Our findings suggest more work is needed 
+on sentence representation.
+
+
+
 
 \bibliography{emnlp2018}
 \bibliographystyle{acl_natbib_nourl}

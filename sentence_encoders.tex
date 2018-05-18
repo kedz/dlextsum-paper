@@ -11,50 +11,60 @@
     \label{fig:encoders}
 \end{figure}
 
-\hal{these descriptions are inconsistent in notation. in the first you use enc(s) but before you say h, and in other palces you say h below. h also switches between hidden state of the encoder and the output of the encoder. you'll also need to say somewhere that $w$ represents the word embedding of a word.}
+%\hal{these descriptions are inconsistent in notation. in the first you use enc(s) but before you say h, and in other palces you say h below. h also switches between hidden state of the encoder and the output of the encoder. you'll also need to say somewhere that $w$ represents the word embedding of a word.}
 
-We treat each sentence $\sent = \{\wemb_1, \ldots, \wemb_{|\sent|}\}$ 
-as a sequence of word embeddings, where $|\sent|$ is the total number of words
+We treat each sentence $\sent = \wordEmb[1], \ldots, \wordEmb[\sentSize]$
+as a sequence of word embeddings, where 
+$\wordEmb[i] \in \mathcal{R}^\wordEmbSize$ are word embeddings and
+$\sentSize$ is the total number of words
 in the sentence. We experiment with three architectures for mapping sequences
-of word embeddings to a fixed length vector: average pooling, RNNs, and CNNs.
+of word embeddings to a fixed length vector: averaging, RNNs, and CNNs.
 See Figure~\ref{fig:encoders} for a diagram of the three encoders.
 
 \paragraph{Averaging Encoder} The averaging encoder (\textit{AVG}) is the simplest
 method and has the added benfit of being parameter free. 
-A sentence encoding is simply the average of its word embeddings: 
-$\operatorname{enc}(\sent) = \frac{1}{|\sent|} \sum_{\wemb \in \sent} \wemb$.
-\hal{probably better to write $\frac 1 {|s|} \sum_{i=1}^{|s|} w_i$ since set notation makes me wonder about words that appear more than once.}
+Under the averaging encoder, a sentence embedding 
+$\sentEmb = \frac{1}{\sentSize} \sum_{i=1}^{\sentSize} \wordEmb[i]$  
+is simply the average of its word embeddings.
+%
+%$\operatorname{enc}(\sent) = \frac{1}{|\sent|} \sum_{\wemb \in \sent} \wemb$.
+%\hal{probably better to write $\frac 1 {|s|} \sum_{i=1}^{|s|} w_i$ since set notation makes me wonder about words that appear more than once.}
 
-\paragraph{RNN Encoder} The \textit{RNN} sentence encoder uses the concatenation 
+\paragraph{RNN Encoder} The \textit{RNN} sentence encoder uses the 
+concatenation 
 of the
 final output states of a forward and backward RNN over the sentence's word
-embeddings. We use a Gated Recurrent Unit (GRU) \cite{cho} for the RNN cell,
+embeddings. We use a Gated Recurrent Unit (GRU)  
+for the RNN cell,
 since it has fewer parameters than the equivalent LSTM but with similar 
-performance. Formally, an \textit{RNN} sentence encoding is defined as
-$\operatorname{enc}(s) = [\rSentVec_{|\sent|}; \lSentVec_1]$
+performance \cite{chung2014empirical}. 
+Under the \textit{RNN} encoder, a sentence embedding is defined as
+$\sentEmb = [\rSentEmb[\sentSize]; \lSentEmb[1]]$
 where 
 \begin{align} 
-\rSentVec_i &= \rgru(w_i, \rSentVec_{i-1}) \\
-\lSentVec_i &= \lgru(w_i, \lSentVec_{i+1}) 
+  \rSentEmb[0] = \mathbf{0} &;\quad 
+       \rSentEmb[i] = \rgru(\wordEmb[i], \rSentEmb[i-1]) \\
+  \lSentEmb[\sentSize + 1] = \mathbf{0} &;\quad 
+       \lSentEmb[i] = \lgru(\wordEmb[i], \lSentEmb[i+1]),
+%\lSentVec_i &= \lgru(w_i, \lSentVec_{i+1}) 
 \end{align}
-for all $i \in 1, \ldots, |\sent|$. $\rgru$ amd $\lgru$ indicate the 
-forward and backward GRUs respectively, and each have separate learned 
+and $\rgru$ amd $\lgru$ indicate the 
+forward and backward GRUs respectively, each with separate 
 parameters.
-The initial states $\rSentVec_0$ and $\lSentVec_{\sentSize + 1}$ are not 
-learned and are set to zero vectors.
 
-\hal{
-  maybe you can make this more brief by saying sth like:
-  \begin{align}
-    \rSentVec_0 = \mathbf{0} &;\quad \rSentVec_{i+1} = \dots \\
-    \lSentVec_{|s|+1} = \mathbf{0} &;\quad \lSentVec_{i-1} = \dots
-  \end{align}
-  then you don't need to spe
-  }
+%\hal{
+%  maybe you can make this more brief by saying sth like:
+%  \begin{align}
+%    \rSentVec_0 = \mathbf{0} &;\quad \rSentVec_{i+1} = \dots \\
+%    \lSentVec_{|s|+1} = \mathbf{0} &;\quad \lSentVec_{i-1} = \dots
+%  \end{align}
+%  then you don't need to spe
+%  }
 
 \paragraph{CNN Encoder} The \textit{CNN} sentence encoder uses a series of 
 convolutional feature maps to encode each sentence. This encoder is similar
-to the convolutional architecture of \cite{kim} used for text classification
+to the convolutional architecture of \cite{kim2014convolutional} used for text
+classification
 tasks and performs a series of ``one-dimensional'' convolutions over 
 word embeddings. 
 The \textit{CNN} encoder has hyperparameters
@@ -63,21 +73,21 @@ associated with the window sizes $\maxWindowSize \subset \mathcal{N}$ of the con
 feature maps $\maxFeatureMaps$ associated with each filter
 (i.e. the output dimension of each 
 convolution). 
-The \textit{CNN} sentence encoding is computed as follows:
+The \textit{CNN} sentence embedding $\sentEmb$ is computed as follows:
 \begin{align}
  \specActivation_i &= \specConvBias 
     + \sum^\filterWindowSize_{j=1} \specConvWeight_j \cdot \wemb_{i + j -1}\\
   \specFeatureMap &= \max_{i\in 1,\dots, |\sent| - \filterWindowSize + 1} 
                       \relu\left(\specActivation_i\right) \\
- \senc(s) &= \left[\specFeatureMap | 
+ \sentEmb &= \left[\specFeatureMap | 
    \numFeatureMaps \in \{1, \ldots, \maxFeatureMaps\},
    \filterWindowSize \in \maxWindowSize
    \right]
 \end{align}
 where $\specConvBias\in\mathcal{R}$ and $\specConvWeight \in 
-\mathcal{R}^{\filterWindowSize \times \wembdim}$ are learned bias and filter
+\mathcal{R}^{\filterWindowSize \times \wordEmbSize}$ are learned bias and filter
 weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
-linear unit \cite{relu}.
+linear unit activation.
 
 
 

@@ -23,49 +23,85 @@
 %no such undertaking for the summarization task. 
 
 
+%\kathy{content selection is very different for generation than for summarization.
+%I think you need to initially say that content selection for generation is sentence
+%selection. Note that you could be criticized even here as some people may say that
+%summarization should be phrase selection (although it rarely is)}
+%\kathy{I have also reworded definition of content selection for NLG.}
 Content selection is an important sub-task in many natural language generation
-problems, i.e. given some context, determine which information
-needs to be expressed in output text \cite{gatt2018survey}. While it is a key component of 
+%problems, 
+tasks,
+where, given a generation goal, the system must determine which information
+%i.e. given some context, determine which information
+needs to be expressed in output text \cite{gatt2018survey}.
+In summarization, content selection usually is accomplished through sentence (and
+less frequently, phrase) extraction.
+ While it is a key component of both
 extractive and abstractive summarization systems, it is not generally well 
-understood, with frequency and information theortic measures used as proxies
+understood, with frequency and information theoretic measures used as proxies
 for content salience \cite{hong2014improving}. 
-
-
+%changed wording
 In this paper, we seek to better understand how deep learning models of 
-summarization are performing content selection across a variety of domains.
+%summarization are performing content selection across a variety of domains.
+summarization perform content selection across a variety of domains.
+%no new paragraph needed here
 We perform an analysis 
 of several recent sentence extractive neural network architectures, 
-looking particulary at the choice of sentence encoder and sentence 
-extractor design. 
+looking particularly at the choice of sentence encoder and sentence 
+extractor design. We compare these recent approaches  against
+a simpler approach based on averaging of word embeddings in order to understand
+the gains derived from more sophisticated architectures.
 
-Our experiments reveal several worrying obstacles for learning such models. 
-For instance, the sentence position bias dominates the learning signal in the 
-news domain; this can be corrected for by shuffling a document's sentence
-order but not without adverse effects on performance.
+\kathy{I would find it better to introduce approach here. I've added an
+extra sentence above. Because your experiments reveal the tidbits below by 
+contrasting past approaches with your simple approach which uses embedding
+averages}
 
-In our study of sentence encoder architectures, we find that word embedding
-averaging is as good or better than more sophisticated recurrent neural 
-network (RNN) and convolutional neural network (CNN) encoders.
-Additionally fixed pre-trained word embeddings are as good or better than 
-learned embeddings in the majority of cases. 
 
-We also propose two simple extractor methods that make sentence selection
-decisions independently in contrast to two previously published architectures
-where previous selection decisions inform future sentence selection probabilities. 
-Oddly we find that the independent predictions are as good as sequential 
-predictions.
+%\kathy{You use some strong words, one of which is ``worrying''. I think it
+%may be better toned down. After all, reviewers may be Lapata or Nallapati}
+%\kathy{Also, I think it should be pumchier with all learned things itemized.
+%For example:
+%~
+Our experiments reveal:
+\begin{itemize}
+\item sentence position bias dominates the learning signal for news though not for
+other genres. Summary content for news is only slightly degrded when content words
+are removed. 
+\item Word embedding averaging is as good or better than either RNN or CNN encoders.
+\item Pre-trained word embeddings are as good or better than learned embeddings in the majority of cases.
+\item Representation of previously selected summary content does not improve overall summary content. 
+\end{itemize} 
+%}
+%\kathy{Then I would cut next three paragraphs but leaven in the one starting ``Taken together''}
 
+%Our experiments reveal several worrying obstacles for learning such models. 
+%For instance, the sentence position bias dominates the learning signal in the 
+%news domain; this can be corrected for by shuffling a document's sentence
+%order but not without adverse effects on performance.
+%
+%In our study of sentence encoder architectures, we find that word embedding
+%averaging is as good or better than more sophisticated recurrent neural 
+%network (RNN) and convolutional neural network (CNN) encoders.
+%Additionally fixed pre-trained word embeddings are as good or better than 
+%learned embeddings in the majority of cases. 
+%
+%We also propose two simple extractor methods that make sentence selection
+%decisions independently in contrast to two previously published architectures
+%where previous selection decisions inform future sentence selection probabilities. 
+%Oddly we find that the independent predictions are as good as sequential 
+%predictions.
+
+
+%KM - Merged this paragraph with the next one.
 Taken together, these and other results in the paper suggest that we are 
 overestimating the ability of deep learning models to learn robust and 
 meaningful features for summarization. 
-
-
 %?impact of sentence position bias, the necessity
 %?of learning embeddings, the unreasonable effectiveness of averaging for 
 %?sentence embedding, and the cross domain generalizability of such models.
 %?Additionally, we propose two simpler models that are on average statistically
 %?indistinguishable from their more complex counterparts.
-
 While we are explicitly studying extractive summarization algorithms here,
 we think the findings will be relevant to the abstractive summarization 
 community as well. The encoder side architectures are quite similar to
@@ -73,24 +109,28 @@ typical abstractive models, and fundamentally the model objectives are
 the same, producing output text with high word overlap to a reference human
 abstract. 
 
+\kathy{I think the contributions have to be the results of the study and the actual extractors. I've reworded.You may want to add these contributions once the domain adaptation part done. }
 The contributions of this paper are the following:
 \begin{enumerate}
-    \item We perform an empirical study of extractive content selection in 
+    \item An empirical study of extractive content selection in 
         deep learning 
         algorithms for text summarization across news, personal narratives, 
          meetings, and
-         medical journal domains using both automatic and manual evaluation.
-    \item We propose two simple sentence extractor models whose performance is 
+         medical journal domains using both automatic and manual evaluation revealing ....
+
+    \item Two simple sentence extractor models whose performance is 
           on par 
           with more complex models.
 \end{enumerate}
-In the following sections we discuss 
-(Sec. ?) related work, 
-(Sec. ?) define the problem of extractive summarization, 
-(sec. ?) formulate our proposed ad baseline models,
-(Sec. ?) describe the datasets used for experiments,
-(Sec. ?) describe the experiments themselves, and conclude with 
-results and analysis (Sec. ?).
+
+%\kathy{This seems detailed and slightly awkward. Are section numbers needed?}
+%In the following sections we discuss 
+%(Sec. ?) related work, 
+%(Sec. ?) define the problem of extractive summarization, 
+%(sec. ?) formulate our proposed ad baseline models,
+%(Sec. ?) describe the datasets used for experiments,
+%(Sec. ?) describe the experiments themselves, and conclude with 
+%results and analysis (Sec. ?).
 
 
 %%% Local Variables:

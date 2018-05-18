@@ -1,45 +1,111 @@
 
 
-\textbf{Choice of Extractor} Our main comparison of extractors/encoders are shown in 
+The results of our main experiment compairing 
+the different extractors/encoders are shown in 
 Table~\ref{tab:results}.
-\textcolor{red}{Overall we find that the \modelTwoBF~extractor achieves the 
-best ROUGE scores on three out of four domains (STILL RUNNING ON AMI AND PUBMED). 
-However, most
-differences are not signficant. (Need to discuss stat sig and how to show it).}
-On the larger CNN-DailyMail dataset, especially, 
-differences are quite smail across all extractor/encoder pairs.
-The \baselineOneBF~extractor achieves the best performance on the DUC 2002
-dataset. It is disappointing that the \baselineOneBF~and \baselineTwoBF~based 
-models do not gain any apparent advantage in conditioning on previous 
-sentence selection decisions; this result suggests the need to improve
-the representation of the summary as it is being constructed iteratively.
+Overall, we find no major advantage when using the CNN and RNN sentence
+encoders. The best performing encoder/extractor pair uses the averaging 
+encoder (\textcolor{red}{4 out of 5 datasets}) or the differences 
+are not statistically significant. When only comparing within the 
+same extractor choice,  the averaging encoder is the better choice
+in 14 of 20 cases. 
 
-\textbf{Choice of Encoder} We also find there to be no major advantage 
-between the different sentence encoders. \textcolor{red}{In most cases,
-there is no statistical significance between the averaging encoder and either
-the RNN or CNN encoders.} 
+When looking at extractors, the Seq2Seq extractor is either part of 
+the best performing system (\textcolor{red}{2 out of 5} datasets) or is not 
+statistically distinguishable from the best extractor. 
 
-\input{tables/table_fixed_vs_learned.tex}
-\textbf{Learning Word Embeddings} Table~\ref{tab:embeddings} shows ROUGE recall
-when using fixed or updated word embeddings. \textcolor{red}{In almost all
-cases, fixed embeddings are as good or better than the learned embeddings.}
+Overall, on the news domain, the differences are quite small with the 
+differences between worst and best systems on the CNN/DM dataset 
+spanning only .56 of a ROUGE point. While there is more performance variability
+ in the non-news domains, there is less distinction among systems: all systems
+are statistically indistinguishable from the best system on Reddit
+and every extractor has at least one configuration that is indistinguishable
+from the best system on the AMI corpus.
+
+
+
+
+
+%?\textcolor{red}{Overall we find that the \modelTwoBF~extractor achieves the 
+%?best ROUGE scores on three out of four domains (STILL RUNNING ON AMI AND PUBMED). 
+%?However, most
+%?differences are not signficant. (Need to discuss stat sig and how to show it).}
+%?On the larger CNN-DailyMail dataset, especially, 
+%?differences are quite smail across all extractor/encoder pairs.
+%?The \baselineOneBF~extractor achieves the best performance on the DUC 2002
+%?dataset. It is disappointing that the \baselineOneBF~and \baselineTwoBF~based 
+%?models do not gain any apparent advantage in conditioning on previous 
+%?sentence selection decisions; this result suggests the need to improve
+%?the representation of the summary as it is being constructed iteratively.
+%?
+%?\textbf{Choice of Encoder} We also find there to be no major advantage 
+%?between the different sentence encoders. \textcolor{red}{In most cases,
+%?there is no statistical significance between the averaging encoder and either
+%?the RNN or CNN encoders.} 
+
+%The lack of differentiation amongst the different encoders concerning; one
+%would assume learning with the appropriate structure would be helpful.
+%The results of next 
+
+
+
+
+\paragraph{Word Embedding Learning}{
+
+Table~\ref{tab:embeddings} shows ROUGE recall
+when using fixed or updated word embeddings. 
+\textcolor{red}{In all but one case,
+fixed embeddings are as good or better than the learned embeddings.}
+This is a somewhat surprising finding, and suggests that our models
+cannot extract much generalizable learning signal from the content than what 
+is already present from initialization. 
+The AMI corpus is an exception here where learning does lead to small
+performance boosts, however, only in the Seq2Seq extractor is this diference 
+significant. The language of this corpus is quite different from the 
+data that the GloVe embeddings were trained on and so it makes sense 
+that  there would be more benefit to learning word representations; one
+explanation for only seeing modest improvements is purely the small size
+of the dataset \textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}.
+
+
+}
 
 \input{tables/table_pos_ablations.tex}
 
 \textbf{POS Ablation} Table~\ref{tab:ablations} shows the results of the POS
-tag ablation experiments. The newswire domain does not appear to be sensative
-to these ablations; this suggests that the models are still able to identify
-the lead section of the document with the remaining word classes \textcolor{red}{(Verify this with histogram analysis)}. 
-The Reddit domain, which is not lead biased, is significantly effected.
-Notably, removing adjectives and adverbs results in a 1.8 point drop 
-in ROUGE-2 recall. 
+tag ablation experiments. 
+While removing any word class from the representation generally hurts 
+performance (with statistical significance) on the news domains,
+the absolute values of the differences are quite small 
+(.18 on CNN/DM, .41 on NYT, .3 on DUC) suggesting that the model's predictions
+are not overly dependent on any particular word types. 
+On the non-news datasets, the ablations have a larger effect 
+(max differences are 1.89 on Reddit, 2.56 on AMI).
+Removing the content words leads to the largest drop on AMI.
+Removing adjectives and adverbs leads to the largest drop on Reddit,
+suggesting the intensifiers and descriptive words are useful for 
+identifying important content in personal narratives.
+Curiously, 
+removing the miscelaneous POS class yields a significant improvement
+on DUC 2002 and AMI.
+
+
+%The newswire domain does not appear to be sensative
+%to these ablations; this suggests that the models are still able to identify
+%the lead section of the document with the remaining word classes \textcolor{red}{(Verify this with histogram analysis)}. 
+%The Reddit domain, which is not lead biased, is significantly effected.
+%Notably, removing adjectives and adverbs results in a 1.8 point drop 
+%in ROUGE-2 recall. 
 
 \input{tables/table_inorder_vs_shuffled.tex}
-\textbf{Sentence Shuffling} We find a similar result on the sentence order
-shuffling experiments. Table~\ref{tab:shuffle} shows the results. 
+\textbf{Document Shuffling} Table~\ref{tab:shuffle} shows the results
+of our shuffling experiments. 
 The newswire domain suffer a significant drop in performance 
 when the document order is shuffled. \textcolor{red}{By comparison, there is no significant difference between the shuffled and in-order models on 
-the Reddit domain.} 
+the Reddit domain, and actually improves performance on the AMI}.
+
+
+
 
 
 \input{tables/table_cross_domain.tex}

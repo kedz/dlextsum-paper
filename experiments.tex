@@ -1,36 +1,97 @@
-\hal{use paragraph instead of textbf for things like the below}
 
-\textbf{Extractor/Encoder} In our main experiment we compare our proposed \hal{i used xpsace to make these space properly}
-sentence extractors \modelOneBF
-and \modelTwoBF against the \baselineOneBF and \baselineTwoBF extractors.
-We test all possible sentence extractor/encoder pairs across the CNN-DailyMail,
-New York Times, DUC 2002, Reddit, AMI, and PubMed domains. We choose ROUGE-2
-recall as our main evaluation metric since it has the strongest correlation
-to human content selection decisions. In this we experiment we initialize
-the word embeddings using pretrained GloVe embeddings \cite{glove} and do 
-not update them during training.
+We train all models to minimize the weighted negative log likelihood
+\[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
+\operatorname{enc}(\sent)\right)\]
+over the training data $\mathcal{D}$
+using stochastic gradient descent with the ADAM optimizer 
+\cite{kingma2014adam}. The term 
+\[ \omega(y_i)=\begin{cases}
+\frac{\sum_{y_j} \mathbbm{1}\{y_j = 0 \}}{ \sum_{y_j} \mathbbm{1}\{y_j = 1 \}  } & \textrm{if $y_i=1$} \\ 1 & \textrm{otherwise}  \end{cases} \] 
+        upweights
+    positive examples proportionally to the ratio of negative to positive
+    examples in the training data in order to compensate for the sparsity
+    of the positive class.
+    We use a learning rate of .0001 and a dropout rate of .25 for all dropout
+    layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$). 
+    We train for a maximum of 30 epochs and the best
+    model is selected with early stopping on the validation set according
+    to ROUGE-2 recall. All experiments are repeated with five random
+    initializations. Weight matrix parameters are initialized using 
+    Xavier initialization with the normal distribution 
+    \cite{glorot2010understanding} and bias terms are set to 0.
+    Unless specified, word embeddings are initialized 
+    using pretrained GloVe embeddings \cite{pennington2014glove} and we do 
+    not update them during training. Unknown words are mapped to a zero 
+    embedding.
+    We use a batch size of 32 for all datasets except AMI and PubMed for
+    which we use sizes two and four respectively. 
+    For the Cheng \& Lapata model, we train for half of the maximum epochs 
+    with teacher forcing, i.e. we set $p_i = 1$
+    if $y_i = 1$ in the gold data and 0 otherwise 
+    when computing the decoder input 
+    $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
+    during the second half training.
+
+\subsection{Ground Truth Extract Summaries} 
+Since we do not typically have ground truth extract summaries from which to
+create the labels $\slabel_i$, we construct gold label sequences 
+by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
+\null \emptyset$, we add the sentence $\hat{\sent} = 
+{\argmax}_{ \sent \in \{\sent_1, \ldots, \sent_{\docsize}\},
+\; \sent \notin \summary} \operatorname{ROUGE-1}(\summary \cup \sent)$
+to $\summary$ stopping when the ROUGE-1 score no longer increases or the 
+length budget is reached. We choose to optimize for ROUGE-1 rather than 
+ROUGE-2 similarly to other optimization based approaches to summarization 
+\textcolor{red}{
+\cite{durrett2016learning,sipos2012large,nallapati2017summarunner} which found this
+be the easier optimization target.}
+
+
+
+
+
+
+
+\paragraph{Extractor/Encoder Comparions}{
+In our main experiment, we compare our proposed 
+sentence extractors, RNN and Seq2Seq,
+to those of Cheng \& Lapata and SummaRunner.
+We test all possible sentence extractor/encoder pairs across all the datasets
+described in Section~\ref{sec:datasets}.} 
+%We choose ROUGE-2
+%recall as our main evaluation metric since it has the strongest correlation
+%to human content selection decisions.
+
 
 In most cases, the averaging encoder performance was as good or better than
 the RNN and CNN encoders, we use only the averaging encoder for the remainder
 of the experiments.
 
-\textbf{Word Embedding Learning} To futher understand how word 
+\paragraph{Word Embedding Learning}{To futher understand how word 
 embeddings 
 can
 effect model performance we also compared extractors when embeddings 
 are updated during training. Both fixed and learned embedding variants are 
 initialized with GloVe embeddings. When learning embeddings, words occurring 
-three or fewer times in the training data are mapped to an \textit{unkown}
-token.
+three or fewer times in the training data are mapped to a learned unkown
+token.}
 
-\textbf{POS Tag Ablation} Additionally, we ran ablation experiments
-using part-of-speech (POS) tags. We experimented with selectively removing 
-nouns, verbs, adjectives/adverbs, numerical expressions, and miscellaneous
-tags (anything that was not in the previously mentioned groups) from each sentece. The embeddings of removed words were replaced with a zero vector,
-preserving the order and position of the non-ablated words in the sentence.
+\paragraph{POS Tag Ablation}{Additionally, we ran ablation experiments
+using part-of-speech (POS) tags. 
 All datasets were automatically tagged using
-the SpaCy POS tagger \cite{spacy}.   
-
+the SpaCy POS tagger \footnote{https://github.com/explosion/spaCy}.   
+We experimented with selectively removing 
+\begin{itemize}
+    \item nouns (NOUN and PROPN tags), 
+    \item verbs (VERB, PART, and AUX tags), 
+    \item adjectives/adverbs (ADJ and ADV tags), 
+    \item numerical expressions (NUM and SYM tags), and 
+    \item miscellaneous words (ADP, CONJ, CCONJ, DET, INTJ, and SCONJ tags)
+\end{itemize}
+from each sentece. 
+The embeddings of removed words were replaced with a zero vector,
+preserving the order and position of the non-ablated words in the sentence.
+}
 
 \textbf{Document Shuffling} In examining the outputs of the models, we found
 most of the selected sentences in the news domain came from the lead paragraph
@@ -43,53 +104,9 @@ each document's sentences are randomly shuffled during training. We then
 evaluate each model performance on the unshuffled test data, comparing to 
 the original unshuffled models. 
 
-\textbf{Cross Domain Experiments}
-
-TODO
-
-Try shuffled and no shuffled models trained on one domain, eval the remaining.
-
-
-
-
-
 %We are also interested in the effect of lead bias. It is well known that the first few sentences of a news article, often referred to as the lead, make a good summary, and this is most commonly used as the default baseline in single document summarization. This lead bias is such a strong learning signal that the learned models almost always extract sentences from the lead despite the ground truth labeling containing a significant portion of positive labels later in the document. This begs the question, are we learning a robust model of sentence salience or simply identifying linguistic style features that are indicative of the lead?
 
 %To better understand this phenomenon, 
-
-
-
-
-
-\subsection{Model Training Details}
-
-TODO: Clean up, expand, make naming consistent!
-
-We train the average pooling, biRNN, and CNN encoders with the biRNN, 
-seq2seq, SummaRunner, and C\&L decoders. We repeat experiments across the 
-CNN-DailyMail, New York Times, DUC, Reddit, and AMI corpus. 
-We use the Adam optimizer for all models with a learning rate of .0001, 
-gradient clipping, and dropout rate of .25. 
-For the C\&L model, we train for half of the maximum epochs with teacher 
-forcing, i.e. we use the gold extractive labels for each when taking the sum 
-of previous states (p(y|x)h = 1 If y = 1) during the first half of training 
-and the model value during the second. We use early stopping on the validation
-set with ROUGE2 as our evaluation criteria. All experiments are run with 5 
-different random initialization seeds and results are averaged.
-
-Since we do not typically have ground truth extract summaries from which to
-create the labels $\slabel_i$, we construct gold label sequences for training
-by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
-\null \emptyset$, we add the sentence $\hat{\sent} = 
-{\argmax}_{ \sent \in \{\sent_1, \ldots, \sent_{\docsize}\},
-\; \sent \notin \summary} \operatorname{ROUGE-1}(\summary \cup \sent)$
-to $\summary$ stopping when the ROUGE-1 score no longer increases or the 
-length budget is reached. We choose to optimize for ROUGE-1 rather than 
-ROUGE-2 similarly to other optimization based approaches to summarization 
-\textcolor{red}{
-\cite{durrett2016learning,sipos2012large,nallapati2017summarunner} which found this
-be the easier optimization target.}
-
 
 
 

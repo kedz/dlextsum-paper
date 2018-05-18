@@ -1,39 +1,39 @@
 We perform our experiments across six corpora from varying domains to 
 understand how different biases with each domain can effect content 
 selection. The corpora come from the news domain
-(CNN-DM, NYT, DUC), personal narratives domain (Reddit),
+(CNN-DailyMail, New York Times, DUC), personal narratives domain (Reddit),
 workplace meetings (AMI), and medical journal articles (PubMed).
 
-\textbf{CNN-DailyMail} The CNN-DailyMail (CNN-DM) corpus was first used 
-for the summarization task by \cite{cl}, when it was noted that the bulleted
-highlights associated with each article could serve as a document summary.
-We use the preprocessing and training, validation and test splits
-of \cite{see} yielding ?/?/? documents respectively, each with one reference
+\paragraph{CNN-DailyMail} We use the preprocessing and training, validation, 
+and test splits
+of \cite{see2017get} yielding 287,113/13,368/11,490 documents respectively, each with one reference
 abstract. This corpus is a mix of news on different topics including politics,
 sports, and celebrity news.
 
-\textbf{New York Times} The New York Times (NYT) corpus \cite{nyt} contains
+\paragraph{New York Times}{The New York Times (NYT) corpus \cite{sandhaus2008new} contains
  two types of abstracts for a subset of its articles. The first summary is
 an abstract \textcolor{red}{produced by an archival librarian} and the 
 second is an online teaser meant to elicit a viewer on the webpage to
 click to read more. From this collection we take all articles that have 
 a combined summary length of at least 100 words. This collection
-includes both hard newswire as well as opinion and long-form journalism.
-We create training, validation, test splits by partitioning on dates
-yield ?/?/? documents.
+includes both straight newswire as well as opinion and long-form journalism.
+We create training, validation, test splits by partitioning on dates;
+we use the year 2005 as the validation data, with training and test partitions
+including documents before and after 2005 respectively,
+yielding 44,382/5,523/6,495 documents.}
 
 \paragraph{DUC}{We use the single document summarization data from the 2001
 and 2002
-Document Understanding Conferences (DUC). We split the 2001 data into training
-and validation splits and reserve the 2002 data for tesing, resulting in
-?/?/? documents for training, validation, and test respectively. 
+Document Understanding Conferences (DUC) \cite{over2002introduction}. We split the 2001 data into training
+and validation splits and reserve the 2002 data for testing, resulting in
+516/91/657 documents for training, validation, and test respectively. 
 The test set has two or three human abstracts rougly 100 words in length per 
 articles.}
 
-\paragraph{AMI}{The AMI corpus \cite{ami} 
+\paragraph{AMI}{The AMI corpus \cite{carletta2005ami} 
 is collection real and staged office meetings
 annotated with text transcriptions, along with abstractive
-summaries. We use the proscribed splits to get ?/?/? training, validation,
+summaries. We use the proscribed splits to get 98/19/20 training, validation,
 and test examples with one human abstract summary per meeting. 
 We ignore any speaker information since we are primarily
 interested in studying content selection in a domain agnostic way.
@@ -41,12 +41,23 @@ The summaries are about 290 words long on average and so we target this length
 for summary generation.
 }
 
-\paragraph{Reddit}{\cite{jessica} collected a corpus a personal stories shared
- on Reddit\footnote{\url{www.reddit.com}}.
+\paragraph{Reddit}{\cite{ouyang2017crowd} collected a corpus a personal 
+    stories shared
+ on Reddit\footnote{\url{www.reddit.com}} along with multiple extractive 
+ and abstractive summaries. These stories are relatively short compared
+ to the other corpora with an average sentence length of ??. 
+ We created our own train, validation, and test splits resulting in 
+404/24/48 documents respectively. 
+}
 
-We use a collection of personal stories paired 
-with multiple abstractive and extractive summaries. As in \cite{jessica}
+\paragraph{PubMed}{We created a corpus of 25,000 randomly samples 
+    medical journal articles from the PubMed Open Access 
+    Subset\footnote{\url{https://www.ncbi.nlm.nih.gov/pmc/tools/openftlist/}}.
+    We only included articles if they were at least 1000 words long and 
+    had an abstract of at least 50 words in length.
+    We used 21250/1250/2500 document for training, validation, test 
+    respectively. 
+We used the article abstracts as the ground truth human summaries.}
 
-reddit \\
-pubmed \\
+
 
