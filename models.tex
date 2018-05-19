@@ -1,6 +1,8 @@
 %\hal{i'm having a hard time understanding what's new and what's prior work here.}
 
 \kathy{This section feels very long. Do you think all the formulas are needed? They take up a lot of space. Would be good for Hal and Chris H to see this comment.}
+\hal{agree. this section is about 3 pages long. i would suggest moving low-level details to an appendix which can be submitted as supplemental. i've added toappendix.sty to make this easy. i've given an example usage in the RNN encoder section which i think you can use throughout. i also added a makefile that will split the paper into main and supllemental}
+
 For a typical deep learning model of extractive 
 summarization there are two main design decisions:
 %At a high level, all the models considered in this paper share the same two part structure: 
@@ -26,6 +28,7 @@ CNNs.
 We also propose two simple models for the sentence extractor and compare
 to the previously proposed extractors of 
 \citet{cheng2016neural} and \citet{nallapati2017summarunner}.
+\hal{i think it's still confusing what's new and what's not. maybe you can somewhat mark? like things with $\star$ are new and ones without are old or something?}
 The prior works differ significantly but make the same semi-Markovian
 factorization of the extraction decisions, i.e. 
 $p(\slabel|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\slabel[<i],\sentEmb)$,
@@ -39,7 +42,7 @@ we later show, this is not the case empirically.
 
 
 
-
+\hal{i think you might need a subsection at the end of this section with oen or two paragraphs of compare/contrast the different models, esp if details are going to appendix}
 
 
 %Depending on the architectural choices of each component we propose we 

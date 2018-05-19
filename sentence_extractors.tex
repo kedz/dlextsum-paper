@@ -39,7 +39,7 @@ four sentence extractor architectures.
 %$\compactLikelihood = \markovLikelihood$, at the expense of greater 
 %computational complexity. 
 
-\paragraph{RNN Extractor}{
+\paragraph{RNN Extractor}
     Our first proposed model is a very simple bidirectional
 RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
 The  forward and backward outputs of each sentence are passed through a 
@@ -55,6 +55,8 @@ of extracting each sentence:
 where $\rgru$ and $\lgru$ indicate the 
 forward and backward GRUs respectively, and each have separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+
+\hal{use paragraph not textbf}
 
 \textbf{\sts~Extractor} One shortcoming of the RNN extractor is that long range
 information from one end of the document may not easily be able to effect 

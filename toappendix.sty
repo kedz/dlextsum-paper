@@ -1,0 +1,22 @@
+
+\makeatletter
+\newwrite\appendix@out
+\immediate\openout\appendix@out\jobname.adx
+
+\newcommand\toappendix{\obeylines\expandafter\toappendixArg\noexpand}
+
+\newcommand\toappendixArg{
+    \begingroup
+        \@bsphack%
+        \let\do\@makeother\dospecials%
+        \catcode`\^^M\active%
+        \def\verbatim@processline{%
+            \immediate\write\appendix@out{\the\verbatim@line}}%
+        \verbatim@start}
+
+\def\endtoappendix{\endgroup}
+\let\oldAppendix\appendix
+\def\appendix{\immediate\closeout\appendix@out\@esphack\oldAppendix}
+\def\makeappendix{\input{\jobname.adx}}
+
+\makeatother
