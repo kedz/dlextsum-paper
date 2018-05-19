@@ -9,6 +9,19 @@ encoder (\textcolor{red}{4 out of 5 datasets}) or the differences
 are not statistically significant. When only comparing within the 
 same extractor choice,  the averaging encoder is the better choice
 in 14 of 20 cases. 
+\hal{i wonder if it would be worth adding another ``average performance metric'' column to \autoref{tab:results}.
+  i'm thinking have ``Average $\Delta$-Best'' meaning how far (on average across the datasets) is this setting from the best setting available on that dataset.
+  so since the best numbers are: 25.56, 35.85, 23.11, 13.65, 5.63
+  and the first row numbers are: 25.42, 34.67, 22.65, 11.37, 5.50
+  then the deltas are:            0.14,  1.18,  0.46,  2.28, 0.13
+  the the average delta is 0.84 (assuming my math is right)
+  there's an argument to do multiplicative, in which case
+  the multipliers for first row:  0.99,  0.97,  0.98,  0.83, 0.97
+  and the average is 0.95
+  either way this gives a quick way to make comparisons between rows. you could do the same for the other tables too.}
+
+  \hal{in some of the tables you list R-2 as headers even though all the numbers are R-2. just put that in the caption.}
+
 
 When looking at extractors, the Seq2Seq extractor is either part of 
 the best performing system (\textcolor{red}{2 out of 5} datasets) or is not 
@@ -20,7 +33,7 @@ spanning only .56 of a ROUGE point. While there is more performance variability
  in the non-news domains, there is less distinction among systems: all systems
 are statistically indistinguishable from the best system on Reddit
 and every extractor has at least one configuration that is indistinguishable
-from the best system on the AMI corpus.
+from the best system on the AMI corpus.\hal{this is probably at least partially because of test set size. maybe mention this.}
 
 
 
@@ -56,7 +69,7 @@ Table~\ref{tab:embeddings} shows ROUGE recall
 when using fixed or updated word embeddings. 
 \textcolor{red}{In all but one case,
 fixed embeddings are as good or better than the learned embeddings.}
-This is a somewhat surprising finding, and suggests that our models
+This is a somewhat surprising finding, and suggests that our models\hal{why is it surprising?}
 cannot extract much generalizable learning signal from the content than what 
 is already present from initialization. 
 The AMI corpus is an exception here where learning does lead to small
@@ -65,7 +78,7 @@ significant. The language of this corpus is quite different from the
 data that the GloVe embeddings were trained on and so it makes sense 
 that  there would be more benefit to learning word representations; one
 explanation for only seeing modest improvements is purely the small size
-of the dataset \textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}.
+of the dataset \textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}. \hal{yes, the dataset size is certainly an issue here. probably worth pointing this out. also when you learned the embeddings, did you initialize to pretrained embeddings? did you regularize toward them?}
 
 
 }
@@ -73,14 +86,14 @@ of the dataset \textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)
 \input{tables/table_pos_ablations.tex}
 
 \textbf{POS Ablation} Table~\ref{tab:ablations} shows the results of the POS
-tag ablation experiments. 
-While removing any word class from the representation generally hurts 
+tag ablation experiments. \hal{i'd label the rows as ``all words'' and then ``- nouns'', ``- verbs'', etc. also use paragraph not textbf :P.}
+While removing any word class from the representation generally hurts \hal{is this removed at train and test or just test?}
 performance (with statistical significance) on the news domains,
 the absolute values of the differences are quite small 
 (.18 on CNN/DM, .41 on NYT, .3 on DUC) suggesting that the model's predictions
-are not overly dependent on any particular word types. 
+are not overly dependent on any particular word types.\hal{i'm not sure i agree. if it's significant it's significant, no?} 
 On the non-news datasets, the ablations have a larger effect 
-(max differences are 1.89 on Reddit, 2.56 on AMI).
+(max differences are 1.89 on Reddit, 2.56 on AMI). \hal{if you're mentioning absolute differences here i'd do that in the tables too}
 Removing the content words leads to the largest drop on AMI.
 Removing adjectives and adverbs leads to the largest drop on Reddit,
 suggesting the intensifiers and descriptive words are useful for 
@@ -102,10 +115,15 @@ on DUC 2002 and AMI.
 of our shuffling experiments. 
 The newswire domain suffer a significant drop in performance 
 when the document order is shuffled. \textcolor{red}{By comparison, there is no significant difference between the shuffled and in-order models on 
-the Reddit domain, and shuffling actually improves performance on the AMI}.
+the Reddit domain, and shuffling actually improves performance on the AMI}.\hal{what about in the cross-domain setting?}
 
 
 
 
 
 \input{tables/table_cross_domain.tex}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:
