@@ -34,45 +34,46 @@ tasks,
 where, given a generation goal, the system must determine which information
 %i.e. given some context, determine which information
 needs to be expressed in output text \cite{gatt2018survey}.
-In summarization, content selection usually is accomplished through sentence (and
+In summarization, content selection usually is accomplished through sentence (and,
 less frequently, phrase) extraction.
  While it is a key component of both
 extractive and abstractive summarization systems, it is not generally well 
-understood, with frequency and information theoretic measures used as proxies
+understood, \hal{well understood as a task or in specific models?} with frequency and information theoretic measures used as proxies
 for content salience \cite{hong2014improving}. 
 %changed wording
+
 In this paper, we seek to better understand how deep learning models of 
 %summarization are performing content selection across a variety of domains.
 summarization perform content selection across a variety of domains.
 %no new paragraph needed here
 We perform an analysis 
 of several recent sentence extractive neural network architectures, 
-looking particularly at the choice of sentence encoder and sentence 
-extractor design. We compare these recent approaches  against
+specifically considering the design choices for sentence encoders and 
+extractors. We compare these architectures against
 a simpler approach based on averaging of word embeddings in order to understand
 the gains derived from more sophisticated architectures.
-
+%
 %\kathy{I would find it better to introduce approach here. I've added an
 %extra sentence above. Because your experiments reveal the tidbits below by 
 %contrasting past approaches with your simple approach which uses embedding
 %averages}
-
-
+%
+%
 %\kathy{You use some strong words, one of which is ``worrying''. I think it
 %may be better toned down. After all, reviewers may be Lapata or Nallapati}
 %\kathy{Also, I think it should be pumchier with all learned things itemized.
 %For example:
 %~
 %KM2: Minor changes below
-Our experiments reveal:
-\begin{itemize}
-\item Sentence position bias dominates the learning signal for news though not for
-other genres. Summary content for news is only slightly degrded when content words
+Our main results reveal:
+\begin{enumerate}
+\item Sentence position bias dominates the learning signal for news summarization, though not for
+other genres\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. Summary content for news is only slightly degraded when content words
 are removed. 
-\item Word embedding averaging is as good or better than either Recurrent Neural Net (RNN) or Convolutional Neural Net (CNN) encoders.
-\item Pre-trained word embeddings are as good or better than learned embeddings in the majority of cases.
-\item Representation of previously selected summary content does not improve overall summary content. 
-\end{itemize} 
+\item Word embedding averaging is as good or better than either Recurrent Neural Net (RNN) or Convolutional Neural Net (CNN) encoders.\hal{across all domains?}
+\item Pre-trained word embeddings are as good, or better than, learned embeddings in most cases.
+\item Representation of previously selected summary content does not improve overall summary content. \hal{i think this one might be hard to parse for non-experts. maybe ``explicitly reprsenting prev...''}
+\end{enumerate} 
 %}
 %\kathy{Then I would cut next three paragraphs but leaven in the one starting ``Taken together''}
 
@@ -103,15 +104,17 @@ meaningful features for summarization.
 %?sentence embedding, and the cross domain generalizability of such models.
 %?Additionally, we propose two simpler models that are on average statistically
 %?indistinguishable from their more complex counterparts.
-While we are explicitly studying extractive summarization algorithms here,
-we think the findings will be relevant to the abstractive summarization 
-community as well. The encoder side architectures are quite similar to
-typical abstractive models, and fundamentally the model objectives are 
-the same, producing output text with high word overlap to a reference human
-abstract. 
+
+In this paper, we concentrate on sentence extraction approaches to summarization,
+but believe that our findings are relevant to the abstractive summarization approaches as well.
+The objective criteria for abstractive and extractive summarization and the the same:
+produce output text with high word overlap to a reference human abstract. 
+Moreover, most neural network-based abstractive summarization techniques are architecturally quite similar to
+the extractive models we consider.
 
 %\kathy{I think the contributions have to be the results of the study and the actual extractors. I've reworded.You may want to add these contributions once the domain adaptation part done. }
 \kathy{I'm not sure these contributions are needed. Others should weigh in here.}
+\hal{agreed. i think the first is already covered in the list above, and the second can probably be worked in to the second paragraph.}
 The contributions of this paper are the following:
 \begin{enumerate}
     \item An empirical study of extractive content selection in 

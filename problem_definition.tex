@@ -13,22 +13,24 @@ Typically, we impose a budget on the length of the summary in either
 words or bytes. In this work, we focus on \textit{sentence} extractive 
 summarization, 
 where the basic unit of extraction is a sentence.
+\hal{and impose a word limit as the budget, or something}
 
 We evaluate summary quality using ROUGE \cite{lin2004rouge} 
-which measures the ngram
-overlap of our predicted extract summary with one or more human abstracts.
-We use ROUGE-2 recall (i.e. bigram recall) as our main evaluation metric 
-(ROUGE-1 and ROUGE-LCS trend similarity to ROUGE-2 in our experiments).
-We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014}
-which measures precision and recall of reference words, while allowing for
+which measures the n-gram
+overlap of a hypothesis summary with one or more human gold-standard summaries.
+We use ROUGE-2 recall (i.e. bigram recall) as our main evaluation metric;
+ROUGE-1 (unigram recall) and ROUGE-LCS (longest common substring) trend similarity to ROUGE-2 in our experiments.
+We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
+which measures precision and recall of reference words, allowing for
 more complicated word matchings (e.g. via synonymy or morphology).
 
-In this paper, we model this task as a sequence tagging problem, 
-i.e. given a document containing $\docsize$ sentences $\sent_1, \ldots, 
-\sent_{\docsize}$ we want to predict a corresponding label sequence $\slabel_1,
-\ldots, \slabel_{\docsize} \in \{0, 1\}^{\docsize}$ where $\slabel_i = 1$ 
+In this paper, we model sentence extraction task as a sequence tagging problem, following \cite{} \hal{need cites here}.
+Specifically, given a document containing $\docsize$ sentences $\sent_1, \ldots, 
+\sent_{\docsize}$ we generate a summary by predict a corresponding label sequence $\slabel_1,
+\ldots, \slabel_{\docsize} \in \{0, 1\}^{\docsize}$, where $\slabel_i = 1$ 
 indicates the $i$-th sentence is to be included in the summary.
-
+The word budget enforces a constraint that \hal{fill in}.
+\hal{maybe introduce some more notation here, like $s$ is a sequence of $w$s, etc. i think that might be all you need.}
 
 %%% Local Variables:
 %%% mode: latex
