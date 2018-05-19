@@ -2,13 +2,13 @@ We perform our experiments across six corpora from varying domains to
 understand how different biases within each domain can affect content 
 selection. The corpora come from the news domain
 (CNN-DailyMail, New York Times, DUC), personal narratives domain (Reddit),
-workplace meetings (AMI), and medical journal articles (PubMed).
+workplace meetings (AMI), and medical journal articles (PubMed).\hal{orphan}
 
 \paragraph{CNN-DailyMail} We use the preprocessing and training, validation, 
 and test splits
 of \cite{see2017get} yielding 287,113/13,368/11,490 documents respectively, each with one reference
 abstract. This corpus is a mix of news on different topics including politics,
-sports, and celebrity news.
+sports, and celebrity news.\hal{=entertainment?}
 
 \paragraph{New York Times}{The New York Times (NYT) corpus \cite{sandhaus2008new} contains
 \kathy{Not sure why you have this in red? Assume it won't stay in red for the final version?}
@@ -16,12 +16,12 @@ sports, and celebrity news.
 an abstract \textcolor{red}{produced by an archival librarian} and the 
 second is an online teaser meant to elicit a viewer on the webpage to
 click to read more. From this collection we take all articles that have 
-a combined summary length of at least 100 words. This collection
+a combined summary length of at least 100 words\hal{i'm not sure what you mean here. are you concatenating the two summaries? if so, say so. is that a little weird tho?}. This collection
 includes both straight newswire as well as opinion and long-form journalism.
 We create training, validation, and test splits by partitioning on dates;
 we use the year 2005 as the validation data, with training and test partitions
 including documents before and after 2005 respectively,
-yielding 44,382/5,523/6,495 documents.}
+yielding $44,382$ training, $5,523$ validation, and $6,495$ test documents.}
 
 \paragraph{DUC}{We use the single document summarization data from the 2001
 and 2002
@@ -34,12 +34,12 @@ articles.}
 \paragraph{AMI}{The AMI corpus \cite{carletta2005ami} 
 is collection of real and staged office meetings
 annotated with text transcriptions, along with abstractive
-summaries. We use the proscribed splits to get 98/19/20 training, validation,
+summaries. We use the proscribed\hal{hehehe i think you mean prescribed :P} splits to get 98/19/20 training, validation,
 and test examples with one human abstract summary per meeting. 
 We ignore any speaker information since we are primarily
 interested in studying content selection in a domain agnostic way.
 The summaries are about 290 words long on average and so we target this length
-for summary generation.
+for summary generation. \hal{a) you don't need braces around paragraph text. b) this is the only place you mention task stuff rather than dataset stuff. mabye move target length information to the experiments section?}
 }
 
 \paragraph{Reddit}{\citet{ouyang2017crowd} collected a corpus of personal 
@@ -60,6 +60,12 @@ for summary generation.
     We used 21250/1250/2500 document for training, validation, test 
     respectively. 
 We used the article abstracts as the ground truth human summaries.}
+\hal{maybe mention this in the intro with a footnote about data release? we've recently used statements like the following in a footnote:
+  \textbf{Code and data release:} Upon publication, all code and pre-processing scripts will be released under an MIT (or more liberal) license; all data will be made available after publication when allowed by original licenses.}
 
 
 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "dlextsum.emnlp18"
+%%% End:

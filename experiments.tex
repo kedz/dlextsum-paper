@@ -3,7 +3,8 @@ We train all models to minimize the weighted negative log likelihood
 \[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
 \operatorname{enc}(\sent)\right)\]
 over the training data $\mathcal{D}$
-using stochastic gradient descent with the ADAM optimizer 
+using stochastic gradient descent with the ADAM optimizer
+\hal{maybe just say $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of examples with label $y$.}
 \cite{kingma2014adam}. The term 
 \[ \omega(y_i)=\begin{cases}
 \frac{\sum_{y_j} \mathbbm{1}\{y_j = 0 \}}{ \sum_{y_j} \mathbbm{1}\{y_j = 1 \}  } & \textrm{if $y_i=1$} \\ 1 & \textrm{otherwise}  \end{cases} \] 
@@ -34,7 +35,8 @@ using stochastic gradient descent with the ADAM optimizer
     $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
     during the second half training.
 
-\subsection{Ground Truth Extract Summaries} 
+\subsection{Ground Truth Extract Summaries}
+    \hal{i feel like this should go before the optimizer dtails}
 Since we do not typically have ground truth extract summaries from which to
 create the labels $\slabel_i$, we construct gold label sequences 
 by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
@@ -49,7 +51,7 @@ ROUGE-2 similarly to other optimization based approaches to summarization
 be the easier optimization target.}
 
 
-
+\hal{do you say anywhere how you do significance testing and what significance level you use?}
 
 
 
@@ -65,6 +67,7 @@ described in Section~\ref{sec:datasets}.}
 %to human content selection decisions.
 
 \kathy{Save all results for results section. I deleted your sentence.}
+\hal{i agree with kathy. put all the results together. be specific about what questions you're asking and then how you framed them as an experiment and then what the answer is. i think i'd just remove all this stuff here.}
 %In most cases, the averaging encoder performance was as good or better than
 %the RNN and CNN encoders, we use only the averaging encoder for the remainder
 %of the experiments.
