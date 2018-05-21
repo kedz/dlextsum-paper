@@ -45,7 +45,10 @@ RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
 The  forward and backward outputs of each sentence are passed through a 
 multi-layer perceptron with a logsitic sigmoid output (denoted by $\sigma$)
 to predict the probability
-of extracting each sentence:
+of extracting each sentence. See details in \autoref{app:rnnextractor}
+
+\begin{toappendix}
+\section{Details on RNN Extractor.} \label{app:rnnextractor}
 \begin{align}
     \rExtHidden_0 = \mathbf{0};&\quad   \rExtHidden_i = \rgru(\sentEmb[i], \rExtHidden_{i-1}) \\
     \lExtHidden_{\docSize + 1} = \mathbf{0};&\quad    \lExtHidden_i = \lgru(\sentEmb[i], \lExtHidden_{i+1}) \\
@@ -55,10 +58,9 @@ of extracting each sentence:
 where $\rgru$ and $\lgru$ indicate the 
 forward and backward GRUs respectively, and each have separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+\end{toappendix}
 
-\hal{use paragraph not textbf}
-
-\textbf{\sts~Extractor} One shortcoming of the RNN extractor is that long range
+\paragraph{\sts~Extractor} One shortcoming of the RNN extractor is that long range
 information from one end of the document may not easily be able to effect 
 extraction probabilities of sentences at the other end. 
 Our second proposed model, the \sts~extractor mitigates this problem with an 
@@ -71,7 +73,9 @@ encoded by a bidirectional $\gru$. A separate decoder $\gru$ transforms each
 sentence into a query vector which attends to the encoder output. The
 attention weighted encoder output and the decoder $\gru$ output are concatenated
 and fed into a multi-layer percepron to compute the extraction probability.
-Formally we have:
+Detail in \autoref{app:s2sextractor}.
+\begin{toappendix}
+\section{Details on Seq2Seq Extractor.} \label{app:s2sextractor}
 \begin{align}
     \rEncExtHidden_0 = \textbf{0}&;\quad \rEncExtHidden_i = \rgru_{enc}(\sentEmb[i], \rEncExtHidden_{i-1}) \\
     \lEncExtHidden_{\docSize + 1} = \textbf{0}&;\quad  \lEncExtHidden_i = \lgru_{enc}(\sentEmb[i], \lEncExtHidden_{i+1}) \\
@@ -98,7 +102,7 @@ steps; additionally, the first step of the decoder GRUs are learned
 (see Figure~\ref{fig:extractors}.b).
 Each GRU has separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
-
+\end{toappendix}
 
 \textbf{Cheng \& Lapata Extractor} 
 We compare the previously proposed architectures to the sentence extractor
@@ -107,6 +111,9 @@ model of \cite{cheng2016neural}.
 %sentence extraction predictions are conditionally independent given
 %the sentence embeddings, this model uses previous extraction probabilities to
 %influence later decisions. 
+
+\begin{toappendix}
+\section{Details on Cheng \& Lapata Extractor.} \label{app:clextractor}
 The basic architecture is a unidirectional
 sequence-to-sequence
 model defined as follows:
@@ -126,8 +133,9 @@ the decoder side GRU input is the sentence embedding from the previous time
 step weighted by its probabilitiy of extraction ($p_{i-1}$) from the 
 previous step, inducing dependence of each output $y_i$ on all previous 
 outputs $y_{<i}$.
+\end{toappendix}
 
-\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
+%\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
 
 Note that in the original paper, the Cheng \& Lapata extractor was paired 
 with
@@ -139,6 +147,11 @@ of sentence encoders.
 Our second baseline, which we refer to as the SummaRunner extractor is taken 
 from 
 \cite{nallapati2017summarunner}.
+
+
+
+\begin{toappendix}
+\section{Details on SummaRunner Extractor.} \label{app:srextractor}
 Like the
 \modelOne~extractor it starts with a bidrectional GRU over the sentence 
 embeddings 
@@ -191,6 +204,7 @@ sum of these terms plus a bias,
 The weight matrices $W_q$, $W_z$, $W^{(con)}$, $W^{(sal)}$, $W^{(nov)}$, $W^{(pos)}$,
 $W^{(qrt)}$ and bias terms $b_q$, $b_z$, and $b$ are learned parameters;
 The GRUs have separate learned parameters.
+\end{toappendix}
 
 Note that in the original paper, the SummaRunner extractor was paired 
 with

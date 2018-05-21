@@ -1,17 +1,23 @@
+
+\subsection{Training Objective}
+
+
 \kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
 We train all models to minimize the weighted negative log likelihood
 \[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
 \operatorname{enc}(\sent)\right)\]
 over the training data $\mathcal{D}$
 using stochastic gradient descent with the ADAM optimizer
-\hal{maybe just say $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of examples with label $y$.}
-\cite{kingma2014adam}. The term 
-\[ \omega(y_i)=\begin{cases}
-\frac{\sum_{y_j} \mathbbm{1}\{y_j = 0 \}}{ \sum_{y_j} \mathbbm{1}\{y_j = 1 \}  } & \textrm{if $y_i=1$} \\ 1 & \textrm{otherwise}  \end{cases} \] 
-        upweights
-    positive examples proportionally to the ratio of negative to positive
-    examples in the training data in order to compensate for the sparsity
-    of the positive class.
+\cite{kingma2014adam}.
+$\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of 
+training examples with label $y$.
+%\cite{kingma2014adam}. The term 
+%\[ \omega(y_i)=\begin{cases}
+%\frac{\sum_{y_j} \mathbbm{1}\{y_j = 0 \}}{ \sum_{y_j} \mathbbm{1}\{y_j = 1 \}  } & \textrm{if $y_i=1$} \\ 1 & \textrm{otherwise}  \end{cases} \] 
+%        upweights
+%    positive examples proportionally to the ratio of negative to positive
+%    examples in the training data in order to compensate for the sparsity
+%    of the positive class.
 \kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
     We use a learning rate of .0001 and a dropout rate of .25 for all dropout
     layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$).
@@ -34,21 +40,6 @@ using stochastic gradient descent with the ADAM optimizer
     when computing the decoder input 
     $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
     during the second half training.
-
-\subsection{Ground Truth Extract Summaries}
-    \hal{i feel like this should go before the optimizer dtails}
-Since we do not typically have ground truth extract summaries from which to
-create the labels $\slabel_i$, we construct gold label sequences 
-by greedily optimizing ROUGE-1. Starting with an empty summary $\summary = 
-\null \emptyset$, we add the sentence $\hat{\sent} = 
-{\argmax}_{ \sent \in \{\sent_1, \ldots, \sent_{\docsize}\},
-\; \sent \notin \summary} \operatorname{ROUGE-1}(\summary \cup \sent)$
-to $\summary$ stopping when the ROUGE-1 score no longer increases or the 
-length budget is reached\hal{what does this mean. does it mean that if the $\hat s$ that's selected puts you over length limit then you stop, or is it that you stop when there are no more sentences that you can cram in? and what if adding $\hat s$ doesn't make rouge go up?}. We choose to optimize for ROUGE-1 rather than 
-ROUGE-2 similarly to other optimization based approaches to summarization 
-\textcolor{red}{
-\cite{durrett2016learning,sipos2012large,nallapati2017summarunner} which found this
-be the easier optimization target.}
 
 
 \hal{do you say anywhere how you do significance testing and what significance level you use?}
