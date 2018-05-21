@@ -38,5 +38,29 @@ which does not, suggesting that we need to rethink or find novel forms
 of sentence representation for the summarization task.
 
 
+A manual examination of the outputs revealed some interesting failure modes
+although in general it was hard to discern clear patterns of behaviour 
+other than lead bias. On the news domain, the models consistently learned 
+to ignore quoted material in the lead, as often the quotes provide
+color to the story but are unlikely to be included in the summary (e.g.\textit{``It was like somebody slugging a punching bag.''}). 
+This behavior was most likely triggered by the presence of quotes, as the
+quote attributions, which were often tokenized as separate sentences,
+would subsequently be included in the summary despite also not containing 
+much information 
+(e.g. \textit{Gil Clark of the National Hurricane Center said Thursday}).
+
+
+
+
+The Reddit corpus was particularly challenging as often there was no concise
+way to extractively represent the story. Authors often inserted a 
+fairly brief summary of the story, either at the end or beginning, but
+this was so abstractive as to not have much overlap with the reference
+summaries. For example, the first sentence, \textit{I took a dog off the street, and she changed my grandparent's lives}, has little overlap with the reference
+\textit{The dog I found for my grandparents still gets really excited to see
+me whenever I come to visit}, but is still functionally a reasonable 
+summary of the story. These ``micro summaries'' do not seem to be 
+consistently found by any summarization model. 
+
 
 

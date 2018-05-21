@@ -69,23 +69,53 @@ We used the article abstracts as the ground truth human summaries.}
 Since we do not typically have ground truth extract summaries from which to
 create the labels $\slabel_i$, we construct gold label sequences 
 by greedily optimizing ROUGE-1, as follows.
+%?\begin{algorithm}[H]
+%?    \KwData{$I = \{\sent[1], \ldots, \sent[n]\}$, word budget $c$} 
+%?    empty summary $\summary = \emptyset$\\
+%?    $y_i = 0 \quad \forall i \in 1, \ldots, n$ \\
+%?    \While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$}{
+%?        $\hat{\sent} = {\argmax}_{ \sent[i] \in I \setminus \summary} \rouge(\summary \cup \sent[i])$\\
+%?  \eIf{$\rouge(\summary \cup \hat{\sent}) > \rouge(\summary)$}{
+%?       $\summary \gets \summary \cup \hat{\sent}$
+%?   }{\textbf{break}\\}
+%?                                       }
+%?$y_i \gets 1 $ if $s_i \in S \; \forall i \in 1, \ldots, n$\\ 
+%?\KwResult{$y = y_1,\ldots y_n$}
+%?%                                        \caption{How to write algorithms}
+%?\end{algorithm}
 
-\begin{enumerate}
-\item Start with an empty summary $\summary = 
-\null \emptyset$ and word limit $c$. 
-\item while $\sum_{i \in \summary} |\sent[i]| \le c$:
-    \begin{enumerate}
-        \item $\hat{\sent} = {\argmax}_{ i \in [\docSize] \setminus \summary} \operatorname{ROUGE}(\summary \cup \sent[i])$
-\item if $\operatorname{ROUGE}(\summary \cup \hat{\sent}) > \operatorname{ROUGE}(\summary)$
-    \begin{enumerate}
-        \item $\summary \leftarrow \summary \cup \hat{\sent}$
-    \end{enumerate}
-\item else break
 
-%to $\summary$ 
-\end{enumerate}
-\item return $y_i =\begin{cases} 1 & \textrm{if $i \in S$}\\ 0 & \textrm{otherwise} \end{cases}$ for all $i \in [n]$.
-\end{enumerate}
+\begin{algorithmic}
+
+\State $I = \{\sent[1], \ldots, \sent[n]\};\quad y_i = 0 \quad \forall i \in 1, \ldots, n$
+\State    empty summary $\summary = \emptyset$; ~~word budget $c$
+\While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$} 
+\State $\hat{i} = {\argmax}_{ i \in \{j \in [n]| \sent[j] \notin \summary\}} \rouge(\summary \cup \sent[i])$
+\If {$\rouge(\summary \cup \sent[\hat{i}]) > \rouge(\summary)$}
+\State $\summary \gets \summary \cup \sent[\hat{i}]; \quad y_{\hat{i}} = 1$
+        \Else
+        \State \textbf{break} 
+       \EndIf
+\EndWhile
+\State \Return $y=y_1, \ldots, y_n$
+\end{algorithmic}
+
+%\begin{enumerate}
+%\item Start with an empty summary $\summary = 
+%\null \emptyset$ and word limit $c$. 
+%\item while $\sum_{i \in \summary} |\sent[i]| \le c$:
+%    \begin{enumerate}
+%        \item $\hat{\sent} = {\argmax}_{ i \in [\docSize] \setminus \summary} \operatorname{ROUGE}(\summary \cup \sent[i])$
+%\item if $\operatorname{ROUGE}(\summary \cup \hat{\sent}) > \operatorname{ROUGE}(\summary)$
+%    \begin{enumerate}
+%        \item $\summary \leftarrow \summary \cup \hat{\sent}$
+%    \end{enumerate}
+%\item else break
+%
+%%to $\summary$ 
+%\end{enumerate}
+%\item return $y_i =\begin{cases} 1 & \textrm{if $i \in S$}\\ 0 & \textrm{otherwise} \end{cases}$ for all $i \in [n]$.
+%\end{enumerate}
 %stopping when the ROUGE-1 score no longer increases or the 
 %length budget is reached\hal{what does this mean. does it mean that if the $\hat s$ that's selected puts you over length limit then you stop, or is it that you stop when there are no more sentences that you can cram in? and what if adding $\hat s$ doesn't make rouge go up?}. 
 We choose to optimize for ROUGE-1 rather than 

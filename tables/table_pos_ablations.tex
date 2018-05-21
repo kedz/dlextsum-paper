@@ -5,16 +5,17 @@
     \multirow{2}{*}{\textbf{Abl.}}  & \multicolumn{1}{g}{\textbf{CNN/DM}} & \multicolumn{1}{c}{\textbf{NYT}} & \multicolumn{1}{g}{\textbf{DUC}} & \multicolumn{1}{c}{\textbf{Reddit}} & \multicolumn{1}{g}{\textbf{AMI}}\\
       & R-2 & R-2 & R-2 & R-2 & R-2\\
     \midrule
-    -- & \textbf{25.42}\textsuperscript{~} & \textbf{34.67}\textsuperscript{~} & 22.65\textsuperscript{~} & \textbf{11.37}\textsuperscript{~} & 5.50\textsuperscript{~}\\
-    nouns & 25.31\textsuperscript{$\dagger$} & 34.26\textsuperscript{$\dagger$} & 22.35\textsuperscript{$\dagger$} & 10.29\textsuperscript{$\dagger$} & 3.76\textsuperscript{$\dagger$}\\
-    verbs & 25.25\textsuperscript{$\dagger$} & 34.36\textsuperscript{$\dagger$} & 22.45\textsuperscript{$\dagger$} & 10.76\textsuperscript{~} & 5.80\textsuperscript{~}\\
-    adjv & 25.28\textsuperscript{$\dagger$} & 34.36\textsuperscript{$\dagger$} & 22.50\textsuperscript{~} & 9.48\textsuperscript{$\dagger$} & 5.36\textsuperscript{~}\\
-    misc & 25.24\textsuperscript{$\dagger$} & 34.55\textsuperscript{$\dagger$} & \textbf{22.89}\textsuperscript{$\dagger$} & 10.26\textsuperscript{$\dagger$} & \textbf{6.32}\textsuperscript{$\dagger$}\\
+    all words & \textbf{25.42}\textsuperscript{~} & \textbf{34.67}\textsuperscript{~} & 22.65\textsuperscript{~} & \textbf{11.37}\textsuperscript{~} & 5.50\textsuperscript{~}\\
+    -nouns & 25.31\textsuperscript{$\dagger$} & 34.26\textsuperscript{$\dagger$} & 22.35\textsuperscript{$\dagger$} & 10.29\textsuperscript{$\dagger$} & 3.76\textsuperscript{$\dagger$}\\
+    -verbs & 25.25\textsuperscript{$\dagger$} & 34.36\textsuperscript{$\dagger$} & 22.45\textsuperscript{$\dagger$} & 10.76\textsuperscript{~} & 5.80\textsuperscript{~}\\
+    -adjv & 25.28\textsuperscript{$\dagger$} & 34.36\textsuperscript{$\dagger$} & 22.50\textsuperscript{~} & 9.48\textsuperscript{$\dagger$} & 5.36\textsuperscript{~}\\
+    -func & 25.24\textsuperscript{$\dagger$} & 34.55\textsuperscript{$\dagger$} & \textbf{22.89}\textsuperscript{$\dagger$} & 10.26\textsuperscript{$\dagger$} & \textbf{6.32}\textsuperscript{$\dagger$}\\
 %    num & 25.36\textsuperscript{$\dagger$} & 34.60\textsuperscript{$\dagger$} & 22.55\textsuperscript{~} & 11.05\textsuperscript{~} & 5.20\textsuperscript{$\dagger$}\\
     \bottomrule
 \end{tabular}
 
-\caption{ROUGE-2 recall after removing different word classes. Ablations are
+\caption{ROUGE-2 recall after removing nouns, verbs, adjectives/adverbs, and 
+    function words. Ablations are
     performed using the averaging sentence encoder and the RNN
 extractor. Table shows average results of five random initializations.
 Bold indicates best performing system. $\dagger$ indicates significant 

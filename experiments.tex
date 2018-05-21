@@ -1,5 +1,4 @@
 
-\subsection{Training Objective}
 
 
 \kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
@@ -31,8 +30,9 @@ training examples with label $y$.
     using pretrained GloVe embeddings \cite{pennington2014glove} and we do 
     not update them during training. Unknown words are mapped to a zero 
     embedding.
-    We use a batch size of 32 for all datasets except AMI and PubMed for
-    which we use sizes two and four respectively. 
+    We use a batch size of 32 for all datasets except AMI and PubMed, which
+    are often longer and consume more memory, for
+    which we use sizes two and four respectively.
 \kathy{why? Say.}
     For the Cheng \& Lapata model, we train for half of the maximum epochs 
     with teacher forcing, i.e. we set $p_i = 1$
@@ -57,52 +57,21 @@ described in Section~\ref{sec:datasets}.}
 %recall as our main evaluation metric since it has the strongest correlation
 %to human content selection decisions.
 
-\kathy{Save all results for results section. I deleted your sentence.}
-\hal{i agree with kathy. put all the results together. be specific about what questions you're asking and then how you framed them as an experiment and then what the answer is. i think i'd just remove all this stuff here.}
+%\kathy{Save all results for results section. I deleted your sentence.}
+%\hal{i agree with kathy. put all the results together. be specific about what questions you're asking and then how you framed them as an experiment and then what the answer is. i think i'd just remove all this stuff here.}
 %In most cases, the averaging encoder performance was as good or better than
 %the RNN and CNN encoders, we use only the averaging encoder for the remainder
 %of the experiments.
 
-\paragraph{Word Embedding Learning}{To futher understand how word 
-embeddings 
-can
-effect model performance we also compared extractors when embeddings 
-are updated during training. Both fixed and learned embedding variants are 
-initialized with GloVe embeddings. When learning embeddings, words occurring 
-three or fewer times in the training data are mapped to a learned unkown
-token.}
+%\paragraph{Word Embedding Learning}{To futher understand how word 
+%embeddings 
+%can
+%effect model performance we also compared extractors when embeddings 
+%are updated during training. Both fixed and learned embedding variants are 
+%initialized with GloVe embeddings. When learning embeddings, words occurring 
+%three or fewer times in the training data are mapped to a learned unkown
+%token.}
 
-\paragraph{POS Tag Ablation}{Additionally, we ran ablation experiments
-using part-of-speech (POS) tags. \hal{this needs to be justified. why is this experiment interesting?}
-All datasets were automatically tagged using
-the SpaCy POS tagger \footnote{https://github.com/explosion/spaCy}.   
-\kathy{I'm still curious what would happen if you separately removed all conjunction tags and later remaining POS.}
-We experimented with selectively removing 
-\begin{itemize}
-    \item nouns (NOUN and PROPN tags), 
-    \item verbs (VERB, PART, and AUX tags), 
-    \item adjectives/adverbs (ADJ and ADV tags), 
-    \item numerical expressions (NUM and SYM tags), and 
-    \item miscellaneous words (ADP, CONJ, CCONJ, DET, INTJ, and SCONJ tags)
-\end{itemize}
-from each sentece. 
-The embeddings of removed words were replaced with a zero vector,
-preserving the order and position of the non-ablated words in the sentence.
-}
-
-\textbf{Document Shuffling} In examining the outputs of the models, we found
-most of the selected sentences in the news domain came from the lead paragraph\hal{i feel like there must be citations to dig up here from like the 90s about lead summarization in news... it's also an intentional bias: maybe the right thing is to cite a style guide from a newsppaer that says to write this way}
-of the document. This is despite the fact that there is a long tail of 
-sentence extractions from later in the document in the ground truth extract 
-summaries\hal{can you be more specific? like give some stats? what \%age come from first quarter of doc and what \%age from last half or something}. Because this lead bias is so strong, it is questionable whether
-the models are learning to identify important content or just find the start
-of the document. We perform a series of sentence order experiments where 
-each document's sentences are randomly shuffled during training. We then
-%KM - I think below should be shuffled. I changed.
-%CK - models are trained on shuffled data but evaluated on in order models.
-%evaluate each model performance on the unshuffled test data, comparing to 
-evaluate each model performance on the unshuffled test data, comparing to 
-the model trained on unshuffled data. 
 
 %We are also interested in the effect of lead bias. It is well known that the first few sentences of a news article, often referred to as the lead, make a good summary, and this is most commonly used as the default baseline in single document summarization. This lead bias is such a strong learning signal that the learned models almost always extract sentences from the lead despite the ground truth labeling containing a significant portion of positive labels later in the document. This begs the question, are we learning a robust model of sentence salience or simply identifying linguistic style features that are indicative of the lead?
 
