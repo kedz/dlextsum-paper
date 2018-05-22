@@ -26,7 +26,7 @@ where the basic unit of extraction is a sentence and impose a word limit as
 the budget.
 
 We model the sentence extraction task as a sequence tagging problem, 
-following \cite{}.
+following \cite{}. \hal{missing cite}
 Specifically, given a document containing $\docSize$ sentences 
 $\sent_1, \ldots, \sent_{\docSize}$ we generate a summary by predicting a 
 corresponding label sequence $\slabel_1, \ldots, \slabel_{\docSize} 
@@ -34,8 +34,8 @@ corresponding label sequence $\slabel_1, \ldots, \slabel_{\docSize}
 indicates the $i$-th sentence is to be included in the summary.
 Each sentence is itself a sequence of word embeddings 
 $\sent[i] = \wordEmb[1]^{(i)}, \ldots, \wordEmb[{|\sent[i]|}]^{(i)}$ where
-$|\sent[i]|$ is the size of the sentence in words.
-The word budget $c \in \mathbb{Z}_+$ 
+$|\sent[i]|$ is the length of the sentence in words.
+The word budget $c \in \mathbb{N}$ 
 enforces a constraint that the total summary word length 
 $\sum_{i=1}^\docSize \slabel_i \cdot |\sent[i]| \le c$.
 
@@ -45,13 +45,13 @@ $\sum_{i=1}^\docSize \slabel_i \cdot |\sent[i]| \le c$.
 For a typical deep learning model of extractive 
 summarization there are two main design decisions:
 %At a high level, all the models considered in this paper share the same two part structure: 
-\textit{i)}  the choice of \textit{sentence encoder} 
+\textit{a)}  the choice of \textit{sentence encoder} 
 which maps each sentence \sent[i] 
 %(treated as a sequence of word embeddings) 
 to an embedding $\sentEmb[i]$, 
 %\hal{notation class, you used $d$ already for number of sentences} 
 and 
-\textit{ii)} the choice of \textit{sentence extractor} 
+\textit{b)} the choice of \textit{sentence extractor} 
 which maps a sequence of sentence embeddings 
 $\sentEmb = \sentEmb[1],\ldots, \sentEmb[\docSize]$  
 to a sequence of extraction
@@ -64,29 +64,35 @@ classifier $p(\slabel | \sentEmb)$.
 Previous neural network approaches to sentence extraction have assumed 
 an auto-regressive model, leading to a semi-Markovian
 factorization of the extractor probabilities 
-$p(\slabel|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\slabel[<i],\sentEmb)$,
-where each prediction \slabel[i] is dependent on all previous \slabel[j] for
+$p(\slabel_{1:n}|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\slabel[<i],\sentEmb)$,
+where each prediction \slabel[i] is dependent on \emph{all} previous \slabel[j] for
 all $j < i$. We compare two such models proposed by \citet{cheng2016neural}
 and \citet{nallapati2017summarunner}.
-\subsection{Previous Sentence Extractors}
+\hal{a simpler approach (explain why simpler) is a fully factored representation where we
+  model $p(\slabel_{1:n}|\sentEmb) = \prod_{i=1}^n p(y_i|h)$, which we explrore etc}
+
+\subsection{Previously Proposed Sentence Extractors}
+
+Sentence extractors take hidden sentence representations $h_{1:n}$ and produce an extract $y_{1:n}$. We consider two recent state-of-the-art extractors.
+\hal{if you're hurting for space, you could probably describe these both in one paragraph, leaving off the stuff about what they use as encoders, etc., and really just making the point that they use $y<i$ to predict $yi$}
 
 \paragraph{Cheng \& Lapata Extractor} The extractor proposed by 
-\citet{cheng2016neural}, which we refer to as the Cheng \& Lapata Extractor,
+\citet{cheng2016neural} %, which we refer to as the Cheng \& Lapata Extractor,
 is built around a sequence-to-sequence model.
-First, each sentence embedding is
+First, each sentence embedding\footnote{\citet{cheng2016neural} used an CNN sentence encoder with 
+this extractor architecture; in this work we pair the Cheng \& Lapata extractor
+with several different encoders.} is
 fed into an encoder side RNN, with the final encoder state passed to the
 first step of the decoder RNN. On the decoder side, the same sentence 
 embeddings are fed as input to the decoder, but are delayed by one step and 
 weighted by their prediction probability, i.e. at decoder step $t$,
-$p(\slabel[t-1]|\slabel[<t-1], \sentEmb[<t-1]) \cdot \sentEmb[t-1]$
-is fed into the decoder. The decoder output at step $t$ is concatenated 
+$p(\slabel[t-1]|\slabel[<t-1], \sentEmb[<t-1]) \cdot \sentEmb[t-1]$\hal{why did you switch from $i$ to $t$?}
+is fed into the decoder\hal{i don't udnerstand what this means. what op is $\cdot$?}. The decoder output at step $t$ is concatenated 
 to the encoder output step $t$ and fed through a multi-layer perceptron
 with one hidden layer and sigmoid unit output computing the $t$-th
 extraction probability $p(\slabel[t]|\slabel[<t], \sentEmb[<t])$. \textcolor{red}{See Figure 2.c. for a graphical view. Full model details are presented in ??}.
 
-In \cite{cheng2016neural}, they used an CNN sentence encoder with 
-this extractor architecture; in this work we pair the Cheng \& Lapata extractor
-with several different sentence encoders.
+
 
 
 
@@ -96,21 +102,19 @@ that factorizes the extraction probability into contributions
 from different sources.
 First, a bidirectional RNN is run over the sentence embeddings and the output
 concatenated. A document representation $q$ is created by passing the 
-averaged RNN output through a fully connected layer. 
+averaged RNN output through a fully connected layer.\hal{make the prev two sentences more brief.}\footnote{\citet{nallapati2017summarunner} use an RNN sentence encoder with 
+this extractor architecture; in this work we pair the SummaRunner extractor
+with different encoders. }
 Given the RNN output $z_t$ at the step $t$, the following scores are created:
-\begin{enumerate}
+\begin{enumerate}[nolistsep,noitemsep]
 \item a content score $W^{(con)}z_t$,
 \item a salience score $z_t^TW^{(sal)}q$,
 \item a novely score $-z_t^TW^{(nov)}\tanh(g_t)$,
 \end{enumerate}
 where $g_t = \sum_{i=1}^{t-1} p(y_i=1|y_{<i}, h_{<i}) \cdot z_i$.
 These scores are summed along with a bias term and a bias for sentence 
-position and the quarter of the document and fed through a sigmoid activation
+position and the quarter of the document\hal{what does ``the quarter of the document'' mean? sentence position quartile?} and fed through a sigmoid activation
 to compute $p(y_t=1|y_{<t}, h_{<t})$.
-
-In \cite{nallapati2017summarunner}, they used an RNN sentence encoder with 
-this extractor architecture; in this work we pair the SummaRunner extractor
-with several different sentence encoders.
 
 
 \subsection{Proposed Sentence Extractors}
@@ -118,7 +122,7 @@ We propose two sentence extractor models that
 make a stronger conditional independence 
 assumption $p(\slabel|\sentEmb)=\prod_{i=1}^\docSize p(\slabel[i]|\sentEmb)$,
 essentially making independent predictions conditioned on $\sentEmb$.
-In theory, our models should perform worse because of this, however, as
+In theory, our models should \hal{why should they?} perform worse because of this, however, as
 we later show, this is not the case empirically.
 
 \paragraph{RNN Extractor}
@@ -146,6 +150,7 @@ Detail in \autoref{app:s2sextractor}.
 
 
 \subsection{Sentence Encoders}
+\hal{why not put this before extractors?}
 \input{sentence_encoders}
 
 

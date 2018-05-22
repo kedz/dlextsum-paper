@@ -22,7 +22,7 @@ We experiment with three architectures for mapping sequences
 of word embeddings to a fixed length vector: averaging, RNNs, and CNNs.
 %See Figure~\ref{fig:encoders} for a diagram of the three encoders.
 Hyperparameter settings and implementation details can be found 
-in the appendix.
+in the appendix\hal{include a ref to appendix section}
 
 \paragraph{Averaging Encoder} Under the averaging encoder, a sentence embedding
 \sentEmb is simply the average of its word embeddings, i.e. $\sentEmb = \frac{1}{\sentSize} \sum_{i=1}^{\sentSize} \wordEmb[i]$.
@@ -73,7 +73,7 @@ parameters.
 
 \paragraph{CNN Encoder} The \textit{CNN} sentence encoder uses a series of 
 convolutional feature maps to encode each sentence. This encoder is similar
-to the convolutional architecture of \cite{kim2014convolutional} used for text
+to the convolutional architecture of \citet{kim2014convolutional} used for text
 classification
 tasks and performs a series of ``one-dimensional'' convolutions over 
 word embeddings. The final sentence embedding $\sentEmb$ is a concatenation
