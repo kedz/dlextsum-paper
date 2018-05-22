@@ -2,7 +2,7 @@
 
 
 %\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
-We train all models to minimize the weighted negative log likelihood
+We train all models to minimize the weighted negative log-likelihood
 \[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
 \operatorname{enc}(\sent)\right)\]
 over the training data $\mathcal{D}$
@@ -17,7 +17,8 @@ training examples with label $y$.
 %    positive examples proportionally to the ratio of negative to positive
 %    examples in the training data in order to compensate for the sparsity
 %    of the positive class.
-%\kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
+%    \kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
+\hal{what about kathy's question?}
     We use a learning rate of .0001 and a dropout rate of .25 for all dropout
     layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$).
     We train for a maximum of 30 epochs and the best
@@ -41,13 +42,11 @@ training examples with label $y$.
     when computing the decoder input 
     $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
     during the second half training.
+\hal{i feel like this paragraph was produced by a summarization algorithm run on the state of Chris' brain :P --- that is to say, it's not super coherant. maybe reorder things so that they are in order of train/apply/eval or something? right now i'm not sure what matters and what doesn't matter. also so-called teacher forcing breaks the definition of log likelihood above, but maybe that's fine.}
 
 
 
-
-
-
-\paragraph{Extractor/Encoder Comparions}{
+\paragraph{Extractor/Encoder Comparions}{\hal{why is this here rather than in results? maybe call this section ``experimental design'' or ``experimental settings'' or something like that, and then shift all results-like-things to results.}
 In our main experiment, we compare our proposed 
 sentence extractors, RNN and Seq2Seq,
 to those of Cheng \& Lapata and SummaRunner.
