@@ -27,13 +27,16 @@ When looking at extractors, the Seq2Seq extractor is either part of
 the best performing system (\textcolor{red}{2 out of 5} datasets) or is not 
 statistically distinguishable from the best extractor. 
 
-Overall, on the news domain, the differences are quite small with the 
+Overall, on the news and medical journal domains, the differences are 
+quite small with the 
 differences between worst and best systems on the CNN/DM dataset 
 spanning only .56 of a ROUGE point. While there is more performance variability
- in the non-news domains, there is less distinction among systems: all systems
+ in the Reddit and AMI data, there is less distinction among systems: all systems
 are statistically indistinguishable from the best system on Reddit
 and every extractor has at least one configuration that is indistinguishable
-from the best system on the AMI corpus.\hal{this is probably at least partially because of test set size. maybe mention this.}
+from the best system on the AMI corpus. This is probably due to the small test
+size of these datasets.
+%\hal{this is probably at least partially because of test set size. maybe mention this.}
 
 
 
@@ -96,7 +99,7 @@ significant. The language of this corpus is quite different from the
 data that the GloVe embeddings were trained on and so it makes sense 
 that  there would be more benefit to learning word representations; one
 explanation for only seeing modest improvements is purely the small size
-of the dataset which has only 98 training meetings.
+of the test dataset which has only 20 training meetings.
 
 %textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}. \hal{yes, the dataset size is certainly an issue here. probably worth pointing this out. also when you learned the embeddings, did you initialize to pretrained embeddings? did you regularize toward them?}
 
