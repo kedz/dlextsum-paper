@@ -85,6 +85,10 @@ flexibility to identify important word features.
 %\hal{why is it surprising?} \textcolor{green}{[[CK: Because learning embeddings should give the model more capacity to represent important patterns]]}
 This suggests that we cannot extract much generalizable learning signal 
 from the content other than what is already present from initialization. 
+Even on PubMed, where the language is quite different from the news/Wikipedia
+articles the GloVe embeddings were trainined on, learning leads to 
+significantly worse results.
+
 
 The AMI corpus is an exception here where learning does lead to small
 performance boosts, however, only in the Seq2Seq extractor is this diference 
@@ -92,7 +96,9 @@ significant. The language of this corpus is quite different from the
 data that the GloVe embeddings were trained on and so it makes sense 
 that  there would be more benefit to learning word representations; one
 explanation for only seeing modest improvements is purely the small size
-of the dataset \textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}. \hal{yes, the dataset size is certainly an issue here. probably worth pointing this out. also when you learned the embeddings, did you initialize to pretrained embeddings? did you regularize toward them?}
+of the dataset which has only 98 training meetings.
+
+%textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}. \hal{yes, the dataset size is certainly an issue here. probably worth pointing this out. also when you learned the embeddings, did you initialize to pretrained embeddings? did you regularize toward them?}
 
 
 \paragraph{POS Tag Ablation}
@@ -151,9 +157,10 @@ on DUC 2002 and AMI.
 powerful feature for news summarization \cite{hong2014improving}, owing 
 from the intentional lead bias in the news article writing\footnote{link to ap style guide on inverted pyramid}; it also explains the difficulty in beating
 the lead baseline for single-document summarization 
-\cite{nenkova2005automatic}.
+\cite{nenkova2005automatic,rau:1999}.
 In examining the generated summaries, we found
-most of the selected sentences in the news domain came from the lead paragraph\hal{i feel like there must be citations to dig up here from like the 90s about lead summarization in news... it's also an intentional bias: maybe the right thing is to cite a style guide from a newsppaer that says to write this way}
+most of the selected sentences in the news domain came from the lead paragraph
+%\hal{i feel like there must be citations to dig up here from like the 90s about lead summarization in news... it's also an intentional bias: maybe the right thing is to cite a style guide from a newsppaer that says to write this way}
 of the document. This is despite the fact that there is a long tail of 
 sentence extractions from later in the document in the ground truth extract 
 summaries (31\%, 28.3\%, and 11.4\% of DUC, CNN/DM, and NYT training extract labels come 

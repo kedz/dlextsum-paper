@@ -53,6 +53,13 @@ sentence extractors, RNN and Seq2Seq,
 to those of Cheng \& Lapata and SummaRunner.
 We test all possible sentence extractor/encoder pairs across all the datasets
 described in Section~\ref{sec:datasets}.} 
+As baselines we include a random summary baseline, i.e. randomly selecting sentences until word length $x$ is reached; a lead baseline, using 
+the first $x$ words;  and a tail baseline, using the last $x$ words
+($x$ is the target summary length for each domain).
+To measure the approximate performance ceiling,
+we also show the oracle performance using the 
+summary which results from greedily optimizing ROUGE-1 
+
 %We choose ROUGE-2
 %recall as our main evaluation metric since it has the strongest correlation
 %to human content selection decisions.
@@ -96,6 +103,8 @@ We then test the difference between the best system on each dataset and
 all other systems using the approximate randomization test 
 \cite{riezler2005some} with the Bonferroni correction for multiple comparisons,
 testing for significance at the $\alpha=.05$ level. 
+
+
 
 
 %%% Local Variables:
