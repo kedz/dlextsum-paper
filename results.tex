@@ -9,18 +9,18 @@ encoder (\textcolor{red}{4 out of 5 datasets}) or the differences
 are not statistically significant. When only comparing within the 
 same extractor choice,  the averaging encoder is the better choice
 in 14 of 20 cases. 
-\hal{i wonder if it would be worth adding another ``average performance metric'' column to \autoref{tab:results}.
-  i'm thinking have ``Average $\Delta$-Best'' meaning how far (on average across the datasets) is this setting from the best setting available on that dataset.
-  so since the best numbers are: 25.56, 35.85, 23.11, 13.65, 5.63
-  and the first row numbers are: 25.42, 34.67, 22.65, 11.37, 5.50
-  then the deltas are:            0.14,  1.18,  0.46,  2.28, 0.13
-  the the average delta is 0.84 (assuming my math is right)
-  there's an argument to do multiplicative, in which case
-  the multipliers for first row:  0.99,  0.97,  0.98,  0.83, 0.97
-  and the average is 0.95
-  either way this gives a quick way to make comparisons between rows. you could do the same for the other tables too.}
+%\hal{i wonder if it would be worth adding another ``average performance metric'' column to \autoref{tab:results}.
+%  i'm thinking have ``Average $\Delta$-Best'' meaning how far (on average across the datasets) is this setting from the best setting available on that dataset.
+%  so since the best numbers are: 25.56, 35.85, 23.11, 13.65, 5.63
+%  and the first row numbers are: 25.42, 34.67, 22.65, 11.37, 5.50
+%  then the deltas are:            0.14,  1.18,  0.46,  2.28, 0.13
+%  the the average delta is 0.84 (assuming my math is right)
+%  there's an argument to do multiplicative, in which case
+%  the multipliers for first row:  0.99,  0.97,  0.98,  0.83, 0.97
+%  and the average is 0.95
+%  either way this gives a quick way to make comparisons between rows. you could do the same for the other tables too.}
 
-  \hal{in some of the tables you list R-2 as headers even though all the numbers are R-2. just put that in the caption.}
+  %\hal{in some of the tables you list R-2 as headers even though all the numbers are R-2. just put that in the caption.}
 
 
 When looking at extractors, the Seq2Seq extractor is either part of 
@@ -81,7 +81,8 @@ from the best system on the AMI corpus.\hal{this is probably at least partially 
 fixed embeddings are as good or better than the learned embeddings.}
 This is a somewhat surprising finding on the CNN/DM data since it is reasonably
 large by most standards and learning embeddings should give the models more
-flexibility to identify important word features. \hal{why is it surprising?} \textcolor{green}{[[CK: Because learning embeddings should give the model more capacity to represent important patterns]]}
+flexibility to identify important word features. 
+%\hal{why is it surprising?} \textcolor{green}{[[CK: Because learning embeddings should give the model more capacity to represent important patterns]]}
 This suggests that we cannot extract much generalizable learning signal 
 from the content other than what is already present from initialization. 
 
@@ -105,7 +106,7 @@ function words (adpositions, determiners, conjunctions).
 All datasets were automatically tagged using
 the spaCy part-of-speech (POS)
 tagger\footnote{https://github.com/explosion/spaCy}.   
-\kathy{I'm still curious what would happen if you separately removed all conjunction tags and later remaining POS.}
+%\kathy{I'm still curious what would happen if you separately removed all conjunction tags and later remaining POS.}
 %We experimented with selectively removing 
 %\begin{itemize}
 %    \item nouns (NOUN and PROPN tags), 
@@ -151,11 +152,14 @@ powerful feature for news summarization \cite{hong2014improving}, owing
 from the intentional lead bias in the news article writing\footnote{link to ap style guide on inverted pyramid}; it also explains the difficulty in beating
 the lead baseline for single-document summarization 
 \cite{nenkova2005automatic}.
-In examining the outputs of the models, we found
+In examining the generated summaries, we found
 most of the selected sentences in the news domain came from the lead paragraph\hal{i feel like there must be citations to dig up here from like the 90s about lead summarization in news... it's also an intentional bias: maybe the right thing is to cite a style guide from a newsppaer that says to write this way}
 of the document. This is despite the fact that there is a long tail of 
 sentence extractions from later in the document in the ground truth extract 
-summaries\hal{can you be more specific? like give some stats? what \%age come from first quarter of doc and what \%age from last half or something}. Because this lead bias is so strong, it is questionable whether
+summaries (31\%, 28.3\%, and 11.4\% of DUC, CNN/DM, and NYT training extract labels come 
+from the back half of the document). 
+%\hal{can you be more specific? like give some stats? what \%age come from first quarter of doc and what \%age from last half or something}. 
+Because this lead bias is so strong, it is questionable whether
 the models are learning to identify important content or just find the start
 of the document. We conduct a sentence order experiment where 
 each document's sentences are randomly shuffled during training. We then
@@ -171,7 +175,8 @@ in learning content selection.
 of the shuffling experiments. 
 The news domain suffers a significant drop in performance 
 when the document order is shuffled. \textcolor{red}{By comparison, there is no significant difference between the shuffled and in-order models on 
-the Reddit domain, and shuffling actually improves performance on the AMI}.\hal{what about in the cross-domain setting?} This suggest that position 
+the Reddit domain, and shuffling actually improves performance on the AMI}.
+%\hal{what about in the cross-domain setting?} This suggest that position 
 is being learned by the models in the news domain even when the model 
 has no explicit position features, and that this feature is more important 
 than either content or function words.

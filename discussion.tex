@@ -1,8 +1,49 @@
+
+\begin{table*}
+\centering
+  \begin{tabular}{p{20em} p{20em}}
+\toprule
+Hurricane Gilbert swept toward the Dominican Republic Sunday, and the 
+   Civil Defense alerted its heavily populated south coast to prepare 
+   for high winds, heavy rains and high seas.                         
+The storm was approaching from the southeast with sustained winds of  
+   75 mph gusting to 92 mph.                                          
+An estimated 100,000 people live in the province, including 70,000 in 
+   the city of Barahona, about 125 miles west of Santo Domingo.       
+\textbf{On Saturday, Hurricane Florence was downgraded to a tropical storm and
+   its remnants pushed inland from the U.S. Gulf Coast.}               
+Tropical Storm Gilbert formed in the eastern Caribbean and            
+   strengthened into a hurricane Saturday night.  
+&
+Hurricane Gilbert swept toward the Dominican Republic Sunday, and the 
+   Civil Defense alerted its heavily populated south coast to prepare 
+   for high winds, heavy rains and high seas.                         
+The storm was approaching from the southeast with sustained winds of  
+   75 mph gusting to 92 mph.                                          
+An estimated 100,000 people live in the province, including 70,000 in 
+   the city of Barahona, about 125 miles west of Santo Domingo.       
+Tropical Storm Gilbert formed in the eastern Caribbean and            
+   strengthened into a hurricane Saturday night.                      
+\textbf{Strong winds associated with the Gilbert brought coastal flooding,    
+   strong southeast winds and up to 12 feet feet to Puerto Rico's     
+   south coast.}   \\
+\bottomrule
+\end{tabular}
+\caption{Example output of Seq2Seq extractor (left) and Cheng 
+\& Lapata Extractor (right). This is a typical example, where only one
+ sentence is different between the two (show in bold). }
+\label{tab:output}
+\end{table*}
+
 Learning in the news domain is severely inhibited by the lead bias. 
-The output of all systems is highly similar to the lead baseline,
-with \textcolor{red}{??\% of all system output sentences also occurring
-in the lead summary.} Shuffling improves this 
-\textcolor{red}{(reducing to ??\%)} but the overall system performance drops
+The output of all systems is highly similar to each other and to the lead 
+baseline. Using the averaging encoder, the Seq2Seq and Cheng \& Lapata
+extractors share 87.8\% of output sentences on average on the CNN/DM data,
+with similar numbers for the other news domains (see \autoref{tab:output}
+for a typical example).  
+Also on CNN/DM, 58\% of the Seq2Seq with averaging encoder outputs sentences also occurring
+in the lead summary, with similar numbers for DUC, NYT, and Reddit. Shuffling
+reduces lead overlap to 35.2\% but the overall system performance drops
     significantly.
     The relative robustness of the news domain to POS ablation also suggests
     suggests that models are mostly learning to recognize the stylistic 

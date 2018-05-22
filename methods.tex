@@ -1,9 +1,9 @@
 \begin{figure*}
   \center
-  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
-  \includegraphics[scale=.7]{figures/s2s_extractor.pdf}
-  \includegraphics[scale=.7]{figures/clextractor.pdf}
-  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
+  \includegraphics[scale=.65]{figures/rnnextractor.pdf}
+  \includegraphics[scale=.65]{figures/s2s_extractor.pdf}
+  \includegraphics[scale=.65]{figures/clextractor.pdf}
+  \includegraphics[scale=.65]{figures/sr_extractor.pdf}
   \caption{Sentence extractor architectures: a) RNN, b) Seq2Seq,
   c) Cheng \& Lapata, and d) SummaRunner. The $\bigoplus$ indicates 
   attention. Green repesents sentence encoder output, yellow and orange
@@ -73,7 +73,7 @@ and \citet{nallapati2017summarunner}.
 \paragraph{Cheng \& Lapata Extractor} The extractor proposed by 
 \citet{cheng2016neural}, which we refer to as the Cheng \& Lapata Extractor,
 is built around a sequence-to-sequence model.
-First each sentence embedding is
+First, each sentence embedding is
 fed into an encoder side RNN, with the final encoder state passed to the
 first step of the decoder RNN. On the decoder side, the same sentence 
 embeddings are fed as input to the decoder, but are delayed by one step and 
@@ -84,11 +84,17 @@ to the encoder output step $t$ and fed through a multi-layer perceptron
 with one hidden layer and sigmoid unit output computing the $t$-th
 extraction probability $p(\slabel[t]|\slabel[<t], \sentEmb[<t])$. \textcolor{red}{See Figure 2.c. for a graphical view. Full model details are presented in ??}.
 
+In \cite{cheng2016neural}, they used an CNN sentence encoder with 
+this extractor architecture; in this work we pair the Cheng \& Lapata extractor
+with several different sentence encoders.
+
+
+
 \paragraph{SummaRunner Extractor} \citet{nallapati2017summarunner} proposed
 a sentence extractor, which we refer to as the SummaRunner Extractor,
 that factorizes the extraction probability into contributions 
 from different sources.
-First a bidirectional RNN is run over the sentence embeddings and the output
+First, a bidirectional RNN is run over the sentence embeddings and the output
 concatenated. A document representation $q$ is created by passing the 
 averaged RNN output through a fully connected layer. 
 Given the RNN output $z_t$ at the step $t$, the following scores are created:
@@ -98,9 +104,13 @@ Given the RNN output $z_t$ at the step $t$, the following scores are created:
 \item a novely score $-z_t^TW^{(nov)}\tanh(g_t)$,
 \end{enumerate}
 where $g_t = \sum_{i=1}^{t-1} p(y_i=1|y_{<i}, h_{<i}) \cdot z_i$.
-These scores are added up along with a bias term and a bias for sentence 
+These scores are summed along with a bias term and a bias for sentence 
 position and the quarter of the document and fed through a sigmoid activation
 to compute $p(y_t=1|y_{<t}, h_{<t})$.
+
+In \cite{nallapati2017summarunner}, they used an RNN sentence encoder with 
+this extractor architecture; in this work we pair the SummaRunner extractor
+with several different sentence encoders.
 
 
 \subsection{Proposed Sentence Extractors}

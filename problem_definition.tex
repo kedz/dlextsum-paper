@@ -1,12 +1,3 @@
-We evaluate summary quality using ROUGE \cite{lin2004rouge} 
-which measures the n-gram
-overlap of a hypothesis summary with one or more human gold-standard summaries.
-We use ROUGE-2 recall (i.e. bigram recall) as our main evaluation metric;
-ROUGE-1 (unigram recall) and ROUGE-LCS (longest common substring) trend similarity to ROUGE-2 in our experiments.
-We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
-which measures precision and recall of reference words, allowing for
-more complicated word matchings (e.g. via synonymy or morphology).
-
 In this paper, we model sentence extraction task as a sequence tagging problem, following \cite{} \hal{need cites here}.
 Specifically, given a document containing $\docsize$ sentences $\sent_1, \ldots, 
 \sent_{\docsize}$ we generate a summary by predict a corresponding label sequence $\slabel_1,

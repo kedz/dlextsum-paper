@@ -38,18 +38,29 @@ In summarization, content selection usually is accomplished through sentence (an
 less frequently, phrase) extraction.
  While it is a key component of both
 extractive and abstractive summarization systems, it is not generally well 
-understood, \hal{well understood as a task or in specific models?} with frequency and information theoretic measures used as proxies
-for content salience \cite{hong2014improving}. 
+understood how deep learning models perform this task using only word and 
+sentence
+embedding based representations.
+%\hal{well understood as a task or in specific models?} 
+Non-neural network approaches often use frequency and information theoretic measures as proxies
+for content salience \cite{hong2014improving}, but these are not typically
+used in most recent work on summarization.
 %changed wording
 
 In this paper, we seek to better understand how deep learning models of 
 %summarization are performing content selection across a variety of domains.
-summarization perform content selection across a variety of domains.
+summarization perform content selection across the news, personal stories,
+workplace meetings, and medical journal article domains.\footnote{\textbf{Code and data release:} Upon
+publication, all code and pre-processing scripts
+will be released under an MIT (or more liberal)
+license; all data will be made available after
+publication when allowed by original licenses.}
 %no new paragraph needed here
 We perform an analysis 
 of several recent sentence extractive neural network architectures, 
 specifically considering the design choices for sentence encoders and 
-extractors. We compare RNN and CNN based sentence representations to the 
+extractors. We compare Recurrent Neural Network (RNN) and Convolutional Neural
+Network (CNN) based sentence representations to the 
 simpler approach of word embedding averaging to understand the gains 
 derived from more sophisticated architectures.
 We also consider the necessity of auto-regressive sentence extraction, 
@@ -78,7 +89,7 @@ Our main results reveal:
 other domains. %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
 Summary content for news is only slightly degraded when content words
 are removed. 
-\item Word embedding averaging is as good or better than either Recurrent Neural Net (RNN) or Convolutional Neural Net (CNN) encoders across all domains.
+\item Word embedding averaging is as good or better than either RNNs or CNNs for sentence embedding across all domains.
 \item Pre-trained word embeddings are as good, or better than, learned embeddings in most cases.
 \item Non auto-regressive sentence extraction performs as good or better 
      than auto-regressive extraction in all

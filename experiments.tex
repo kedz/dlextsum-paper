@@ -1,7 +1,7 @@
 
 
 
-\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
+%\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
 We train all models to minimize the weighted negative log likelihood
 \[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
 \operatorname{enc}(\sent)\right)\]
@@ -17,12 +17,13 @@ training examples with label $y$.
 %    positive examples proportionally to the ratio of negative to positive
 %    examples in the training data in order to compensate for the sparsity
 %    of the positive class.
-\kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
+%\kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
     We use a learning rate of .0001 and a dropout rate of .25 for all dropout
     layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$).
     We train for a maximum of 30 epochs and the best
     model is selected with early stopping on the validation set according
-    to ROUGE-2. All experiments are repeated with five random\hal{there's prolly a bunch here that could go to the appendix}
+    to ROUGE-2. All experiments are repeated with five random
+    %\hal{there's prolly a bunch here that could go to the appendix}
     initializations. Weight matrix parameters are initialized using 
     Xavier initialization with the normal distribution 
     \cite{glorot2010understanding} and bias terms are set to 0.
@@ -33,7 +34,7 @@ training examples with label $y$.
     We use a batch size of 32 for all datasets except AMI and PubMed, which
     are often longer and consume more memory, for
     which we use sizes two and four respectively.
-\kathy{why? Say.}
+%\kathy{why? Say.}
     For the Cheng \& Lapata model, we train for half of the maximum epochs 
     with teacher forcing, i.e. we set $p_i = 1$
     if $y_i = 1$ in the gold data and 0 otherwise 
@@ -42,7 +43,6 @@ training examples with label $y$.
     during the second half training.
 
 
-\hal{do you say anywhere how you do significance testing and what significance level you use?}
 
 
 
@@ -77,7 +77,25 @@ described in Section~\ref{sec:datasets}.}
 
 %To better understand this phenomenon, 
 
+We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge} 
+as our main evaluation metric;
+ROUGE-1 and ROUGE-LCS trend similarity to ROUGE-2 in our experiments.
+We use target word lengths of 100 words for the news domains, and 
+75, 290, and 200 words for Reddit, AMI, and PubMed respectively.
+We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
+which measures precision and recall of reference words, allowing for
+more complicated word matchings (e.g. via synonymy or morphology).
 
+
+
+
+To perform statistical significance, we first average each document level score
+(either ROUGE-2 or METEOR) over the five random initializations to get
+one score per document per system per dataset.
+We then test the difference between the best system on each dataset and 
+all other systems using the approximate randomization test 
+\cite{riezler2005some} with the Bonferroni correction for multiple comparisons,
+testing for significance at the $\alpha=.05$ level. 
 
 
 %%% Local Variables:
