@@ -68,24 +68,28 @@ size of these datasets.
 
 
 \paragraph{Word Embedding Learning}
- Given that learning a sentence encoder (averaging has no learned structure)
+ Given that learning a sentence encoder (averaging has no learned parameters)
  does not yield significant improvement, it is natural to consider whether
  learning word embeddings is also necessary. 
  In \autoref{tab:embeddings} we compare the performance of different extractors
  using the averaging encoder, when the word embeddings are held fixed or 
  learned during training. In both cases, word embeddings are initialized with
  GloVe embeddings.
+ \hal{TRAINED ON WHAT? JUST THE DEFAULT ONES?}
  When learning embeddings, words occurring 
- fewer than three times in the training data are mapped to a learned unknown
- token.
+ fewer than three times in the training data are mapped to an unknown
+ token (with learned embedding).
  
 % shows ROUGE recall
 %when using fixed or updated word embeddings. 
  In all but one case,
 fixed embeddings are as good or better than the learned embeddings.
 This is a somewhat surprising finding on the CNN/DM data since it is reasonably
-large by most standards and learning embeddings should give the models more
-flexibility to identify important word features. 
+large, and learning embeddings should give the models more
+flexibility to identify important word features.\footnote{The AMI corpus is an exception here where learning \emph{does} lead to small
+performance boosts, however, only in the Seq2Seq extractor is this diference 
+significant; it is quite possible that this is an artifact of the very small
+test set size.}
 %\hal{why is it surprising?} \textcolor{green}{[[CK: Because learning embeddings should give the model more capacity to represent important patterns]]}
 This suggests that we cannot extract much generalizable learning signal 
 from the content other than what is already present from initialization. 
@@ -93,11 +97,6 @@ Even on PubMed, where the language is quite different from the news/Wikipedia
 articles the GloVe embeddings were trainined on, learning leads to 
 significantly worse results.
 
-
-The AMI corpus is an exception here where learning does lead to small
-performance boosts, however, only in the Seq2Seq extractor is this diference 
-significant; it is quite possible that this is an artifact of the small
-test size (20 datapoints).
 %The language of this corpus is quite different from the 
 %data that the GloVe embeddings were trained on and so it makes sense 
 %that  there would be more benefit to learning word representations; one
@@ -148,7 +147,7 @@ suggesting the intensifiers and descriptive words are useful for
 identifying important content in personal narratives.
 Curiously, 
 removing the miscellaneous POS class yields a significant improvement
-on DUC 2002 and AMI.
+on DUC 2002 and AMI.\hal{WAS THIS REMOVED FROM THE TABLE???}
 
 
 %The newswire domain does not appear to be sensative
@@ -170,7 +169,7 @@ most of the selected sentences in the news domain came from the lead paragraph
 of the document. This is despite the fact that there is a long tail of 
 sentence extractions from later in the document in the ground truth extract 
 summaries (31\%, 28.3\%, and 11.4\% of DUC, CNN/DM, and NYT training extract labels come 
-from the back half of the document). 
+from the second half of the document). 
 %\hal{can you be more specific? like give some stats? what \%age come from first quarter of doc and what \%age from last half or something}. 
 Because this lead bias is so strong, it is questionable whether
 the models are learning to identify important content or just find the start

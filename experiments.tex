@@ -1,14 +1,19 @@
 
-We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge} 
-as our main evaluation metric;
-ROUGE-1 and ROUGE-LCS trend similarity to ROUGE-2 in our experiments.
-We use target word lengths of 100 words for the news domains, and 
-75, 290, and 200 words for Reddit, AMI, and PubMed respectively.
+We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge};
+ROUGE-1 and ROUGE-LCS trend similarity in our experiments.
+We use target word lengths of 100 words for news, and 
+75, 290, and 200 for Reddit, AMI, and PubMed respectively.
 We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
 which measures precision and recall of reference words, allowing for
-more complicated word matchings (e.g. via synonymy or morphology).
+more matchings on synonymy or morphology.
+We estimate statistical significance by averaging each document level score
+over the five random initializations.
+We then test the difference between the best system on each dataset and 
+all other systems using the approximate randomization test 
+\cite{riezler2005some} with the Bonferroni correction for multiple comparisons,
+testing for significance at the $0.05$ level. 
 
-
+\subsection{Training}
 
 %\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
 We train all models to minimize the weighted negative log-likelihood
@@ -42,7 +47,7 @@ the first $x$ words;  and a tail baseline, using the last $x$ words
 ($x$ is the target summary length for each domain).
 To measure the approximate performance ceiling,
 we also show the oracle performance using the 
-summary which results from greedily optimizing ROUGE-1 
+summary which results from greedily optimizing ROUGE-1 .
 
 %We choose ROUGE-2
 %recall as our main evaluation metric since it has the strongest correlation
@@ -69,15 +74,6 @@ summary which results from greedily optimizing ROUGE-1
 %To better understand this phenomenon, 
 
 
-
-
-To perform statistical significance, we first average each document level score
-(either ROUGE-2 or METEOR) over the five random initializations to get
-one score per document per system per dataset.
-We then test the difference between the best system on each dataset and 
-all other systems using the approximate randomization test 
-\cite{riezler2005some} with the Bonferroni correction for multiple comparisons,
-testing for significance at the $\alpha=.05$ level. 
 
 
 
