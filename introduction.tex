@@ -28,17 +28,17 @@
 %selection. Note that you could be criticized even here as some people may say that
 %summarization should be phrase selection (although it rarely is)}
 %\kathy{I have also reworded definition of content selection for NLG.}
-Content selection is an important sub-task in many natural language generation
+Content selection is an central component in many natural language generation
 %problems, 
 tasks,
 where, given a generation goal, the system must determine which information
 %i.e. given some context, determine which information
-needs to be expressed in output text \cite{gatt2018survey}.
-In summarization, content selection usually is accomplished through sentence (and,
-less frequently, phrase) extraction.
- While it is a key component of both
-extractive and abstractive summarization systems, it is not generally well 
-understood how deep learning models perform this task with only word and 
+should be expressed in output text \cite{gatt2018survey}.
+In summarization, content selection is usually accomplished through sentence (and,
+occasionally, phrase) extraction.
+Despite being a key component of both
+extractive and abstractive summarization systems, it is is not well
+understood how deep learning models perform content selection with only word and 
 sentence
 embedding based features as input\hal{i'm not sure what this sentence means, especially the part after ``using'', CK: addressed it, does it work now?}.
 %\hal{well understood as a task or in specific models?} 
@@ -52,23 +52,23 @@ used in most neural network summarization systems.
 
 In this paper, we seek to better understand how deep learning models of 
 %summarization are performing content selection across a variety of domains.
-summarization perform content selection across the news, personal stories,
-workplace meetings, and medical journal article domains.\footnote{\textbf{Code and data release:} Upon
+summarization perform content selection across multiple domains (\S~\ref{sec:datasets}): news, personal stories,
+meetings, and medical articles (for which we collect a new corpus).\footnote{\textbf{Code and data release:} Upon
 publication, all code and pre-processing scripts
 will be released under an MIT (or more liberal)
 license; all data will be made available after
 publication when allowed by original licenses.}
 %no new paragraph needed here
-We perform an analysis 
-of several recent sentence extractive neural network architectures, 
-specifically considering the design choices for sentence encoders and 
-extractors. We compare Recurrent Neural Network (RNN) and Convolutional Neural
+We analyze
+several recent sentence extractive neural network architectures, 
+specifically considering the design choices for sentence encoders (\S~\ref{sec:senc})
+and sentence extractors (\S~\ref{sec:sext}). We compare Recurrent Neural Network (RNN) and Convolutional Neural
 Network (CNN) based sentence representations to the 
 simpler approach of word embedding averaging to understand the gains 
 derived from more sophisticated architectures.
 We also question the necessity of auto-regressive sentence extraction 
 (i.e. using previous model predictions to inform future predictions), 
-which the previous approaches have assumed,
+which previous approaches have used (\S~\ref{sec:related}),
 and propose two alternative models that extract sentences independently.
 %
 %We compare these architectures against
@@ -87,8 +87,11 @@ and propose two alternative models that extract sentences independently.
 %For example:
 %~
 %KM2: Minor changes below
-Our main results reveal:
-\begin{enumerate}
+\\[-0.5em]
+
+\noindent
+Our main results (\S~\ref{sec:exps}) reveal:
+\begin{enumerate}[nolistsep,noitemsep]
 \item Sentence position bias dominates the learning signal for news summarization, though not for
 other domains. %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
 Summary quality for news is only slightly degraded when content words

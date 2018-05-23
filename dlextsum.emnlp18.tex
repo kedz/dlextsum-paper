@@ -11,7 +11,6 @@
 \usepackage{colortbl}
 \usepackage{xspace}
 \usepackage{bbm}
-\usepackage{verbatim,toappendix}
 \usepackage{amsfonts}
 %\usepackage[]{algorithm2e}
 %\usepackage{algorithmic}
@@ -32,6 +31,9 @@
 
 \usepackage{amsmath}
 \DeclareMathOperator*{\argmax}{arg\,max}
+\usepackage{verbatim,toappendix}
+%\newenvironment{toappendix}{}{}{}
+%\newcommand{\makeappendix}{}
 
 \newcommand\BibTeX{B{\sc ib}\TeX}
 \newcommand\confname{EMNLP 2018}
@@ -66,7 +68,7 @@
 \section{Introduction}
 \input{introduction}
 
-\section{Related Work}
+\section{Related Work} \label{sec:related}
 \input{related_work}
 
 \section{Methods}
@@ -85,10 +87,10 @@
 \input{tables/table_inorder_vs_shuffled.tex}
 
 
-\section{Experiments}
+\section{Experiments} \label{sec:exps}
 \input{experiments}
 
-\section{Results}
+\subsection{Results} 
 \input{results}
 
 \section{Discussion}
