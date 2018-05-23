@@ -19,6 +19,9 @@
 \usepackage{ifthen}
 \newcolumntype{g}{>{\columncolor{black!5}}c}
 \newcolumntype{f}{>{\columncolor{black!5}}r}
+%\newcolumntype{f}{>{\columncolor{black!5}}r}
+%\newcolumntype{v}{>{\columncolor{black!5}}r}
+\newcolumntype{L}[1]{>{\columncolor{black!5}}m{#1}}
 
 %\aclfinalcopy % Uncomment this line for the final submission
 %\def\aclpaperid{***} %  Enter the acl Paper ID here
@@ -41,7 +44,7 @@
 
 \newcommand{\hal}[1]{} %{\textcolor{blue!50!red!70!white}{\textbf{[[Hal: #1]]}}}
 \newcommand{\kathy}[1]{} %{\textcolor{blue!70!red!50!white}{\textbf{[[Kathy: #1]]}}}
-\newcommand{\hidey}[1]{} %{\textcolor{green}{\textbf{[[Hidey: #1]]}}}
+\newcommand{\hidey}[1]{}%{\textcolor{green}{\textbf{[[Hidey: #1]]}}}
 
 \title{Content Selection in Deep Learning Models of Summarization}
 
