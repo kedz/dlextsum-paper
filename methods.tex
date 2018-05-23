@@ -99,7 +99,7 @@ is to
   model $p(\slabel_{1:n}|\sentEmb) = \prod_{i=1}^n p(y_i|h)$, 
   which we explore in two proposed extractor models the we refer to as the RNN 
   and Seq2Seq extractors.
-Implementation details can be found for all extractors in the \autoref{app:sentextractors}.
+Implementation details for all extractors are in Appendix~\ref{app:sentextractors}.
 
 
 \paragraph{Previously Proposed Sentence Extractors}
@@ -119,7 +119,7 @@ embeddings are fed as input to the decoder and decoder outputs are used to
 predict each $y_i$. The decoder input is weighted by the previous extraction
 probability, inducing the dependence of $y_i$ on $y_{<i}$.
 See \autoref{fig:extractors}.c for a graphical layout of the extractor
-and \autoref{app:clextractor} for the full implementation details.
+and Appendix~\ref{app:clextractor} for details.
 
 %?, but are delayed by one step and 
 %?weighted by their prediction probability, i.e. at decoder step $t$,
@@ -141,13 +141,13 @@ with different encoders. } and the output
 concatenated. A representation of the whole document is made by 
 averaging the RNN output. A summary representation is also constructed 
 by taking the sum of the previous RNN outputs weighted by their extraction
-probabilities. Extraction predictions are then made using 
+probabilities. Extraction predictions are made using 
 the RNN output at the $i$-th step, the document representation, and 
 $i$-th version of the summary representation, along with factors for 
 sentence location in the document. The use of the iteratively constructed
-summary representation induces depence of $y_i$ on all $y_{<i}$.
-See \autoref{fig:extractors}.d for a graphical layout of the extractor
-and \autoref{app:srextractor} for the full implementation details.
+summary representation create a dependence of $y_i$ on all $y_{<i}$.
+See \autoref{fig:extractors}.d for a graphical layout,
+and Appendix~\ref{app:srextractor} for details.
 
 %?A document representation $q$ is created by passing the 
 %?averaged RNN output through a fully connected layer.
@@ -179,8 +179,8 @@ The forward and backward outputs of each sentence are passed through a
 multi-layer perceptron with a logsitic sigmoid output 
 to predict the probability
 of extracting each sentence. 
-See \autoref{fig:extractors}.a for a graphical layout of the extractor
-and \autoref{app:rnnextractor} for the full implementation details.
+See \autoref{fig:extractors}.a for a graphical layout,
+and Appendix~\ref{app:rnnextractor} for details.
 
 
 \paragraph{\sts~Extractor} One shortcoming of the RNN extractor is that long range
@@ -196,8 +196,8 @@ encoded by a bidirectional $\gru$. A separate decoder $\gru$ transforms each
 sentence into a query vector which attends to the encoder output. The
 attention weighted encoder output and the decoder $\gru$ output are concatenated
 and fed into a multi-layer percepron to compute the extraction probability.
-See \autoref{fig:extractors}.b for a graphical layout of the extractor
-and \autoref{app:s2sextractor} for the full implementation details.
+See \autoref{fig:extractors}.b for a graphical layout,
+and Appendix~\ref{app:s2sextractor} for details.
 
 %
 %We study three architectures for the sentence encoders, namely, 

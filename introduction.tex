@@ -67,7 +67,7 @@ Network (CNN) based sentence representations to the
 simpler approach of word embedding averaging to understand the gains 
 derived from more sophisticated architectures.
 We also question the necessity of auto-regressive sentence extraction 
-(i.e. using previous model predictions to inform future predictions), 
+(i.e. using previous predictions to inform future predictions), 
 which previous approaches have used (\S~\ref{sec:related}),
 and propose two alternative models that extract sentences independently.
 %
@@ -91,7 +91,7 @@ and propose two alternative models that extract sentences independently.
 
 \noindent
 Our main results (\S~\ref{sec:exps}) reveal:
-\begin{enumerate}[nolistsep,noitemsep]
+\begin{enumerate}[noitemsep]
 \item Sentence position bias dominates the learning signal for news summarization, though not for
 other domains. %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
 Summary quality for news is only slightly degraded when content words
@@ -123,8 +123,8 @@ are omitted from sentence embeddings. %\hal{this sounds like you remove content 
 %Oddly we find that the independent predictions are as good as sequential 
 %predictions.
 
-
-%KM - Merged this paragraph with the next one.
+% KM - Merged this paragraph with the next one.
+\noindent
 Taken together, these and other results in the paper suggest that we are 
 over-estimating the ability of deep learning models to learn robust and 
 meaningful content features for summarization.  \hal{i think there need to be stronger take-aways here. why do i care about these things?}

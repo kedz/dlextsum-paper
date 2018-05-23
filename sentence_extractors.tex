@@ -45,7 +45,7 @@ RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
 The  forward and backward outputs of each sentence are passed through a 
 multi-layer perceptron with a logsitic sigmoid output (denoted by $\sigma$)
 to predict the probability
-of extracting each sentence. See details in \autoref{app:rnnextractor}
+of extracting each sentence. See details in Appendix~\ref{app:rnnextractor}
 
 \begin{toappendix}
 \section{Details on RNN Extractor.} \label{app:rnnextractor}
@@ -73,7 +73,7 @@ encoded by a bidirectional $\gru$. A separate decoder $\gru$ transforms each
 sentence into a query vector which attends to the encoder output. The
 attention weighted encoder output and the decoder $\gru$ output are concatenated
 and fed into a multi-layer percepron to compute the extraction probability.
-Detail in \autoref{app:s2sextractor}.
+Detail in Appendix~\ref{app:s2sextractor}.
 \begin{toappendix}
 \section{Details on Seq2Seq Extractor.} \label{app:s2sextractor}
 \begin{align}
