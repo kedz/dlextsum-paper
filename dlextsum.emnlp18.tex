@@ -42,8 +42,8 @@
 \newcommand\confname{EMNLP 2018}
 \newcommand\conforg{SIGDAT}
 
-\newcommand{\hal}[1]{} %{\textcolor{blue!50!red!70!white}{\textbf{[[Hal: #1]]}}}
-\newcommand{\kathy}[1]{} %{\textcolor{blue!70!red!50!white}{\textbf{[[Kathy: #1]]}}}
+\newcommand{\hal}[1]{}%{\textcolor{blue!50!red!70!white}{\textbf{[[Hal: #1]]}}}
+\newcommand{\kathy}[1]{}%{\textcolor{blue!70!red!50!white}{\textbf{[[Kathy: #1]]}}}
 \newcommand{\hidey}[1]{}%{\textcolor{green}{\textbf{[[Hidey: #1]]}}}
 
 \title{Content Selection in Deep Learning Models of Summarization}
@@ -64,6 +64,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
+We carry out experiments with deep learning models of summarization across the domains of news, personal stories, meetings and medical articles in order to understand how content selection is performed. We find that many sophisticated features of state of the art extractive summarizers do not improve performance over simpler models. These results suggest that it is easier to create a summarizer for  a new domain than previous work suggests and bring into question the benefit of deep learning models for summarization for those domains that do have massive datasets (i.e., news). At the same time, they suggest important questions for new research in summarization; namely,  new forms of sentence representations or external knowledge sources are needed that are better suited to the sumarization task. 
 \end{abstract}
 
 \input{macros}
@@ -93,8 +94,47 @@
 \section{Experiments} \label{sec:exps}
 \input{experiments}
 
+\begin{table*}[ht]
+    \footnotesize
+\centering
+  \begin{tabular}{p{24em} p{24em}}
+\toprule
+Hurricane Gilbert swept toward the Dominican Republic Sunday, and the 
+   Civil Defense alerted its heavily populated south coast to prepare 
+   for high winds, heavy rains and high seas.                         
+The storm was approaching from the southeast with sustained winds of  
+   75 mph gusting to 92 mph.                                          
+An estimated 100,000 people live in the province, including 70,000 in 
+   the city of Barahona, about 125 miles west of Santo Domingo.       
+\textbf{On Saturday, Hurricane Florence was downgraded to a tropical storm and
+   its remnants pushed inland from the U.S. Gulf Coast.}               
+Tropical Storm Gilbert formed in the eastern Caribbean and            
+   strengthened into a hurricane Saturday night.  
+&
+Hurricane Gilbert swept toward the Dominican Republic Sunday, and the 
+   Civil Defense alerted its heavily populated south coast to prepare 
+   for high winds, heavy rains and high seas.                         
+The storm was approaching from the southeast with sustained winds of  
+   75 mph gusting to 92 mph.                                          
+An estimated 100,000 people live in the province, including 70,000 in 
+   the city of Barahona, about 125 miles west of Santo Domingo.       
+Tropical Storm Gilbert formed in the eastern Caribbean and            
+   strengthened into a hurricane Saturday night.                      
+\textbf{Strong winds associated with the Gilbert brought coastal flooding,    
+   strong southeast winds and up to 12 feet feet to Puerto Rico's     
+   south coast.}   \\
+\bottomrule
+\end{tabular}
+\caption{Example output of Seq2Seq extractor (left) and Cheng 
+\& Lapata Extractor (right). This is a typical example, where only one
+ sentence is different between the two (show in bold). }
+\label{tab:output}
+\end{table*}
+
 \subsection{Results} 
 \input{results}
+
+
 
 \section{Discussion}
 \input{discussion}
@@ -102,8 +142,8 @@
 
 \section{Conclusion}
 We have presented an empirical study of deep learning based content selection
-algorithms for summarization. Our findings suggest more work is needed 
-on sentence representation.
+algorithms for summarization. Our findings suggest such models face stark limitations on their ability to learn robust features for this task and that 
+more work is needed on sentence representation for summarization.
 
 
 

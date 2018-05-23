@@ -55,11 +55,11 @@
         \multirow{2}{*}{\textbf{Extractor}} &\multirow{2}{*}{\textbf{Enc.}}  & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}} & \multicolumn{2}{g}{\textbf{DUC 2002}} & \multicolumn{2}{c}{\textbf{Reddit}} & \multicolumn{2}{g}{\textbf{AMI}} & \multicolumn{2}{c}{\textbf{PubMed}}\\
          &  & M & R-2 & M & R-2 & M & R-2 & M & R-2 & M & R-2 & M & R-2\\
         \midrule
-        Random &  -- & 18.2 & 12.7 & 20.7 & 16.0 & 21.7 & 15.8 & \textbf{20.4} & \textbf{12.9} & 12.7 &  2.0 & 16.9 &  9.3\\
-        \hline
+%        Random &  -- & 18.2 & 12.7 & 20.7 & 16.0 & 21.7 & 15.8 & \textbf{20.4} & \textbf{12.9} & 12.7 &  2.0 & 16.9 &  9.3\\
+%        \hline
         Lead &  -- & 24.1 & 24.4 & 30.0 & 32.3 & 25.1 & 21.5 & \textbf{20.1} & \textbf{10.9} & 12.3 &  2.0 & 15.9 &  9.3\\
-        \hline
-        Tail &  -- & 13.7 &  5.4 & 12.5 &  4.1 & 17.8 &  9.1 & \textbf{19.8} & \textbf{10.0} & 11.5 &  2.7 & 17.0 &  9.9\\
+%        \hline
+%        Tail &  -- & 13.7 &  5.4 & 12.5 &  4.1 & 17.8 &  9.1 & \textbf{19.8} & \textbf{10.0} & 11.5 &  2.7 & 17.0 &  9.9\\
         \hline
         \multirow{3}{*}{RNN} & Avg. & \textbf{25.2} & 25.4 & 29.8 & 34.7 & \textbf{26.8} & 22.7 & \textbf{20.4} & \textbf{11.4} & \textbf{17.0} & \textbf{ 5.5} & 19.8 & 17.0\\
          & RNN & 25.1 & 25.4 & 29.6 & 34.9 & \textbf{26.8} & 22.6 & \textbf{20.2} & \textbf{11.4} & 16.2 & \textbf{ 5.2} & 19.7 & 16.6\\
@@ -83,7 +83,6 @@
 
     \caption{METEOR (M) and ROUGE-2 recall (R-2)  results across all 
         extractor/encoder pairs.
-           All results are averaged over five random initializations. 
            Results that are statistically indistinguishable from the best 
            system are shown in bold face.}
   \label{tab:results}

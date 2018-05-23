@@ -3,9 +3,9 @@ We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge};
 ROUGE-1 and ROUGE-LCS trend similarity in our experiments.
 We use target word lengths of 100 words for news, and 
 75, 290, and 200 for Reddit, AMI, and PubMed respectively.
-We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
-which measures precision and recall of reference words, allowing for
-more matchings on synonymy or morphology.
+We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014}.
+%which measures precision and recall of reference words, allowing for
+%more matchings on synonymy or morphology.
 We estimate statistical significance by averaging each document level score
 over the five random initializations.
 We then test the difference between the best system on each dataset and 
@@ -25,7 +25,7 @@ using stochastic gradient descent with the ADAM optimizer
 $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of 
 training examples with label $y$.
 %    \kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
-\hal{what about kathy's question?}
+%\hal{what about kathy's question?}
     We train for a maximum of 30 epochs and the best
     model is selected with early stopping on the validation set according
     to ROUGE-2. All experiments are repeated with five random
@@ -42,9 +42,11 @@ training examples with label $y$.
 %to those of Cheng \& Lapata and SummaRunner.
 %We test all possible sentence extractor/encoder pairs across all the datasets
 %described in Section~\ref{sec:datasets}.} 
-As baselines we include a random summary baseline, i.e. randomly selecting sentences until word length $x$ is reached; a lead baseline, using 
-the first $x$ words;  and a tail baseline, using the last $x$ words
-($x$ is the target summary length for each domain).
+As a baseline we include the lead summary, using the first $x$ words
+where $x$ is the target summary length for each dataset.
+%a random summary baseline, i.e. randomly selecting sentences until word length $x$ is reached; a lead baseline, using 
+%the first $x$ words;  and a tail baseline, using the last $x$ words
+%($x$ is the target summary length for each domain).
 To measure the approximate performance ceiling,
 we also show the oracle performance using the 
 summary which results from greedily optimizing ROUGE-1 .

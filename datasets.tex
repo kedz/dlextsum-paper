@@ -15,10 +15,10 @@ sports, and entertainment.
 \paragraph{New York Times}The New York Times (NYT) corpus \cite{sandhaus2008new} contains
  two types of abstracts for a subset of its articles. The first summary is
 an archival abstract and the 
-second is a shorter online teaser meant to elicit a viewer on the webpage to
+second is a shorter online teaser meant to entice a viewer of the webpage to
 click to read more. From this collection, we take all articles that have 
-a concatenated summary length of at least 100 words
-\hal{the following comment was commented out but not answered and idk why???? [[i'm not sure what you mean here. are you concatenating the two summaries? if so, say so. is that a little weird tho? CK they are still treated as separate refs when evaluating. I did this because the online abs could be really short but I dont quite remember why I did this tbh]]}.
+a concatenated summary length of at least 100 words.
+%\hal{the following comment was commented out but not answered and idk why???? [[i'm not sure what you mean here. are you concatenating the two summaries? if so, say so. is that a little weird tho? CK they are still treated as separate refs when evaluating. I did this because the online abs could be really short but I dont quite remember why I did this tbh]]}.
 %This collection
 %includes both straight newswire as well as opinion and long-form journalism.
 We create training, validation, and test splits by partitioning on dates;
@@ -50,7 +50,8 @@ summaries. We use the prescribed splits.
 \paragraph{Reddit} \citet{ouyang2017crowd} collected a corpus of personal 
     stories shared
  on Reddit\footnote{\url{www.reddit.com}} along with multiple extractive 
- and abstractive summaries. %These stories are relatively short compared
+ and abstractive summaries. We randomly split this data using roughly three and five percent of the data validation and test respectively.
+ %These stories are relatively short compared
  %to the other corpora with an average sentence length of ??. 
 %\kathy{Why didn't you use theirs?}
 % We created our own train, validation, and test splits resulting in 
@@ -105,9 +106,8 @@ by greedily optimizing ROUGE-1, using the algorithm in \autoref{app:oracle}.
 %length budget is reached\hal{what does this mean. does it mean that if the $\hat s$ that's selected puts you over length limit then you stop, or is it that you stop when there are no more sentences that you can cram in? and what if adding $\hat s$ doesn't make rouge go up?}. 
 We choose to optimize for ROUGE-1 rather than 
 ROUGE-2 similarly to other optimization based approaches to summarization 
-\textcolor{red}{
-\cite{durrett2016learning,sipos2012large,nallapati2017summarunner} which found this
-be the easier optimization target.}
+\cite{sipos2012large,durrett2016learning} which found this to
+be the easier target to learn.
 
 
 

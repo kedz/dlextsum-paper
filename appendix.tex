@@ -8,6 +8,7 @@
   \section{Details on Sentence Encoders} \label{app:sentencoders}
 
   We use 200 dimenional word embeddings \wordEmb[i] in all models.
+  Dropout is applied to the embeddings during training.
 
 \subsection{Details on RNN Encoder} \label{app:rnnencoder}
   
@@ -23,7 +24,8 @@ where
 \end{align}
 and $\rgru$ amd $\lgru$ indicate the 
 forward and backward GRUs respectively, each with separate 
-parameters.
+parameters. We use 300 dimensional hidden layers for each GRU. 
+Dropout is applied to GRU during training.
 
 \subsection{Details on CNN Encoder} \label{app:cnnencoder}
 The \textit{CNN} encoder has hyperparameters
@@ -47,6 +49,8 @@ where $\specConvBias\in\mathcal{R}$ and $\specConvWeight \in
 \mathcal{R}^{\filterWindowSize \times \wordEmbSize}$ are learned bias and filter
 weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
 linear unit activation.
+We use window sizes $K={1, 2, 3, 4, 5, 6}$ with corresponding feature maps sizes 25, 25, 50, 50, 50, 50, giving $h$ a dimensionality of 300. 
+Dropout is applied to the CNN output during training.
 
 \section{Details on Sentence Extractors} \label{app:sentextractors}
 \subsection{Details on RNN Extractor} \label{app:rnnextractor}
@@ -59,6 +63,8 @@ linear unit activation.
 where $\rgru$ and $\lgru$ indicate the 
 forward and backward GRUs respectively, and each have separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+The hidden layer size of the GRU is 300 for each direction and the MLP hidden layer
+size is 100. Dropout is applied to the GRUs and to $a_i$.
 
 \subsection{Details on Seq2Seq Extrator} \label{app:s2sextractor}
 \begin{align}
@@ -87,6 +93,8 @@ steps; additionally, the first step of the decoder GRUs are learned
 (see Figure~\ref{fig:extractors}.b).
 Each GRU has separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+The hidden layer size of the GRU is 300 for each direction and MLP hidden layer
+size is 100. Dropout is applied to the GRUs and to $a_i$.
 
 \subsection{Details on Cheng \& Lapata Extractor.} \label{app:clextractor}
 The basic architecture is a unidirectional
@@ -108,6 +116,9 @@ the decoder side GRU input is the sentence embedding from the previous time
 step weighted by its probabilitiy of extraction ($p_{i-1}$) from the 
 previous step, inducing dependence of each output $y_i$ on all previous 
 outputs $y_{<i}$.
+The hidden layer size of the GRU is 300 and the MLP hidden layer
+size is 100. Dropout is applied to the GRUs and to $a_i$.
+
 
 %\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
 
@@ -168,6 +179,11 @@ sum of these terms plus a bias,
 The weight matrices $W_q$, $W_z$, $W^{(con)}$, $W^{(sal)}$, $W^{(nov)}$, $W^{(pos)}$,
 $W^{(qrt)}$ and bias terms $b_q$, $b_z$, and $b$ are learned parameters;
 The GRUs have separate learned parameters.
+The hidden layer size of the GRU is 300 for each direction $z_i$, $q$, and $g_i$ have 100 dimensions. The position and quartile embeddings are 16 dimensional each.
+Dropout is applied to the GRUs and to the MLP layer.
+
+
+
 
 Note that in the original paper, the SummaRunner extractor was paired 
 with

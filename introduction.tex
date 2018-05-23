@@ -40,7 +40,8 @@ Despite being a key component of both
 extractive and abstractive summarization systems, it is is not well
 understood how deep learning models perform content selection with only word and 
 sentence
-embedding based features as input\hal{i'm not sure what this sentence means, especially the part after ``using'', CK: addressed it, does it work now?}.
+embedding based features as input.
+%\hal{i'm not sure what this sentence means, especially the part after ``using'', CK: addressed it, does it work now?}.
 %\hal{well understood as a task or in specific models?} 
 Non-neural network approaches often use frequency and information theoretic measures as proxies
 for content salience \cite{hong2014improving}, but these are not explicitly %\hal{directly? explicitly?} 
@@ -48,7 +49,7 @@ used in most neural network summarization systems.
 %\hal{maybe instead of recent work say nn systems?}.
 % changed wording
 
-\hal{there are lots of widows/orphans throughout that need to be cleaned up.}
+%\hal{there are lots of widows/orphans throughout that need to be cleaned up.}
 
 In this paper, we seek to better understand how deep learning models of 
 %summarization are performing content selection across a variety of domains.
@@ -93,7 +94,9 @@ and propose two alternative models that extract sentences independently.
 Our main results (\S~\ref{sec:exps}) reveal:
 \begin{enumerate}[noitemsep]
 \item Sentence position bias dominates the learning signal for news summarization, though not for
-other domains. %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
+    other domains.\footnote{This is a known bias 
+    in news summarization \cite{nenkova2005automatic}.}
+        %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
 Summary quality for news is only slightly degraded when content words
 are omitted from sentence embeddings. %\hal{this sounds like you remove content words and the summary is still as good. clearly not what's meant. i hope :P.}
 \item Word embedding averaging is as good or better than either RNNs or CNNs for sentence embedding across all domains.
@@ -127,9 +130,9 @@ are omitted from sentence embeddings. %\hal{this sounds like you remove content 
 \noindent
 Taken together, these and other results in the paper suggest that we are 
 over-estimating the ability of deep learning models to learn robust and 
-meaningful content features for summarization.  \hal{i think there need to be stronger take-aways here. why do i care about these things?}
+meaningful content features for summarization.  %\hal{i think there need to be stronger take-aways here. why do i care about these things?}
 In one sense, this might lessen the burden of applying neural network models
-of  content to other domains; you really just need in-domain word embeddings.
+of  content to other domains; one really just needs in-domain word embeddings.
 However, if we want to learn something other than where the start of 
 the article is, we will need to design other means of sentence representation,
 and possibly external knowledge representations, better suited to the summarization task.

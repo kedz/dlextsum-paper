@@ -25,7 +25,7 @@ are not statistically significant. %When only comparing within the
 
 
 When looking at extractors, the Seq2Seq extractor is either part of 
-the best performing system (\textcolor{red}{2 out of 5} datasets) or is not 
+the best performing system (three out of six datasets) or is not 
 statistically distinguishable from the best extractor. 
 
 Overall, on the news and medical journal domains, the differences are 
@@ -74,8 +74,8 @@ size of these datasets.
  In \autoref{tab:embeddings} we compare the performance of different extractors
  using the averaging encoder, when the word embeddings are held fixed or 
  learned during training. In both cases, word embeddings are initialized with
- GloVe embeddings.
- \hal{TRAINED ON WHAT? JUST THE DEFAULT ONES?}
+ GloVe embeddings trained on a combination of Gigaword and Wikipedia.
+% \hal{TRAINED ON WHAT? JUST THE DEFAULT ONES?}
  When learning embeddings, words occurring 
  fewer than three times in the training data are mapped to an unknown
  token (with learned embedding).
@@ -94,7 +94,7 @@ test set size.}
 This suggests that we cannot extract much generalizable learning signal 
 from the content other than what is already present from initialization. 
 Even on PubMed, where the language is quite different from the news/Wikipedia
-articles the GloVe embeddings were trainined on, learning leads to 
+articles the GloVe embeddings were trained on, learning leads to 
 significantly worse results.
 
 %The language of this corpus is quite different from the 
@@ -146,8 +146,8 @@ Removing adjectives and adverbs leads to the largest drop on Reddit,
 suggesting the intensifiers and descriptive words are useful for 
 identifying important content in personal narratives.
 Curiously, 
-removing the miscellaneous POS class yields a significant improvement
-on DUC 2002 and AMI.\hal{WAS THIS REMOVED FROM THE TABLE???}
+removing the function word POS class yields a significant improvement
+on DUC 2002 and AMI.%\hal{WAS THIS REMOVED FROM THE TABLE???}
 
 
 %The newswire domain does not appear to be sensative
@@ -160,7 +160,7 @@ on DUC 2002 and AMI.\hal{WAS THIS REMOVED FROM THE TABLE???}
 
 \textbf{Document Shuffling} Sentence position is a well known and 
 powerful feature for news summarization \cite{hong2014improving}, owing 
-from the intentional lead bias in the news article writing\footnote{link to ap style guide on inverted pyramid}; it also explains the difficulty in beating
+to the intentional lead bias in the news article writing\footnote{\url{https://en.wikipedia.org/wiki/Inverted_pyramid_(journalism)}}; it also explains the difficulty in beating
 the lead baseline for single-document summarization 
 \cite{nenkova2005automatic,rau:1999}.
 In examining the generated summaries, we found
@@ -180,15 +180,16 @@ each document's sentences are randomly shuffled during training. We then
 %evaluate each model performance on the unshuffled test data, comparing to 
 evaluate each model performance on the unshuffled test data, comparing to 
 the model trained on unshuffled data; if the models trained on shuffled data
-drop in performance, then this indicates the lead bias is relevant factor
-in learning content selection.
+drop in performance, then this indicates the lead bias is the relevant factor.
+%in learning content selection.
 
 \autoref{tab:shuffle} shows the results
 of the shuffling experiments. 
 The news domain suffers a significant drop in performance 
-when the document order is shuffled. \textcolor{red}{By comparison, there is no significant difference between the shuffled and in-order models on 
-the Reddit domain, and shuffling actually improves performance on the AMI}.
-%\hal{what about in the cross-domain setting?} This suggest that position 
+when the document order is shuffled. By comparison, there is no significant difference between the shuffled and in-order models on 
+the Reddit domain, and shuffling actually improves performance on the AMI.
+%\hal{what about in the cross-domain setting?} 
+This suggest that position 
 is being learned by the models in the news domain even when the model 
 has no explicit position features, and that this feature is more important 
 than either content or function words.

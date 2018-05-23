@@ -1,9 +1,9 @@
-\begin{figure*}
+\begin{figure}
   \center
-  \includegraphics[scale=.65]{figures/rnnextractor.pdf}
-  \includegraphics[scale=.65]{figures/s2s_extractor.pdf}
-  \includegraphics[scale=.65]{figures/clextractor.pdf}
-  \includegraphics[scale=.65]{figures/sr_extractor.pdf}
+  \includegraphics[scale=.45]{figures/rnnextractor.pdf}
+  \includegraphics[scale=.45]{figures/s2s_extractor.pdf}
+  \includegraphics[scale=.45]{figures/clextractor.pdf}
+  \includegraphics[scale=.45]{figures/sr_extractor.pdf}
   \caption{Sentence extractor architectures: a) RNN, b) Seq2Seq,
   c) Cheng \& Lapata, and d) SummaRunner. The $\bigoplus$ indicates 
   attention. Green repesents sentence encoder output, yellow and orange
@@ -11,7 +11,7 @@
   extractor encoder and decoder hidden states respectively, and red indicates
   learned ``begin decoding'' embeddings. }
   \label{fig:extractors}
-\end{figure*}
+\end{figure}
 
 
 
@@ -26,7 +26,7 @@ where the basic unit of extraction is a sentence and impose a word limit as
 the budget.
 
 We model the sentence extraction task as a sequence tagging problem, 
-following \cite{conroy2001text}. \hal{missing cite}
+following \cite{conroy2001text}. 
 Specifically, given a document containing $\docSize$ sentences 
 $\sent_1, \ldots, \sent_{\docSize}$ we generate a summary by predicting a 
 corresponding label sequence $\slabel_1, \ldots, \slabel_{\docSize} 
@@ -145,7 +145,7 @@ probabilities. Extraction predictions are made using
 the RNN output at the $i$-th step, the document representation, and 
 $i$-th version of the summary representation, along with factors for 
 sentence location in the document. The use of the iteratively constructed
-summary representation create a dependence of $y_i$ on all $y_{<i}$.
+summary representation creates a dependence of $y_i$ on all $y_{<i}$.
 See \autoref{fig:extractors}.d for a graphical layout,
 and Appendix~\ref{app:srextractor} for details.
 
@@ -184,7 +184,7 @@ and Appendix~\ref{app:rnnextractor} for details.
 
 
 \paragraph{\sts~Extractor} One shortcoming of the RNN extractor is that long range
-information from one end of the document may not easily be able to effect 
+information from one end of the document may not easily be able to affect 
 extraction probabilities of sentences at the other end. 
 Our second proposed model, the \sts~extractor mitigates this problem with an 
 attention 
