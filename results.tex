@@ -4,11 +4,12 @@ The results of our main experiment comparing
 the different extractors/encoders are shown in 
 Table~\ref{tab:results}.
 Overall, we find no major advantage when using the CNN and RNN sentence
-encoders. The best performing encoder/extractor pair uses the averaging 
-encoder (\textcolor{red}{4 out of 5 datasets}) or the differences 
-are not statistically significant. When only comparing within the 
-same extractor choice,  the averaging encoder is the better choice
-in 14 of 20 cases. 
+encoders. The best performing encoder/extractor pair either 
+uses the averaging 
+encoder (five out of six datasets) or the differences 
+are not statistically significant. %When only comparing within the 
+%same extractor choice,  the averaging encoder is the better choice
+%in 14 of 20 cases. 
 %\hal{i wonder if it would be worth adding another ``average performance metric'' column to \autoref{tab:results}.
 %  i'm thinking have ``Average $\Delta$-Best'' meaning how far (on average across the datasets) is this setting from the best setting available on that dataset.
 %  so since the best numbers are: 25.56, 35.85, 23.11, 13.65, 5.63
@@ -31,8 +32,8 @@ Overall, on the news and medical journal domains, the differences are
 quite small with the 
 differences between worst and best systems on the CNN/DM dataset 
 spanning only .56 of a ROUGE point. While there is more performance variability
- in the Reddit and AMI data, there is less distinction among systems: all systems
-are statistically indistinguishable from the best system on Reddit
+ in the Reddit and AMI data, there is less distinction among systems: 
+ no differences are significant on Reddit
 and every extractor has at least one configuration that is indistinguishable
 from the best system on the AMI corpus. This is probably due to the small test
 size of these datasets.
@@ -69,7 +70,7 @@ size of these datasets.
 \paragraph{Word Embedding Learning}
  Given that learning a sentence encoder (averaging has no learned structure)
  does not yield significant improvement, it is natural to consider whether
- learning word embeddings is necessary either. 
+ learning word embeddings is also necessary. 
  In \autoref{tab:embeddings} we compare the performance of different extractors
  using the averaging encoder, when the word embeddings are held fixed or 
  learned during training. In both cases, word embeddings are initialized with
@@ -80,8 +81,8 @@ size of these datasets.
  
 % shows ROUGE recall
 %when using fixed or updated word embeddings. 
- \textcolor{red}{In all but one case,
-fixed embeddings are as good or better than the learned embeddings.}
+ In all but one case,
+fixed embeddings are as good or better than the learned embeddings.
 This is a somewhat surprising finding on the CNN/DM data since it is reasonably
 large by most standards and learning embeddings should give the models more
 flexibility to identify important word features. 
@@ -95,11 +96,13 @@ significantly worse results.
 
 The AMI corpus is an exception here where learning does lead to small
 performance boosts, however, only in the Seq2Seq extractor is this diference 
-significant. The language of this corpus is quite different from the 
-data that the GloVe embeddings were trained on and so it makes sense 
-that  there would be more benefit to learning word representations; one
-explanation for only seeing modest improvements is purely the small size
-of the test dataset which has only 20 training meetings.
+significant; it is quite possible that this is an artifact of the small
+test size (20 datapoints).
+%The language of this corpus is quite different from the 
+%data that the GloVe embeddings were trained on and so it makes sense 
+%that  there would be more benefit to learning word representations; one
+%explanation for only seeing modest improvements is purely the small size
+%of the test dataset which has only 20 training meetings.
 
 %textcolor{red}{(NOTE TO CK -- expect learning to help on pubmed)}. \hal{yes, the dataset size is certainly an issue here. probably worth pointing this out. also when you learned the embeddings, did you initialize to pretrained embeddings? did you regularize toward them?}
 
@@ -195,7 +198,7 @@ than either content or function words.
 
 
 
-\input{tables/table_cross_domain.tex}
+%\input{tables/table_cross_domain.tex}
 
 %%% Local Variables:
 %%% mode: latex

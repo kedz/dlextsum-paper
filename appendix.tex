@@ -1,0 +1,220 @@
+\begin{centering}
+  \Large
+  Supplementary Material For:\\
+  Content Selection in Deep Learning Models of Summarization\\
+
+\end{centering}
+
+  \section{Details on Sentence Encoders} \label{app:sentencoders}
+
+  We use 200 dimenional word embeddings \wordEmb[i] in all models.
+
+\subsection{Details on RNN Encoder} \label{app:rnnencoder}
+  
+Under the \textit{RNN} encoder, a sentence embedding is defined as
+$\sentEmb = [\rSentEmb[\sentSize]; \lSentEmb[1]]$
+where 
+\begin{align} 
+  \rSentEmb[0] = \mathbf{0} &;\quad 
+       \rSentEmb[i] = \rgru(\wordEmb[i], \rSentEmb[i-1]) \\
+  \lSentEmb[\sentSize + 1] = \mathbf{0} &;\quad 
+       \lSentEmb[i] = \lgru(\wordEmb[i], \lSentEmb[i+1]),
+%\lSentVec_i &= \lgru(w_i, \lSentVec_{i+1}) 
+\end{align}
+and $\rgru$ amd $\lgru$ indicate the 
+forward and backward GRUs respectively, each with separate 
+parameters.
+
+\subsection{Details on CNN Encoder} \label{app:cnnencoder}
+The \textit{CNN} encoder has hyperparameters
+associated with the window sizes $\maxWindowSize \subset \mathcal{N}$ of the convolutional filter 
+(i.e. the number of words associated with each convolution) and the number of 
+feature maps $\maxFeatureMaps$ associated with each filter
+(i.e. the output dimension of each 
+convolution). 
+The \textit{CNN} sentence embedding $\sentEmb$ is computed as follows:
+\begin{align}
+ \specActivation_i &= \specConvBias 
+    + \sum^\filterWindowSize_{j=1} \specConvWeight_j \cdot \wemb_{i + j -1}\\
+  \specFeatureMap &= \max_{i\in 1,\dots, |\sent| - \filterWindowSize + 1} 
+                      \relu\left(\specActivation_i\right) \\
+ \sentEmb &= \left[\specFeatureMap | 
+   \numFeatureMaps \in \{1, \ldots, \maxFeatureMaps\},
+   \filterWindowSize \in \maxWindowSize
+   \right]
+\end{align}
+where $\specConvBias\in\mathcal{R}$ and $\specConvWeight \in 
+\mathcal{R}^{\filterWindowSize \times \wordEmbSize}$ are learned bias and filter
+weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
+linear unit activation.
+
+\section{Details on Sentence Extractors} \label{app:sentextractors}
+\subsection{Details on RNN Extractor} \label{app:rnnextractor}
+\begin{align}
+    \rExtHidden_0 = \mathbf{0};&\quad   \rExtHidden_i = \rgru(\sentEmb[i], \rExtHidden_{i-1}) \\
+    \lExtHidden_{\docSize + 1} = \mathbf{0};&\quad    \lExtHidden_i = \lgru(\sentEmb[i], \lExtHidden_{i+1}) \\
+   \logits_i &= \relu\left(U \cdot [\rExtHidden_i; \lExtHidden_i] + u \right)\\
+   p(\slabel_i=1|\sentvec) &= \sigma\left(V\cdot \logits_i + v  \right)
+\end{align}
+where $\rgru$ and $\lgru$ indicate the 
+forward and backward GRUs respectively, and each have separate learned 
+parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+
+\subsection{Details on Seq2Seq Extrator} \label{app:s2sextractor}
+\begin{align}
+    \rEncExtHidden_0 = \textbf{0}&;\quad \rEncExtHidden_i = \rgru_{enc}(\sentEmb[i], \rEncExtHidden_{i-1}) \\
+    \lEncExtHidden_{\docSize + 1} = \textbf{0}&;\quad  \lEncExtHidden_i = \lgru_{enc}(\sentEmb[i], \lEncExtHidden_{i+1}) \\
+    \rDecExtHidden_i &= \rgru_{dec}(\sentEmb[i], \rDecExtHidden_{i-1}) \\
+    \lDecExtHidden_i &= \lgru_{dec}(\sentEmb[i], \lDecExtHidden_{i+1}) 
+\end{align}
+\begin{align}
+ \decExtHidden_i = [\rDecExtHidden_i; \lDecExtHidden_i], &\;\;
+ \encExtHidden_i = [\rEncExtHidden_i; \lEncExtHidden_i] 
+\end{align}
+\begin{align}
+ \alpha_{i,j} = 
+   \frac{\exp \left(\decExtHidden_i \cdot \encExtHidden_j \right)}{
+   \sum_{j=1}^{\docSize}\exp\left(\decExtHidden_i \cdot \encExtHidden_j\right)}, 
+& \;\; \attnExtHidden_i = \sum_{j=1}^{\docSize} \alpha_{i,j} \encExtHidden_j 
+\end{align}
+\begin{align}
+   \logits_i = \relu\left(U \cdot [\attnExtHidden_i; \decExtHidden_i] + u \right)&\\
+   p(\slabel_i=1|\sentvec) = \sigma\left(V\cdot \logits_i + v  \right).
+\end{align}
+The final outputs of each encoder direction are passed to the first decoder
+steps; additionally, the first step of the decoder GRUs are learned 
+``begin decoding'' vectors $\rDecExtHidden_0$ and $\lDecExtHidden_0$ 
+(see Figure~\ref{fig:extractors}.b).
+Each GRU has separate learned 
+parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+
+\subsection{Details on Cheng \& Lapata Extractor.} \label{app:clextractor}
+The basic architecture is a unidirectional
+sequence-to-sequence
+model defined as follows:
+\begin{align}
+    \encExtHidden_0 = \textbf{0};&\quad   \encExtHidden_i = \gru_{enc}(\sentvec_i, \encExtHidden_{i-1}) \\
+    \decExtHidden_1 &= \gru_{dec}(\sentEmb[*], \encExtHidden_{\docSize}) \\
+    \decExtHidden_i &= \gru_{dec}(p_{i-1} \cdot \sentvec_{i-1}, \decExtHidden_{i-1}) \label{eq:cl1} \\
+   \logits_i &= \relu\left(U \cdot [\encExtHidden_i; \decExtHidden_i] + u \right)\\
+    p_i = p(\slabel_i&=1|\slabel_{<i}, \sentvec) = \sigma\left(V\cdot \logits_i + v  \right) 
+\end{align}
+where \sentEmb[*] is a learned ``begin decoding'' sentence embedding
+(see Figure~\ref{fig:extractors}.c).
+Each GRU has separate learned 
+parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
+Note in Equation~\ref{eq:cl1} that 
+the decoder side GRU input is the sentence embedding from the previous time
+step weighted by its probabilitiy of extraction ($p_{i-1}$) from the 
+previous step, inducing dependence of each output $y_i$ on all previous 
+outputs $y_{<i}$.
+
+%\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
+
+Note that in the original paper, the Cheng \& Lapata extractor was paired 
+with
+a \textit{CNN} sentence encoder, but in this work we experiment with a variety
+of sentence encoders.
+
+\subsection{Details on SummaRunner Extractor.} \label{app:srextractor}
+Like the
+RNN~extractor it starts with a bidrectional GRU over the sentence 
+embeddings 
+\begin{align}
+    \rEncExtHidden_0 = \textbf{0}&;\quad \rEncExtHidden_i = \rgru(\sentvec_i, \rEncExtHidden_{i-1}) \\
+    \lEncExtHidden_{\docSize + 1} = \textbf{0}&;\quad \lEncExtHidden_i = \lgru(\sentvec_i, \lEncExtHidden_{i+1}),
+\end{align}
+
+It then creates a representation
+of the whole document $q$ by passing the averaged GRU output states through
+a fully connected layer: 
+\begin{align}
+q = \tanh\left(b_q + W_q\frac{1}{\docSize}\sum_{i=1}^{\docSize} [\rEncExtHidden_i; \lEncExtHidden_i] \right)
+\end{align}
+A concatentation of the GRU outputs at each step
+are passed through a separate fully connected layer to create a 
+sentence representation $z_i$, where
+\begin{align}
+    \extHidden_i &= \relu\left(b_z + W_z [\rEncExtHidden_i; \lEncExtHidden_i]\right).
+\end{align}
+The extraction probability is then determined by contributions from five 
+sources:
+\begin{align}
+    \textit{content} &\quad a^{(con)}_i=W^{(con)} z_i, \\
+    \textit{salience}&\quad a^{(sal)}_i = z_i^TW^{(sal)} q, \\
+    \textit{novelty}&\quad a^{(nov)}_i = -z_i^TW^{(nov)} \tanh(g_i), \label{eq:srnov} \\
+    \textit{position}&\quad a^{(pos)}_i = W^{(pos)} l_i, \\
+    \textit{quartile}&\quad a^{(qrt)}_i = W^{(qrt)} r_i,
+\end{align}
+where $l_i$ and $r_i$ are embeddings associated with the $i$-th sentence
+position and the quarter of the document containing sentence $i$ respectively.
+In Equation~\ref{eq:srnov}, $g_i$ is an iterative summary representation 
+computed as the
+sum of the previous $z_{<i}$ weighted by their extraction probabilities,
+\begin{align}
+g_i & = \sum_{j=1}^{i-1} p(y_j=1|y_{<j},h) \cdot z_j.
+\end{align}
+Note that the presence of this term induces dependence of each 
+$\slabel_i$ to 
+all $\slabel_{<i}$ similarly to the Cheng \& Lapata extractor.
+
+The final extraction probability is the logistic sigmoid of the
+sum of these terms plus a bias,
+\begin{align}
+    p(y_i=1|y_{<i}, h) &= \sigma\left(\begin{array}{l}
+      a_i^{(con)} + a_i^{(sal)} + a_i^{(nov)} \\
+  + a_i^{(pos)}  + a_i^{(qrt)} + b \end{array}\right).
+\end{align}
+The weight matrices $W_q$, $W_z$, $W^{(con)}$, $W^{(sal)}$, $W^{(nov)}$, $W^{(pos)}$,
+$W^{(qrt)}$ and bias terms $b_q$, $b_z$, and $b$ are learned parameters;
+The GRUs have separate learned parameters.
+
+Note that in the original paper, the SummaRunner extractor was paired 
+with
+an \textit{RNN} sentence encoder, but in this work we experiment with a variety
+of sentence encoders.
+
+
+\section{Ground Truth Extract Summary Algorithm} \label{app:oracle}
+\begin{algorithmic}
+
+    \State \textbf{data:} $I = \{\sent[1], \ldots, \sent[n]\}$;
+    \State $y_i = 0 \quad \forall i \in 1, \ldots, n$;
+\State    empty summary $\summary = \emptyset$; ~~word budget $c$
+\While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$} 
+\State $\hat{i} = {\argmax}_{ i \in \{j \in [n]| \sent[j] \notin \summary\}} \rouge(\summary \cup \{\sent[i]\})$
+\If {$\rouge(\summary \cup \{ \sent[\hat{i}] \} ) > \rouge(\summary)$}
+\State $\summary \gets \summary \cup \{ \sent[\hat{i}] \}; \quad y_{\hat{i}} = 1$
+        \Else
+        \State \textbf{break} 
+       \EndIf
+\EndWhile
+\State \Return $y=y_1, \ldots, y_n$
+\end{algorithmic}
+\hal{is this right? this could yield something longer than the budget size because what if the last step selects a really long sentence.
+  i think you want the argmax over $\{j \in [n] - S : \sum \dots \leq c\}$ to make things brief maybe define $\textit{len}$ to be the current summary length? or $\textit{len}(S)$? also minor quibble but i like $S \cup \{s_i\}$ better than without the braces. CK this is what I did. I saved all summary length constraint for the eval, e.g. rouge just chops things off at 100 words. Not ideal but in practice i think it helps to have more to predict, ie less positive label sparseness, since we are no where near accurately predicting these labels anyway.}
+
+
+
+\section{Optimizer and initialization settings.} \label{app:optset}
+
+    We use a learning rate of .0001 and a dropout rate of .25 for all dropout
+    layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$).
+Weight matrix parameters are initialized using 
+    Xavier initialization with the normal distribution 
+    \cite{glorot2010understanding} and bias terms are set to 0.
+    We use a batch size of 32 for all datasets except AMI and PubMed, which
+    are often longer and consume more memory, for
+    which we use sizes two and four respectively.
+%\kathy{why? Say.}
+    For the Cheng \& Lapata model, we train for half of the maximum epochs 
+    with teacher forcing, i.e. we set $p_i = 1$
+    if $y_i = 1$ in the gold data and 0 otherwise 
+    when computing the decoder input 
+    $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
+    during the second half training.
+\hal{i feel like this paragraph was produced by a summarization algorithm run on the state of Chris' brain :P --- that is to say, it's not super coherant. maybe reorder things so that they are in order of train/apply/eval or something? right now i'm not sure what matters and what doesn't matter. also so-called teacher forcing breaks the definition of log likelihood above, but maybe that's fine.}
+
+
+
+

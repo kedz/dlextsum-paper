@@ -37,7 +37,8 @@ neural networks that can capture more complex word level feature interactions
 and whose dense representations are more compatible with current practices
 in NLP.
 
-The introduction of the CNN-DailyMail corpus by \citet{nips15_hermann} \hal{bad citation style, be sure these are all fixed. (i fixed this one and will fix others that i notice.)}
+The introduction of the CNN-DailyMail corpus by \citet{nips15_hermann} 
+%\hal{bad citation style, be sure these are all fixed. (i fixed this one and will fix others that i notice.)}
 allowed for the application of large-scale training of deep learning models for summarization.
 %\kathy{This is a wordy way to cite. Couldn't you just put the citation after the appropriate pphrase? If you say ``by'' then I think you have to use \citet so that the name appears in the text.}
 \citet{cheng2016neural} %wpresent both a sentence and word
@@ -57,14 +58,14 @@ Additionally, the sentence
 extractor creates representations of the whole document and computes 
 separate scores for salience, novelty, and location.
 
-Since these two models are very different in design, it is unclear 
-what model choices are most important for indentifying summary content 
-in the input document. We use the sentence extractor designs of 
-\citet{cheng2016neural} and \citet{nallapati2017summarunner} as points of 
-%KM - removed ``presented in'' as slightly awkward.
-comparison in our experiments 
-%presented in 
-(Section~\ref{models}). \hal{can probably drop this paragraph for space}
+%?Since these two models are very different in design, it is unclear 
+%?what model choices are most important for indentifying summary content 
+%?in the input document. We use the sentence extractor designs of 
+%?\citet{cheng2016neural} and \citet{nallapati2017summarunner} as points of 
+%?%KM - removed ``presented in'' as slightly awkward.
+%?comparison in our experiments 
+%?%presented in 
+%?(Section~\ref{models}). \hal{can probably drop this paragraph for space}
 
 %KM -  I don't think ``have'' is needed.
 All of the previous works \hal{all previous works mentioned? or in the whole universe? :)}
@@ -123,19 +124,19 @@ selection features.
 %?i.e. the key ingredients in the final summary, a process which we 
 %?broadly refer to as content selection \cite{possiblyMcKeownAndNenkova}.
 
-As is also the case in other NLP tasks, it is not immediately obvious how a
-deep learning model is making its predictions, or what correlations 
-are being exploited. There is a concerning and growing body of work that 
-find models functioning as mere \hal{why mere? nneighbor is good in a lot of settings!} nearest neighbors search 
-\cite{chen2016thorough}, 
-exploiting annotator artifacts 
-\cite{gururangan2018annotation}, or open to fairly trivial adversarial 
-exploitation \cite{jia2017adversarial}. 
-These lines of research are critical for finding model shortcomings, and over
-time, guiding improvements in technique. Unfortunately,
-to the best of our knowledge, there has been
-no such undertaking for the summarization task.  \hal{are we doing it? if not, perhaps this does belong here?}
-
+%?As is also the case in other NLP tasks, it is not immediately obvious how a
+%?deep learning model is making its predictions, or what correlations 
+%?are being exploited. There is a concerning and growing body of work that 
+%?find models functioning as mere \hal{why mere? nneighbor is good in a lot of settings!} nearest neighbors search 
+%?\cite{chen2016thorough}, 
+%?exploiting annotator artifacts 
+%?\cite{gururangan2018annotation}, or open to fairly trivial adversarial 
+%?exploitation \cite{jia2017adversarial}. 
+%?These lines of research are critical for finding model shortcomings, and over
+%?time, guiding improvements in technique. Unfortunately,
+%?to the best of our knowledge, there has been
+%?no such undertaking for the summarization task.  \hal{are we doing it? if not, perhaps this does belong here?}
+%?
 
 %%% Local Variables:
 %%% mode: latex

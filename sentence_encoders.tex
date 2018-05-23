@@ -22,7 +22,7 @@ We experiment with three architectures for mapping sequences
 of word embeddings to a fixed length vector: averaging, RNNs, and CNNs.
 %See Figure~\ref{fig:encoders} for a diagram of the three encoders.
 Hyperparameter settings and implementation details can be found 
-in the appendix\hal{include a ref to appendix section}
+in the \autoref{app:sentencoders}.
 
 \paragraph{Averaging Encoder} Under the averaging encoder, a sentence embedding
 \sentEmb is simply the average of its word embeddings, i.e. $\sentEmb = \frac{1}{\sentSize} \sum_{i=1}^{\sentSize} \wordEmb[i]$.
@@ -37,30 +37,31 @@ in the appendix\hal{include a ref to appendix section}
 a sentenc embedding is the 
 concatenation 
 of the
-final output states of a forward and backward RNN over the sentence's word
+final output istates of a forward and backward RNN over the sentence's word
 embeddings. We use a Gated Recurrent Unit (GRU)  
 for the RNN cell \cite{chung2014empirical}.
+
 %since it has fewer parameters than the equivalent LSTM but with similar 
 %performance . 
 %Details in \autoref{app:rnnencoder}.
 
-\begin{toappendix}
-\section{Details on RNN Encoder} \label{app:rnnencoder}
-  
-Under the \textit{RNN} encoder, a sentence embedding is defined as
-$\sentEmb = [\rSentEmb[\sentSize]; \lSentEmb[1]]$
-where 
-\begin{align} 
-  \rSentEmb[0] = \mathbf{0} &;\quad 
-       \rSentEmb[i] = \rgru(\wordEmb[i], \rSentEmb[i-1]) \\
-  \lSentEmb[\sentSize + 1] = \mathbf{0} &;\quad 
-       \lSentEmb[i] = \lgru(\wordEmb[i], \lSentEmb[i+1]),
-%\lSentVec_i &= \lgru(w_i, \lSentVec_{i+1}) 
-\end{align}
-and $\rgru$ amd $\lgru$ indicate the 
-forward and backward GRUs respectively, each with separate 
-parameters.
-\end{toappendix}
+%\begin{toappendix}
+%\section{Details on RNN Encoder} \label{app:rnnencoder}
+%  
+%Under the \textit{RNN} encoder, a sentence embedding is defined as
+%$\sentEmb = [\rSentEmb[\sentSize]; \lSentEmb[1]]$
+%where 
+%\begin{align} 
+%  \rSentEmb[0] = \mathbf{0} &;\quad 
+%       \rSentEmb[i] = \rgru(\wordEmb[i], \rSentEmb[i-1]) \\
+%  \lSentEmb[\sentSize + 1] = \mathbf{0} &;\quad 
+%       \lSentEmb[i] = \lgru(\wordEmb[i], \lSentEmb[i+1]),
+%%\lSentVec_i &= \lgru(w_i, \lSentVec_{i+1}) 
+%\end{align}
+%and $\rgru$ amd $\lgru$ indicate the 
+%forward and backward GRUs respectively, each with separate 
+%parameters.
+%\end{toappendix}
 
 %\hal{
 %  maybe you can make this more brief by saying sth like:
@@ -78,31 +79,6 @@ classification
 tasks and performs a series of ``one-dimensional'' convolutions over 
 word embeddings. The final sentence embedding $\sentEmb$ is a concatenation
 of all the convolutional filter outputs after max pooling over time.
-
-\begin{toappendix}
-\section{Details on CNN Encoder} \label{app:cnnencoder}
-The \textit{CNN} encoder has hyperparameters
-associated with the window sizes $\maxWindowSize \subset \mathcal{N}$ of the convolutional filter 
-(i.e. the number of words associated with each convolution) and the number of 
-feature maps $\maxFeatureMaps$ associated with each filter
-(i.e. the output dimension of each 
-convolution). 
-The \textit{CNN} sentence embedding $\sentEmb$ is computed as follows:
-\begin{align}
- \specActivation_i &= \specConvBias 
-    + \sum^\filterWindowSize_{j=1} \specConvWeight_j \cdot \wemb_{i + j -1}\\
-  \specFeatureMap &= \max_{i\in 1,\dots, |\sent| - \filterWindowSize + 1} 
-                      \relu\left(\specActivation_i\right) \\
- \sentEmb &= \left[\specFeatureMap | 
-   \numFeatureMaps \in \{1, \ldots, \maxFeatureMaps\},
-   \filterWindowSize \in \maxWindowSize
-   \right]
-\end{align}
-where $\specConvBias\in\mathcal{R}$ and $\specConvWeight \in 
-\mathcal{R}^{\filterWindowSize \times \wordEmbSize}$ are learned bias and filter
-weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
-linear unit activation.
-\end{toappendix}
 
 
 %%% Local Variables:

@@ -14,11 +14,11 @@ sports, and entertainment.
 
 \paragraph{New York Times}The New York Times (NYT) corpus \cite{sandhaus2008new} contains
  two types of abstracts for a subset of its articles. The first summary is
-an abstract \textcolor{red}{produced by an archival librarian} and the 
-second is an online teaser meant to elicit a viewer on the webpage to
+an archival abstract and the 
+second is a shorter online teaser meant to elicit a viewer on the webpage to
 click to read more. From this collection, we take all articles that have 
-a combined summary length of at least 100 words
-\hal{the following comment was commented out but not answered and idk why???? [[i'm not sure what you mean here. are you concatenating the two summaries? if so, say so. is that a little weird tho?]]}.
+a concatenated summary length of at least 100 words
+\hal{the following comment was commented out but not answered and idk why???? [[i'm not sure what you mean here. are you concatenating the two summaries? if so, say so. is that a little weird tho? CK they are still treated as separate refs when evaluating. I did this because the online abs could be really short but I dont quite remember why I did this tbh]]}.
 %This collection
 %includes both straight newswire as well as opinion and long-form journalism.
 We create training, validation, and test splits by partitioning on dates;
@@ -69,7 +69,7 @@ We used the article abstracts as the ground truth human summaries.}
 \subsection{Ground Truth Extract Summaries}
 Since we do not typically have ground truth extract summaries from which to
 create the labels $\slabel_i$, we construct gold label sequences 
-by greedily optimizing ROUGE-1, as follows.
+by greedily optimizing ROUGE-1, using the algorithm in \autoref{app:oracle}.
 %?\begin{algorithm}[H]
 %?    \KwData{$I = \{\sent[1], \ldots, \sent[n]\}$, word budget $c$} 
 %?    empty summary $\summary = \emptyset$\\
@@ -84,24 +84,6 @@ by greedily optimizing ROUGE-1, as follows.
 %?\KwResult{$y = y_1,\ldots y_n$}
 %?%                                        \caption{How to write algorithms}
 %?\end{algorithm}
-
-
-\begin{algorithmic}
-
-\State $I = \{\sent[1], \ldots, \sent[n]\};\quad y_i = 0 \quad \forall i \in 1, \ldots, n$
-\State    empty summary $\summary = \emptyset$; ~~word budget $c$
-\While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$} 
-\State $\hat{i} = {\argmax}_{ i \in \{j \in [n]| \sent[j] \notin \summary\}} \rouge(\summary \cup \sent[i])$
-\If {$\rouge(\summary \cup \sent[\hat{i}]) > \rouge(\summary)$}
-\State $\summary \gets \summary \cup \sent[\hat{i}]; \quad y_{\hat{i}} = 1$
-        \Else
-        \State \textbf{break} 
-       \EndIf
-\EndWhile
-\State \Return $y=y_1, \ldots, y_n$
-\end{algorithmic}
-\hal{is this right? this could yield something longer than the budget size because what if the last step selects a really long sentence.
-  i think you want the argmax over $\{j \in [n] - S : \sum \dots \leq c\}$ to make things brief maybe define $\textit{len}$ to be the current summary length? or $\textit{len}(S)$? also minor quibble but i like $S \cup \{s_i\}$ better than without the braces.}
 
 %\begin{enumerate}
 %\item Start with an empty summary $\summary = 

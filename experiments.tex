@@ -1,4 +1,13 @@
 
+We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge} 
+as our main evaluation metric;
+ROUGE-1 and ROUGE-LCS trend similarity to ROUGE-2 in our experiments.
+We use target word lengths of 100 words for the news domains, and 
+75, 290, and 200 words for Reddit, AMI, and PubMed respectively.
+We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
+which measures precision and recall of reference words, allowing for
+more complicated word matchings (e.g. via synonymy or morphology).
+
 
 
 %\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
@@ -10,48 +19,24 @@ using stochastic gradient descent with the ADAM optimizer
 \cite{kingma2014adam}.
 $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of 
 training examples with label $y$.
-%\cite{kingma2014adam}. The term 
-%\[ \omega(y_i)=\begin{cases}
-%\frac{\sum_{y_j} \mathbbm{1}\{y_j = 0 \}}{ \sum_{y_j} \mathbbm{1}\{y_j = 1 \}  } & \textrm{if $y_i=1$} \\ 1 & \textrm{otherwise}  \end{cases} \] 
-%        upweights
-%    positive examples proportionally to the ratio of negative to positive
-%    examples in the training data in order to compensate for the sparsity
-%    of the positive class.
 %    \kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
 \hal{what about kathy's question?}
-    We use a learning rate of .0001 and a dropout rate of .25 for all dropout
-    layers. We also employ gradient clipping ($-5 < \nabla_\theta < 5$).
     We train for a maximum of 30 epochs and the best
     model is selected with early stopping on the validation set according
     to ROUGE-2. All experiments are repeated with five random
     %\hal{there's prolly a bunch here that could go to the appendix}
-    initializations. Weight matrix parameters are initialized using 
-    Xavier initialization with the normal distribution 
-    \cite{glorot2010understanding} and bias terms are set to 0.
-    Unless specified, word embeddings are initialized 
+    initializations.     Unless specified, word embeddings are initialized 
     using pretrained GloVe embeddings \cite{pennington2014glove} and we do 
     not update them during training. Unknown words are mapped to a zero 
     embedding.
-    We use a batch size of 32 for all datasets except AMI and PubMed, which
-    are often longer and consume more memory, for
-    which we use sizes two and four respectively.
-%\kathy{why? Say.}
-    For the Cheng \& Lapata model, we train for half of the maximum epochs 
-    with teacher forcing, i.e. we set $p_i = 1$
-    if $y_i = 1$ in the gold data and 0 otherwise 
-    when computing the decoder input 
-    $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
-    during the second half training.
-\hal{i feel like this paragraph was produced by a summarization algorithm run on the state of Chris' brain :P --- that is to say, it's not super coherant. maybe reorder things so that they are in order of train/apply/eval or something? right now i'm not sure what matters and what doesn't matter. also so-called teacher forcing breaks the definition of log likelihood above, but maybe that's fine.}
+    See \autoref{app:optset} for more optimization and training details.
 
-
-
-\paragraph{Extractor/Encoder Comparions}{\hal{why is this here rather than in results? maybe call this section ``experimental design'' or ``experimental settings'' or something like that, and then shift all results-like-things to results.}
-In our main experiment, we compare our proposed 
-sentence extractors, RNN and Seq2Seq,
-to those of Cheng \& Lapata and SummaRunner.
-We test all possible sentence extractor/encoder pairs across all the datasets
-described in Section~\ref{sec:datasets}.} 
+%\paragraph{Extractor/Encoder Comparions}{\hal{why is this here rather than in results? maybe call this section ``experimental design'' or ``experimental settings'' or something like that, and then shift all results-like-things to results.}
+%In our main experiment, we compare our proposed 
+%sentence extractors, RNN and Seq2Seq,
+%to those of Cheng \& Lapata and SummaRunner.
+%We test all possible sentence extractor/encoder pairs across all the datasets
+%described in Section~\ref{sec:datasets}.} 
 As baselines we include a random summary baseline, i.e. randomly selecting sentences until word length $x$ is reached; a lead baseline, using 
 the first $x$ words;  and a tail baseline, using the last $x$ words
 ($x$ is the target summary length for each domain).
@@ -82,15 +67,6 @@ summary which results from greedily optimizing ROUGE-1
 %We are also interested in the effect of lead bias. It is well known that the first few sentences of a news article, often referred to as the lead, make a good summary, and this is most commonly used as the default baseline in single document summarization. This lead bias is such a strong learning signal that the learned models almost always extract sentences from the lead despite the ground truth labeling containing a significant portion of positive labels later in the document. This begs the question, are we learning a robust model of sentence salience or simply identifying linguistic style features that are indicative of the lead?
 
 %To better understand this phenomenon, 
-
-We evaluate summary quality using ROUGE-2 recall \cite{lin2004rouge} 
-as our main evaluation metric;
-ROUGE-1 and ROUGE-LCS trend similarity to ROUGE-2 in our experiments.
-We use target word lengths of 100 words for the news domains, and 
-75, 290, and 200 words for Reddit, AMI, and PubMed respectively.
-We also evaluate using METEOR \cite{denkowski:lavie:meteor-wmt:2014},
-which measures precision and recall of reference words, allowing for
-more complicated word matchings (e.g. via synonymy or morphology).
 
 
 

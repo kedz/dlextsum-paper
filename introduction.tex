@@ -38,13 +38,14 @@ In summarization, content selection usually is accomplished through sentence (an
 less frequently, phrase) extraction.
  While it is a key component of both
 extractive and abstractive summarization systems, it is not generally well 
-understood how deep learning models perform this task using only word and 
+understood how deep learning models perform this task with only word and 
 sentence
-embedding based representations\hal{i'm not sure what this sentence means, especially the part after ``using''}.
+embedding based features as input\hal{i'm not sure what this sentence means, especially the part after ``using'', CK: addressed it, does it work now?}.
 %\hal{well understood as a task or in specific models?} 
 Non-neural network approaches often use frequency and information theoretic measures as proxies
-for content salience \cite{hong2014improving}, but these are not typically
-used \hal{directly? explicitly?} in most recent work on summarization\hal{maybe instead of recent work say nn systems?}.
+for content salience \cite{hong2014improving}, but these are not explicitly %\hal{directly? explicitly?} 
+used in most neural network summarization systems.
+%\hal{maybe instead of recent work say nn systems?}.
 % changed wording
 
 \hal{there are lots of widows/orphans throughout that need to be cleaned up.}
@@ -65,7 +66,8 @@ extractors. We compare Recurrent Neural Network (RNN) and Convolutional Neural
 Network (CNN) based sentence representations to the 
 simpler approach of word embedding averaging to understand the gains 
 derived from more sophisticated architectures.
-We also consider \hal{use a diff word than consider} the necessity of auto-regressive sentence extraction, 
+We also question the necessity of auto-regressive sentence extraction 
+(i.e. using previous model predictions to inform future predictions), 
 which the previous approaches have assumed,
 and propose two alternative models that extract sentences independently.
 %
@@ -89,14 +91,13 @@ Our main results reveal:
 \begin{enumerate}
 \item Sentence position bias dominates the learning signal for news summarization, though not for
 other domains. %\hal{be consistent on domain/genre. also maybe you should say above what domains you consider?}. 
-Summary content for news is only slightly degraded when content words
-are removed. \hal{this sounds like you remove content words and the summary is still as good. clearly not what's meant. i hope :P.}
+Summary quality for news is only slightly degraded when content words
+are omitted from sentence embeddings. %\hal{this sounds like you remove content words and the summary is still as good. clearly not what's meant. i hope :P.}
 \item Word embedding averaging is as good or better than either RNNs or CNNs for sentence embedding across all domains.
-\item Pre-trained word embeddings are as good, or better than, learned embeddings in most cases.\hal{you were specific in the other ones, be specific here too if possible}
+\item Pre-trained word embeddings are as good, or better than, learned embeddings in five of six datasets.%\hal{you were specific in the other ones, be specific here too if possible}
 \item Non auto-regressive sentence extraction performs as good or better 
      than auto-regressive extraction in all
     domains.
-    
  %   Representation of previously selected summary content does not improve overall summary content. \hal{i think this one might be hard to parse for non-experts. maybe ``explicitly reprsenting prev...''}
 \end{enumerate} 
 %}
@@ -122,8 +123,16 @@ are removed. \hal{this sounds like you remove content words and the summary is s
 
 %KM - Merged this paragraph with the next one.
 Taken together, these and other results in the paper suggest that we are 
-overestimating the ability of deep learning models to learn robust and 
-meaningful features for summarization.  \hal{i think there need to be stronger take-aways here. why do i care about these things?}
+over-estimating the ability of deep learning models to learn robust and 
+meaningful content features for summarization.  \hal{i think there need to be stronger take-aways here. why do i care about these things?}
+In one sense, this might lessen the burden of applying neural network models
+of  content to other domains; you really just need in-domain word embeddings.
+However, if we want to learn something other than where the start of 
+the article is, we will need to design other means of sentence representation,
+and possibly external knowledge representations, better suited to the summarization task.
+
+
+
 %?impact of sentence position bias, the necessity
 %?of learning embeddings, the unreasonable effectiveness of averaging for 
 %?sentence embedding, and the cross domain generalizability of such models.
