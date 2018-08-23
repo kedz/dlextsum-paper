@@ -1,32 +1,14 @@
 \begin{table*}[ht]
 \center
-%\begin{tabular}{llgcgcg}
-%    \toprule
-%    \multirow{2}{*}{\textbf{Extractor}} &\textbf{Sentence}  & \multicolumn{1}{g}{\textbf{CNN/DM}} & \multicolumn{1}{c}{\textbf{NYT}} & \multicolumn{1}{g}{\textbf{DUC 2002}} & \multicolumn{1}{c}{\textbf{Reddit}} & \multicolumn{1}{g}{\textbf{AMI}}\\
-%    & \textbf{Order} & R-2 & R-2 & R-2 & R-2 & R-2\\
-%    \midrule
-%    \multirow{2}{*}{RNN} & In-Order & \textbf{25.42} & \textbf{34.67} & \textbf{22.65} & \textbf{11.37} & \textbf{5.50}\\
-%     & Shuffled & 22.80 & 24.96 & 18.24 & \textbf{11.83} & \textbf{5.70}\\
-%    \hline
-%    \multirow{2}{*}{Seq2Seq} & In-Order & \textbf{25.56} & \textbf{35.73} & \textbf{22.84} & \textbf{13.61} & 5.52\\
-%     & Shuffled & 21.66 & 25.61 & 21.21 & \textbf{13.45} & \textbf{5.98}\\
-%    \bottomrule
-%\end{tabular}
-
 
 \begin{tabular}{ccgL{.5cm}cm{.5cm}gL{.5cm}cm{.75cm}gL{.75cm}cm{.5cm}}
     \toprule
     \textbf{Ext.} &\textbf{Order}  & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}} & \multicolumn{2}{g}{\textbf{DUC}} & \multicolumn{2}{c}{\textbf{Reddit}} & \multicolumn{2}{g}{\textbf{AMI}} & \multicolumn{2}{c}{\textbf{PubMed}}\\
-    % &  & R-2 & R-2 & R-2 & R-2 & R-2 & R-2\\
     \midrule
-%    \multirow{2}{*}{RNN} & In-Order & \textbf{25.4} & & \textbf{34.7} && \textbf{22.7} && \textbf{11.4} && \textbf{5.5} && \textbf{17.0} &\\
-%                         & Shuffled & 22.8 & \footnotesize{(2.6)} & 25.0 & \footnotesize{(9.7)}& 18.2 & \footnotesize{(4.5)} & \textbf{11.8} &\footnotesize{(-0.4)} & \textbf{5.7} & \footnotesize{(-0.2)}& 14.6 & \footnotesize{(2.4)}\\
-%    \hline
     \multirow{2}{*}{Seq2Seq} & In-Order & \textbf{25.6} & & \textbf{35.7} && \textbf{22.8}& & \textbf{13.6} && 5.5 && \textbf{17.7} &\\
-                             & Shuffled & 21.7&\footnotesize{(3.9)} & 25.6 & \footnotesize{(10.1)} & 21.2 & \footnotesize{(1.6)} &\textbf{13.5} &\footnotesize{(0.1)} &\textbf{6.0} & \footnotesize{(-0.5)}&15.0 &\footnotesize{(2.7)}\\
+                             & Shuffled & 21.7&\footnotesize{(3.9)} & 25.6 & \footnotesize{(10.1)} & 21.2 & \footnotesize{(1.6)} &\textbf{13.5} &\footnotesize{(0.1)} &\textbf{6.0} & \footnotesize{(-0.5)}&14.9 &\footnotesize{(2.8)}\\
     \bottomrule
 \end{tabular}
-
 
 \caption{ROUGE-2 recall using models trained on in-order and shuffled
 documents. Extractor uses the averaging sentence encoder. 
@@ -35,24 +17,3 @@ there is no signifcant performance difference. Difference in scores shown in par
 }
 \label{tab:shuffle}
 \end{table*}
-
-
-%\begin{table*}
-%\center
-%\begin{tabular}{| c | c || c | c | c | c | c | c |}
-%\hline
-%  &   & \multicolumn{2}{|c|}{nyt} & \multicolumn{2}{|c|}{duc-sds} & \multicolumn{2}{|c|}{reddit} \\
-%Extractor & sentence order & R1 & R2  & R1 & R2  & R1 & R2 \\ 
-%\hline
-%\multirow{2}{*}{RNN} & in-order & 51.4 & 34.7 & 44.1 & 22.6 & 45.2 & 11.4\\ \cline{2-8}
-% & shuffled & 41.9 & 25.0 & 39.7 & 18.2 & 45.1 & 11.9\\
-%\hline
-%\multirow{2}{*}{Seq2Seq} & in-order & 52.5 & 35.7 & 44.4 & 22.8 & 49.1 & 13.6\\ \cline{2-8}
-% & shuffled & 42.6 & 25.6 & 42.9 & 21.2 & 48.7 & 13.6\\
-%\hline
-%\end{tabular}
-%\caption{ROUGE 1 and 2 recall using models trained on in-order and shuffled
-%documents. All extractors use the averaging sentence encoder. 
-%Table shows average results of five random initializations.}
-%\label{tab:shuffle}
-%\end{table*}

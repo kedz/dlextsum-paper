@@ -47,7 +47,7 @@
   }
   \foreach \step in {4,...,6} {
     \node[hid={2}{orange}] (h_f_\step) at (1 *\step, .5) {};    
-    \node[hid={2}{orange}] (g_f_\step) at (1 *\step, 2) {};    
+    \node[mlp={2}{orange}] (g_f_\step) at (1 *\step, 2) {};    
     \draw[->] (e\step.north) -> (h_f_\step.south);
     
  }

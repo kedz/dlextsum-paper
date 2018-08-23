@@ -23,8 +23,8 @@
 %\newcolumntype{v}{>{\columncolor{black!5}}r}
 \newcolumntype{L}[1]{>{\columncolor{black!5}}m{#1}}
 
-%\aclfinalcopy % Uncomment this line for the final submission
-%\def\aclpaperid{***} %  Enter the acl Paper ID here
+\aclfinalcopy % Uncomment this line for the final submission
+\def\aclpaperid{***} %  Enter the acl Paper ID here
 
 %\setlength\titlebox{5cm}
 % You can expand the titlebox if you need extra space
@@ -48,23 +48,22 @@
 
 \title{Content Selection in Deep Learning Models of Summarization}
 
-\author{First Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\\And
-  Second Author \\
-  Affiliation / Address line 1 \\
-  Affiliation / Address line 2 \\
-  Affiliation / Address line 3 \\
-  {\tt email@domain} \\}
+\author{Chris Kedzie \and Kathleen McKeown\\
+  Columbia University \\
+  Computer Science Dept. \\
+  {\tt \{kedzie,kathy\}@cs.columbia.edu} \\\And
+  Hal Daum\'e III  \\
+  University of Maryland, College Park \\
+  Microsoft Research, New York City \\
+  {\tt hal@cs.umd.edu} \\}
+
 
 \date{}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-We carry out experiments with deep learning models of summarization across the domains of news, personal stories, meetings and medical articles in order to understand how content selection is performed. We find that many sophisticated features of state of the art extractive summarizers do not improve performance over simpler models. These results suggest that it is easier to create a summarizer for  a new domain than previous work suggests and bring into question the benefit of deep learning models for summarization for those domains that do have massive datasets (i.e., news). At the same time, they suggest important questions for new research in summarization; namely,  new forms of sentence representations or external knowledge sources are needed that are better suited to the sumarization task. 
+We carry out experiments with deep learning models of summarization across the domains of news, personal stories, meetings, and medical articles in order to understand how content selection is performed. We find that many sophisticated features of state of the art extractive summarizers do not improve performance over simpler models. These results suggest that it is easier to create a summarizer for  a new domain than previous work suggests and bring into question the benefit of deep learning models for summarization for those domains that do have massive datasets (i.e., news). At the same time, they suggest important questions for new research in summarization; namely,  new forms of sentence representations or external knowledge sources are needed that are better suited to the sumarization task. 
 \end{abstract}
 
 \input{macros}
@@ -144,6 +143,21 @@ Tropical Storm Gilbert formed in the eastern Caribbean and
 We have presented an empirical study of deep learning based content selection
 algorithms for summarization. Our findings suggest such models face stark limitations on their ability to learn robust features for this task and that 
 more work is needed on sentence representation for summarization.
+
+
+\section{Acknowledgements}
+The authors would like to thank the anonymous reviewers for their valuable 
+feedback. Thanks goes out as well to Chris Hidey for his helpful comments.
+
+This research is based upon work supported in part by the Office of the 
+Director of National Intelligence (ODNI), Intelligence Advanced Research 
+Projects Activity (IARPA), via contract \# FA8650-17-C-9117. The views and 
+conclusions contained herein are those of the authors and should not be 
+interpreted as necessarily representing the official policies, either 
+expressed or implied, of ODNI, IARPA, or the U.S. Government. The U.S. 
+Government is authorized to reproduce and distribute reprints for governmental 
+purposes notwithstanding any copyright annotation therein. 
+
 
 
 

@@ -16,42 +16,41 @@ testing for significance at the $0.05$ level.
 
 \subsection{Training}
 
-%\kathy{Could Lapata or Nallapati criticize your choice of parameters here as not being the same as what they used? (Note that I don't know what they used but it seems like a possible criticism.)}
 We train all models to minimize the weighted negative log-likelihood
-\[\mathcal{L} = -\sum_{s,y\in \mathcal{D}} \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
-\operatorname{enc}(\sent)\right)\]
+\[\mathcal{L} = -\sum_{\substack{ s,y\in \mathcal{D} \\ h = \operatorname{enc}(s) } } \sum_{i=1}^\docSize \omega(y_i) \log p\left(y_i|y_{<i},
+h \right)\]
 over the training data $\mathcal{D}$
 using stochastic gradient descent with the ADAM optimizer
 \cite{kingma2014adam}.
 $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of 
 training examples with label $y$.
-%    \kathy{Could you say how you arrived at these settings? Is any one system penalized by the use of uniform settings?}
-%\hal{what about kathy's question?}
-    We train for a maximum of 30 epochs and the best
-    model is selected with early stopping on the validation set according
-    to ROUGE-2. All experiments are repeated with five random
+    We trained for a maximum of 50 epochs and the best
+    model was selected with early stopping on the validation set according
+    to ROUGE-2. {\color{red}{Each epoch constitutes a full pass through the
+    dataset. The average stopping epoch was: CNN-DailyMail, 16.2; NYT, 21.36; DUC, 37.11; Reddit, 36.59; AMI, 19.58; PubMed, 19.84.
+    }} All experiments were repeated with five random
     %\hal{there's prolly a bunch here that could go to the appendix}
-    initializations.     Unless specified, word embeddings are initialized 
-    using pretrained GloVe embeddings \cite{pennington2014glove} and we do 
-    not update them during training. Unknown words are mapped to a zero 
+    initializations.     Unless specified, word embeddings were initialized 
+    using pretrained GloVe embeddings \cite{pennington2014glove} and we did 
+    not update them during training. Unknown words were mapped to a zero 
     embedding.
     See \autoref{app:optset} for more optimization and training details.
 
-%\paragraph{Extractor/Encoder Comparions}{\hal{why is this here rather than in results? maybe call this section ``experimental design'' or ``experimental settings'' or something like that, and then shift all results-like-things to results.}
-%In our main experiment, we compare our proposed 
-%sentence extractors, RNN and Seq2Seq,
-%to those of Cheng \& Lapata and SummaRunner.
-%We test all possible sentence extractor/encoder pairs across all the datasets
-%described in Section~\ref{sec:datasets}.} 
-As a baseline we include the lead summary, using the first $x$ words
-where $x$ is the target summary length for each dataset.
-%a random summary baseline, i.e. randomly selecting sentences until word length $x$ is reached; a lead baseline, using 
-%the first $x$ words;  and a tail baseline, using the last $x$ words
-%($x$ is the target summary length for each domain).
-To measure the approximate performance ceiling,
-we also show the oracle performance using the 
-summary which results from greedily optimizing ROUGE-1 .
-
+{\color{red}
+\subsection{Baselines}
+\paragraph{Lead} As a baseline we include the lead summary, i.e. taking the first 
+$x$ words of the document as summary, where $x$ is the target summary length for each dataset (see the 
+first paragraph of \S~\ref{sec:exps}). While incredibly simple, this method is still a 
+competitive baseline for single document summarization, especially on newswire.
+\paragraph{Oracle} To measure the performance ceiling,
+we show the ROUGE/METEOR scores using the 
+extractive summary which results from greedily optimizing ROUGE-1. I.e., if we 
+had clairvoyant knowledge
+of the human reference summary, the oracle system achieves the (approximate) 
+maximum possible ROUGE scores. 
+See \autoref{app:oracle} for a detailed
+description of the oracle algorithm.
+}
 %We choose ROUGE-2
 %recall as our main evaluation metric since it has the strongest correlation
 %to human content selection decisions.

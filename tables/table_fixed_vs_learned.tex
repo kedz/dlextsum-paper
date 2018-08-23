@@ -1,42 +1,6 @@
 
 \begin{table*}[t]
 \center
-%\begin{tabular}{llgcgcg}
-%    \toprule
-%    \multirow{2}{*}{\textbf{Extractor}} &\multirow{2}{*}{\textbf{Embeddings}}  & \multicolumn{1}{g}{\textbf{CNN/DM}} & \multicolumn{1}{c}{\textbf{NYT}} & \multicolumn{1}{g}{\textbf{DUC 2002}} & \multicolumn{1}{c}{\textbf{Reddit}} & \multicolumn{1}{g}{\textbf{AMI}}\\
-%     &  & R-2 & R-2 & R-2 & R-2 & R-2\\
-%    \hline
-%    \multirow{2}{*}{RNN} & Fixed & \textbf{25.42} & \textbf{34.67} & \textbf{22.65} & \textbf{11.37} & \textbf{5.50}\\
-%     & Learned & 25.21 & 34.31 & \textbf{22.60} & \textbf{11.30} & \textbf{5.30}\\
-%    \hline
-%    \multirow{2}{*}{Seq2Seq} & Fixed & \textbf{25.56} & \textbf{35.73} & \textbf{22.84} & \textbf{13.61} & 5.52\\
-%     & Learned & 25.34 & \textbf{35.65} & \textbf{22.88} & \textbf{13.78} & \textbf{5.79}\\
-%    \hline
-%    \multirow{2}{*}{C\&L} & Fixed & \textbf{25.29} & \textbf{35.58} & \textbf{23.11} & \textbf{13.65} & \textbf{6.12}\\
-%     & Learned & 24.95 & 35.41 & \textbf{22.98} & \textbf{13.39} & \textbf{6.16}\\
-%    \hline
-%    \multirow{2}{*}{SummaRunner} & Fixed & \textbf{25.44} & \textbf{35.40} & \textbf{22.28} & \textbf{13.41} & \textbf{5.63}\\
-%     & Learned & 25.11 & 35.20 & \textbf{22.15} & 12.64 & \textbf{5.85}\\
-%    \bottomrule
-%\end{tabular}
-%\begin{tabular}{ccgcgcgc}
-%    \toprule
-%    \multirow{2}{*}{\textbf{Extractor}} &\multirow{2}{*}{\textbf{Embeddings}}  & \multicolumn{1}{g}{\textbf{CNN/DM}} & \multicolumn{1}{c}{\textbf{NYT}} & \multicolumn{1}{g}{\textbf{DUC 2002}} & \multicolumn{1}{c}{\textbf{Reddit}} & \multicolumn{1}{g}{\textbf{AMI}} & \multicolumn{1}{c}{\textbf{PubMed}}\\
-%     &  & R-2 & R-2 & R-2 & R-2 & R-2 & R-2\\
-%    \hline
-%    \multirow{2}{*}{RNN} & Fixed & \textbf{25.42} & \textbf{34.66} & \textbf{22.65} & \textbf{11.37} & \textbf{5.50} & \textbf{17.03}\\
-%     & Learned & 25.21 & 34.31 & \textbf{22.60} & \textbf{11.30} & \textbf{5.30} & 16.44\\
-%    \hline
-%    \multirow{2}{*}{Seq2Seq} & Fixed & \textbf{25.56} & \textbf{35.73} & \textbf{22.84} & \textbf{13.61} & 5.52 & \textbf{17.68}\\
-%     & Learned & 25.34 & \textbf{35.65} & \textbf{22.88} & \textbf{13.78} & \textbf{5.79} & 16.94\\
-%    \hline
-%    \multirow{2}{*}{C\&L} & Fixed & \textbf{25.28} & \textbf{35.58} & \textbf{23.11} & \textbf{13.65} & \textbf{6.12} & \textbf{17.65}\\
-%     & Learned & 24.95 & 35.41 & \textbf{22.98} & \textbf{13.39} & \textbf{6.16} & 16.40\\
-%    \hline
-%    \multirow{2}{*}{SummaRunner} & Fixed & \textbf{25.44} & \textbf{35.40} & \textbf{22.28} & \textbf{13.41} & \textbf{5.63} & \textbf{17.23}\\
-%     & Learned & 25.11 & 35.20 & \textbf{22.15} & 12.64 & \textbf{5.85} & 16.85\\
-%    \bottomrule
-%\end{tabular}
 \begin{tabular}{ccgL{.5cm}cm{.5cm}gL{.75cm}cm{.75cm}gL{.75cm}cm{.5cm}}
     \toprule
     \multirow{1}{*}{\textbf{Ext.}} &\multirow{1}{*}{\textbf{Emb.}}  & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}} & \multicolumn{2}{g}{\textbf{DUC}} & \multicolumn{2}{c}{\textbf{Reddit}} & \multicolumn{2}{g}{\textbf{AMI}} & \multicolumn{2}{c}{\textbf{PubMed}}\\
@@ -47,10 +11,10 @@
 %                         & Learn & 25.2& \footnotesize{(0.2)} & 34.3 &\footnotesize{(0.4)} & \textbf{22.6} & \footnotesize{(0.1)} & \textbf{11.3} & \footnotesize{(0.1)} & \textbf{ 5.3} & \footnotesize{(0.2)} & 16.4& \footnotesize{(0.6)}\\
 %    \hline
     \multirow{2}{*}{Seq2Seq} & Fixed & \textbf{25.6} && \textbf{35.7}& & \textbf{22.8}& & \textbf{13.6} &&  5.5 && \textbf{17.7}\\
-   & Learn & 25.3 &\footnotesize{(0.2)} & \textbf{35.7}& \footnotesize{(0.1)} & \textbf{22.9} & \footnotesize{(-0.0)} & \textbf{13.8} &\footnotesize{ (-0.2)} & \textbf{ 5.8} & \footnotesize{(-0.3)} & 16.9 & \footnotesize{(0.7)}\\
+   & Learn & 25.3 &\footnotesize{(0.3)} & \textbf{35.7}& \footnotesize{(0.0)} & \textbf{22.9} & \footnotesize{(-0.1)} & \textbf{13.8} &\footnotesize{ (-0.2)} & \textbf{ 5.8} & \footnotesize{(-0.3)} & 16.9 & \footnotesize{(0.8)}\\
     \hline
     \multirow{2}{*}{C\&L} & Fixed & \textbf{25.3} && \textbf{35.6} && \textbf{23.1} && \textbf{13.6} && \textbf{ 6.1} && \textbf{17.7}&\\
-                      & Learn & 24.9 &\footnotesize{(0.3)} & 35.4 & \footnotesize{(0.2)} & \textbf{23.0} &\footnotesize{ (0.1)} & \textbf{13.4} &\footnotesize{ (0.3)} & \textbf{ 6.2} &\footnotesize{ (-0.0)} & 16.4 &\footnotesize{ (1.3)} \\
+                      & Learn & 24.9 &\footnotesize{(0.4)} & 35.4 & \footnotesize{(0.2)} & \textbf{23.0} &\footnotesize{ (0.1)} & \textbf{13.4} &\footnotesize{ (0.2)} & \textbf{ 6.2} &\footnotesize{ (-0.1)} & 16.4 &\footnotesize{ (1.3)} \\
     \hline
 \multirow{2}{*}{\begin{tabular}{c} Summa \\ Runner \end{tabular}} & Fixed & \textbf{25.4} && \textbf{35.4} && \textbf{22.3} && \textbf{13.4} && \textbf{ 5.6} & &\textbf{17.2}&\\
                                                                   & Learn & 25.1 &\footnotesize{(0.3)} & 35.2 &\footnotesize{(0.2)} & \textbf{22.2} & \footnotesize{(0.1)} & 12.6 & \footnotesize{(0.8)} & \textbf{ 5.8} & \footnotesize{(-0.2)} & 16.8&\footnotesize{ (0.4) }\\

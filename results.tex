@@ -133,21 +133,20 @@ Ablations were performed on training, validation, and test partitions,
 using the RNN extractor with averaging encoder.
 \autoref{tab:ablations} shows the results of the POS
 tag ablation experiments. 
-%\hal{i'd label the rows as ``all words'' and then ``- nouns'', ``- verbs'', etc. also use paragraph not textbf :P.}
-While removing any word class from the representation generally hurts %\hal{is this removed at train and test or just test?}
+While removing any word class from the representation generally hurts 
 performance (with statistical significance), on the news domains,
 the absolute values of the differences are quite small 
 (.18 on CNN/DM, .41 on NYT, .3 on DUC) suggesting that the model's predictions
-are not overly dependent on any particular word types.\hal{i'm not sure i agree. if it's significant it's significant, no?} 
+are not overly dependent on any particular word types.
 On the non-news datasets, the ablations have a larger effect 
-(max differences are 1.89 on Reddit, 2.56 on AMI). \hal{if you're mentioning absolute differences here i'd do that in the tables too}
-Removing the content words leads to the largest drop on AMI.
+(max differences are 1.89 on Reddit, 2.56 on AMI, and 1.3 on PubMed).
+Removing the content words leads to the largest drop on AMI and PubMed.
 Removing adjectives and adverbs leads to the largest drop on Reddit,
 suggesting the intensifiers and descriptive words are useful for 
 identifying important content in personal narratives.
 Curiously, 
 removing the function word POS class yields a significant improvement
-on DUC 2002 and AMI.%\hal{WAS THIS REMOVED FROM THE TABLE???}
+on DUC 2002 and AMI.
 
 
 %The newswire domain does not appear to be sensative
@@ -185,14 +184,14 @@ drop in performance, then this indicates the lead bias is the relevant factor.
 
 \autoref{tab:shuffle} shows the results
 of the shuffling experiments. 
-The news domain suffers a significant drop in performance 
+The news domains and PubMed suffer a significant drop in performance 
 when the document order is shuffled. By comparison, there is no significant difference between the shuffled and in-order models on 
 the Reddit domain, and shuffling actually improves performance on the AMI.
 %\hal{what about in the cross-domain setting?} 
 This suggest that position 
-is being learned by the models in the news domain even when the model 
-has no explicit position features, and that this feature is more important 
-than either content or function words.
+is being learned by the models in the news/journal article domain even when 
+the model has no explicit position features, and that this feature is more 
+important than either content or function words.
 
 
 

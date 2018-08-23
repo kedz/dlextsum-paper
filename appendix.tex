@@ -8,7 +8,8 @@
   \section{Details on Sentence Encoders} \label{app:sentencoders}
 
   We use 200 dimenional word embeddings \wordEmb[i] in all models.
-  Dropout is applied to the embeddings during training.
+  Dropout is applied to the embeddings during training. 
+  Wherever dropout is applied, the drop probability is .25.
 
 \subsection{Details on RNN Encoder} \label{app:rnnencoder}
   
@@ -29,9 +30,9 @@ Dropout is applied to GRU during training.
 
 \subsection{Details on CNN Encoder} \label{app:cnnencoder}
 The \textit{CNN} encoder has hyperparameters
-associated with the window sizes $\maxWindowSize \subset \mathcal{N}$ of the convolutional filter 
+associated with the window sizes $\maxWindowSize \subset \mathbb{N}$ of the convolutional filters
 (i.e. the number of words associated with each convolution) and the number of 
-feature maps $\maxFeatureMaps$ associated with each filter
+feature maps $\maxFeatureMaps_k \in \mathbb{N}$ associated with each filter
 (i.e. the output dimension of each 
 convolution). 
 The \textit{CNN} sentence embedding $\sentEmb$ is computed as follows:
@@ -41,7 +42,7 @@ The \textit{CNN} sentence embedding $\sentEmb$ is computed as follows:
   \specFeatureMap &= \max_{i\in 1,\dots, |\sent| - \filterWindowSize + 1} 
                       \relu\left(\specActivation_i\right) \\
  \sentEmb &= \left[\specFeatureMap | 
-   \numFeatureMaps \in \{1, \ldots, \maxFeatureMaps\},
+   \numFeatureMaps \in \{1, \ldots, \maxFeatureMaps_k\},
    \filterWindowSize \in \maxWindowSize
    \right]
 \end{align}
@@ -49,7 +50,7 @@ where $\specConvBias\in\mathcal{R}$ and $\specConvWeight \in
 \mathcal{R}^{\filterWindowSize \times \wordEmbSize}$ are learned bias and filter
 weight parameters respectively, and $\relu(x) = \max(0, x)$ is the rectified
 linear unit activation.
-We use window sizes $K={1, 2, 3, 4, 5, 6}$ with corresponding feature maps sizes 25, 25, 50, 50, 50, 50, giving $h$ a dimensionality of 300. 
+We use window sizes $K=\{1, 2, 3, 4, 5, 6\}$ with corresponding feature maps sizes $M_1=25, M_2=25, M_3=50, M_4=50, M_5=50, M_6=50$, giving $h$ a dimensionality of 250. 
 Dropout is applied to the CNN output during training.
 
 \section{Details on Sentence Extractors} \label{app:sentextractors}
@@ -90,11 +91,11 @@ size is 100. Dropout is applied to the GRUs and to $a_i$.
 The final outputs of each encoder direction are passed to the first decoder
 steps; additionally, the first step of the decoder GRUs are learned 
 ``begin decoding'' vectors $\rDecExtHidden_0$ and $\lDecExtHidden_0$ 
-(see Figure~\ref{fig:extractors}.b).
+(see \autoref{fig:extractors}.b).
 Each GRU has separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
 The hidden layer size of the GRU is 300 for each direction and MLP hidden layer
-size is 100. Dropout is applied to the GRUs and to $a_i$.
+size is 100. Dropout with drop probability .25 is applied to the GRU outputs and to $a_i$.
 
 \subsection{Details on Cheng \& Lapata Extractor.} \label{app:clextractor}
 The basic architecture is a unidirectional
@@ -108,7 +109,7 @@ model defined as follows:
     p_i = p(\slabel_i&=1|\slabel_{<i}, \sentvec) = \sigma\left(V\cdot \logits_i + v  \right) 
 \end{align}
 where \sentEmb[*] is a learned ``begin decoding'' sentence embedding
-(see Figure~\ref{fig:extractors}.c).
+(see \autoref{fig:extractors}.c).
 Each GRU has separate learned 
 parameters; $U, V$ and $u, v$ are learned weight and bias parameters.
 Note in Equation~\ref{eq:cl1} that 
@@ -117,7 +118,8 @@ step weighted by its probabilitiy of extraction ($p_{i-1}$) from the
 previous step, inducing dependence of each output $y_i$ on all previous 
 outputs $y_{<i}$.
 The hidden layer size of the GRU is 300 and the MLP hidden layer
-size is 100. Dropout is applied to the GRUs and to $a_i$.
+size is 100. 
+Dropout with drop probability .25 is applied to the GRU outputs and to $a_i$.
 
 
 %\kathy{In many ways the Cheng and Lapata architecture looks simpler than yours. Can you indicate here why it is more complicated? Is it because of the number of learned parameters?}
@@ -180,7 +182,7 @@ The weight matrices $W_q$, $W_z$, $W^{(con)}$, $W^{(sal)}$, $W^{(nov)}$, $W^{(po
 $W^{(qrt)}$ and bias terms $b_q$, $b_z$, and $b$ are learned parameters;
 The GRUs have separate learned parameters.
 The hidden layer size of the GRU is 300 for each direction $z_i$, $q$, and $g_i$ have 100 dimensions. The position and quartile embeddings are 16 dimensional each.
-Dropout is applied to the GRUs and to the MLP layer.
+Dropout with drop probability .25 is applied to the GRU outputs and to $z_i$.
 
 
 
@@ -227,7 +229,7 @@ Weight matrix parameters are initialized using
     with teacher forcing, i.e. we set $p_i = 1$
     if $y_i = 1$ in the gold data and 0 otherwise 
     when computing the decoder input 
-    $p_i \cdot \sentEmb[i]$; we revert to the true model probability 
+    $p_i \cdot \sentEmb[i]$; we revert to the predicted model probability 
     during the second half training.
 \hal{i feel like this paragraph was produced by a summarization algorithm run on the state of Chris' brain :P --- that is to say, it's not super coherant. maybe reorder things so that they are in order of train/apply/eval or something? right now i'm not sure what matters and what doesn't matter. also so-called teacher forcing breaks the definition of log likelihood above, but maybe that's fine.}
 

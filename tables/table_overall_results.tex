@@ -1,55 +1,5 @@
 \begin{table*}[ht]
     \center
-%\begin{tabular}{llgcgcg}
-%    \toprule
-%    \multirow{2}{*}{\textbf{Extractor}} &\multirow{2}{*}{\textbf{Encoder}}  & \multicolumn{1}{g}{\textbf{CNN/DM}} & \multicolumn{1}{c}{\textbf{NYT}} & \multicolumn{1}{g}{\textbf{DUC 2002}} & \multicolumn{1}{c}{\textbf{Reddit}} & \multicolumn{1}{g}{\textbf{AMI}}\\
-%     &  & R-2 & R-2 & R-2 & R-2 & R-2\\
-%    \hline
-%    \multirow{3}{*}{RNN} & Average & 25.42 & 34.67 & 22.65 & \textbf{11.37} & \textbf{5.50}\\
-%     & RNN & 25.38 & 34.88 & \textbf{22.58} & \textbf{11.43} & \textbf{5.24}\\
-%     & CNN & 25.08 & 33.70 & \textbf{22.73} & \textbf{12.78} & 3.16\\
-%    \hline
-%    \multirow{3}{*}{Seq2Seq} & Average & \textbf{25.56} & \textbf{35.73} & \textbf{22.84} & \textbf{13.61} & \textbf{5.52}\\
-%     & RNN & 25.34 & \textbf{35.85} & 22.47 & \textbf{11.98} & \textbf{5.25}\\
-%     & CNN & 25.07 & 35.07 & \textbf{22.67} & \textbf{13.21} & 2.94\\
-%    \hline
-%    \multirow{3}{*}{C\&L} & Average & 25.29 & \textbf{35.58} & \textbf{23.11} & \textbf{13.65} & \textbf{6.12}\\
-%     & RNN & 25.04 & \textbf{35.84} & \textbf{23.03} & \textbf{12.62} & 4.96\\
-%     & CNN & 25.13 & 34.97 & \textbf{23.00} & \textbf{13.42} & 2.81\\
-%    \hline
-%    \multirow{3}{*}{SummaRunner} & Average & 25.44 & 35.40 & 22.28 & \textbf{13.41} & \textbf{5.63}\\
-%     & RNN & 25.20 & 35.47 & 22.09 & \textbf{12.51} & \textbf{5.38}\\
-%     & CNN & 25.00 & 34.41 & 22.22 & \textbf{12.32} & 3.16\\
-%    \bottomrule
-%\end{tabular}
-
-%    \begin{tabular}{ccggccggccgg}
-%        \toprule
-%        \multirow{2}{*}{\textbf{Ext.}} &\multirow{2}{*}{\textbf{Enc.}}  & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{DUC 2002}} & \multicolumn{2}{g}{\textbf{Reddit}} & \multicolumn{2}{c}{\textbf{AMI}} & \multicolumn{2}{g}{\textbf{ $\Delta$-Best}}\\
-%         &  & M & R-2 & M & R-2 & M & R-2 & M & R-2 & M & R-2\\
-%        \hline
-%        Rand. &  -- & 18.18 & 12.66 & 21.72 & 15.81 & \textbf{20.43} & \textbf{12.90} & 12.73 & 2.00 & 0.81 & 0.61\\
-%        \hline
-%        Lead &  -- & 24.13 & 24.44 & 25.05 & 21.54 & \textbf{20.05} & \textbf{10.88} & 12.27 & 2.04 & 0.89 & 0.76\\
-%        \hline
-%        Tail &  -- & 13.67 & 5.39 & 17.81 & 9.13 & \textbf{19.82} & \textbf{9.95} & 11.53 & 2.73 & 0.70 & 0.45\\
-%        \hline
-%        \multirow{3}{*}{RNN} & Avg. & \textbf{25.19} & 25.42 & \textbf{26.83} & 22.65 & \textbf{20.44} & \textbf{11.37} & \textbf{17.02} & \textbf{5.50} & 0.99 & 0.93\\
-%         & RNN & 25.11 & 25.38 & \textbf{26.79} & 22.58 & \textbf{20.17} & \textbf{11.43} & 16.20 & \textbf{5.24} & 0.97 & 0.92\\
-%         & CNN & 24.98 & 25.07 & \textbf{26.68} & \textbf{22.73} & \textbf{20.88} & \textbf{12.78} & 14.37 & 3.16 & 0.95 & 0.85\\
-%        \hline
-%        \multirow{3}{*}{Seq2Seq} & Avg. & \textbf{25.18} & \textbf{25.56} & \textbf{26.95} & \textbf{22.84} & \textbf{20.88} & \textbf{13.61} & \textbf{16.99} & \textbf{5.52} & \textbf{1.00} & 0.97\\
-%         & RNN & \textbf{25.12} & 25.33 & \textbf{26.75} & 22.47 & \textbf{20.51} & \textbf{11.98} & 16.11 & \textbf{5.25} & 0.98 & 0.93\\
-%         & CNN & 24.96 & 25.07 & \textbf{26.73} & \textbf{22.67} & \textbf{20.72} & \textbf{13.21} & 14.20 & 2.94 & 0.95 & 0.85\\
-%        \hline
-%    \multirow{3}{*}{\begin{tabular}{c} Cheng \\ \& \\ Lapata \end{tabular}} & Avg. & 25.04 & 25.28 & \textbf{27.07} & \textbf{23.11} & \textbf{20.94} & \textbf{13.65} & \textbf{16.72} & \textbf{6.12} & 0.99 & \textbf{1.00}\\
-%         & RNN & 25.04 & 25.03 & \textbf{26.99} & \textbf{23.03} & \textbf{20.27} & \textbf{12.62} & 16.28 & \textbf{4.96} & 0.98 & 0.93\\
-%         & CNN & \textbf{25.15} & 25.13 & \textbf{26.93} & \textbf{23.00} & \textbf{20.52} & \textbf{13.42} & 14.27 & 2.81 & 0.95 & 0.86\\
-%        \hline
-%    \multirow{3}{*}{\begin{tabular}{c}Summa\\Runner\end{tabular} } & Avg. & 25.12 & 25.44 & 26.69 & 22.28 & \textbf{21.04} & \textbf{13.41} & \textbf{16.97} & \textbf{5.63} & 1.00 & 0.97\\
-%         & RNN & 25.07 & 25.21 & 26.46 & 22.09 & \textbf{20.89} & \textbf{12.51} & \textbf{16.46} & \textbf{5.38} & 0.98 & 0.93\\
-%         & CNN & 24.90 & 25.00 & 26.37 & 22.22 & \textbf{20.43} & \textbf{12.32} & 14.54 & 3.16 & 0.95 & 0.84\\
-%    \end{tabular}
     \begin{tabular}{ccggccggccggcc}
         \toprule
         \multirow{2}{*}{\textbf{Extractor}} &\multirow{2}{*}{\textbf{Enc.}}  & \multicolumn{2}{g}{\textbf{CNN/DM}} & \multicolumn{2}{c}{\textbf{NYT}} & \multicolumn{2}{g}{\textbf{DUC 2002}} & \multicolumn{2}{c}{\textbf{Reddit}} & \multicolumn{2}{g}{\textbf{AMI}} & \multicolumn{2}{c}{\textbf{PubMed}}\\
@@ -77,7 +27,7 @@
          & RNN & 25.1 & 25.2 & 30.0 & 35.5 & 26.5 & 22.1 & \textbf{20.9} & \textbf{12.5} & \textbf{16.5} & \textbf{ 5.4} & 19.7 & 16.5\\
          & CNN & 24.9 & 25.0 & 29.3 & 34.4 & 26.4 & 22.2 & \textbf{20.4} & \textbf{12.3} & 14.5 &  3.2 & 19.8 & 16.8\\
         \hline
-        Oracle & -- &  & 36.2 &  & 48.9 & &  31.8 & &  16.2 & &  3.9  & &25.0 \\
+        Oracle & -- & 31.1 & 36.2 & 35.3 & 48.9 & 31.3 &  31.8 & 24.3 &  16.2 &8.1 &  3.9  & 24.1 &25.0 \\
         \bottomrule
     \end{tabular}
 
@@ -87,32 +37,3 @@
            system are shown in bold face.}
   \label{tab:results}
 \end{table*}
-
-
-%\begin{table*}
-%    \center
-%    \begin{tabular}{| c | c || c | c | c | c | c | c | c | c |}
-%        \hline
-%         &  & \multicolumn{2}{|c|}{cnn-dailymail} & \multicolumn{2}{|c|}{nyt} & \multicolumn{2}{|c|}{duc-sds} & \multicolumn{2}{|c|}{reddit}\\
-%        Extractor & Encoder & R-1 & R-2 & R-1 & R-2 & R-1 & R-2 & R-1 & R-2\\
-%        \hline
-%        \multirow{3}{*}{RNN} & avg & 55.3 & 25.4 & 51.4 & 34.7 & 44.1 & 22.6 & 45.2 & 11.4\\ \cline{2-10}
-%         & rnn & 55.3 & 25.4 & 51.7 & 35.0 & 44.0 & 22.6 & 44.4 & 11.4\\ \cline{2-10}
-%         & cnn & 54.7 & 25.1 & 50.3 & 33.7 & 44.3 & 22.7 & 47.5 & 12.7\\
-%        \hline
-%        \multirow{3}{*}{Seq2Seq} & avg & \textbf{55.6} & \textbf{25.6} & 52.5 & 35.7 & 44.4 & 22.8 & \textbf{49.1} & \textbf{13.6}\\ \cline{2-10}
-%                                 & rnn & 55.2 & 25.3 & 52.5 & \textbf{35.9} & 43.8 & 22.5 & 45.4 & 12.1\\ \cline{2-10}
-%         & cnn & 54.8 & 25.1 & 51.7 & 35.1 & 44.0 & 22.7 & 46.8 & 13.1\\
-%        \hline
-%        \multirow{3}{*}{C\&L} & avg & 55.1 & 25.3 & 52.3 & 35.6 & \textbf{44.8} & \textbf{23.1} & 48.3 & 13.6\\ \cline{2-10}
-%         & rnn & 54.8 & 25.0 & 52.5 & 35.8 & 44.5 & 23.0 & 46.3 & 12.6\\ \cline{2-10}
-%         & cnn & 55.0 & 25.1 & 51.5 & 35.0 & 44.5 & 23.0 & 46.9 & 13.4\\
-%        \hline
-%        \multirow{3}{*}{SR} & avg & 55.3 & 25.4 & 52.1 & 35.4 & 44.0 & 22.3 & 48.8 & 13.4\\ \cline{2-10}
-%         & rnn & 55.0 & 25.2 & 52.1 & 35.5 & 43.6 & 22.1 & 46.5 & 12.6\\ \cline{2-10}
-%         & cnn & 54.6 & 25.0 & 51.0 & 34.4 & 43.6 & 22.2 & 46.6 & 12.3\\
-%        \hline
-%    \end{tabular}
-%\end{table*}
-
-

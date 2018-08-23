@@ -2,6 +2,8 @@
 \usetikzlibrary{shapes}
 \usetikzlibrary{arrows}
 \usetikzlibrary{positioning}
+
+    %
 \begin{document} 
 
 \begin{tikzpicture}[
@@ -26,13 +28,13 @@
     \node (i\step) at (.9*\step, -2) {\i};
     \node[hid={3}{green}] (e\step) at (.9*\step, -1) {};    
   }
-  \node (i4) at (.9*4, -2) {$\overrightarrow{h}_*$};
+  \node (i4) at (.9*4, -2) {$\overrightarrow{h}$};
   \node[hid={3}{red}] (e4) at (.9*4, -1) {};    
   \foreach \i [count=\step from 5] in {$h_1$, $h_2$, $h_3$} {
     \node (i\step) at (.9*\step, -2) {\i};
     \node[hid={3}{green}] (e\step) at (.9*\step, -1) {};    
   }
-  \node (i8) at (.9*8, -2) {$\overleftarrow{h}_*$};
+  \node (i8) at (.9*8, -2) {$\overleftarrow{h}$};
   \node[hid={3}{red}] (e8) at (.9*8, -1) {};    
 
   \foreach \step in {1,...,3} {
@@ -80,23 +82,30 @@
   \draw[->] (h_r_7.west) -> (h_r_6.east);
   \draw[->] (h_r_6.west) -> (h_r_5.east);
 
-  \node[circle,draw=black] (attn1) at (2, 2.6) {\tiny$+$};    
-  \node[circle,draw=black] (attn2) at (3.5, 2.6) {\tiny$+$};    
-  \node[circle,draw=black] (attn3) at (5, 2.6) {\tiny$+$};    
+  \node[circle,draw=black,line width=0.4mm,minimum size=0.5cm] (attn1) at (2, 2.6) {};    
+  \node[circle,draw=black,line width=0.4mm,minimum size=0.5cm] (attn2) at (4, 2.6) {};    
+  \node[circle,draw=black,line width=0.4mm,minimum size=0.5cm] (attn3) at (6, 2.6) {};    
+  \path[draw=black,-,line width=0.4mm] (attn1.north) -- (attn1.south);
+  \path[draw=black,-,line width=0.4mm] (attn1.west) -- (attn1.east);
+  \path[draw=black,-,line width=0.4mm] (attn2.north) -- (attn2.south);
+  \path[draw=black,-,line width=0.4mm] (attn2.west) -- (attn2.east);
+  \path[draw=black,-,line width=0.4mm] (attn3.north) -- (attn3.south);
+  \path[draw=black,-,line width=0.4mm] (attn3.west) -- (attn3.east);
   
   \node[mlp={2}{orange}] (h1) at (2, 3.75) {};
-  \node[mlp={2}{orange}] (h2) at (3.5, 3.75) {};
-  \node[mlp={2}{orange}] (h3) at (5, 3.75) {};
+  \node[mlp={2}{orange}] (h2) at (4, 3.75) {};
+  \node[mlp={2}{orange}] (h3) at (6, 3.75) {};
   \node[circle, draw=blue, fill=blue!20] (y1) at (2, 4.8) {\tiny $y_1$};    
-  \node[circle, draw=blue, fill=blue!20] (y2) at (3.5, 4.8) {\tiny $y_2$};    
-  \node[circle, draw=blue, fill=blue!20] (y3) at (5, 4.8) {\tiny $y_3$};    
+  \node[circle, draw=blue, fill=blue!20] (y2) at (4, 4.8) {\tiny $y_2$};    
+  \node[circle, draw=blue, fill=blue!20] (y3) at (6, 4.8) {\tiny $y_3$};    
+
 
   \foreach \step in {1,...,3} {
       \node (m\step) at (\step * .9, 1.9) {};
-      \path[draw=black,-] (h_f_\step.north) -- (m\step.center);
-      \path[draw=black,-] (h_r_\step.north) -- (m\step.center);
+      \path[draw=black!75,-] (h_f_\step.north) -- (m\step.center);
+      \path[draw=black!75,-] (h_r_\step.north) -- (m\step.center);
       \foreach \stepj in {1,...,3} {
-          \path[draw=black,->] (m\step.center) -- (attn\stepj.south);
+          \path[draw=black!75,->] (m\step.center) -- (attn\stepj.south);
       } 
   }
 
@@ -106,23 +115,23 @@
   }
 
 
-  \node (m21) at (5* .9, 1.9) {};
+  \node (m21) at (5* .9 - .4 , 1.9) {};
   \path[draw=black,-] (h_f_5.north) -- (m21.center);
   \path[draw=black,-] (h_r_5.north) -- (m21.center);
-  \path[draw=black,->] (m21.center) -- (attn1.south);
+  \path[draw=black,->] (m21.center) -- (attn1.east);
   \path[draw=black,->] (m21.center) -- (h1.south);
 
   \node (m22) at (6* .9, 1.9) {};
   \path[draw=black,-] (h_f_6.north) -- (m22.center);
   \path[draw=black,-] (h_r_6.north) -- (m22.center);
-  \path[draw=black,->] (m22.center) -- (attn2.south);
+  \path[draw=black,->] (m22.center) -- (attn2.east);
   \path[draw=black,->] (m22.center) -- (h2.south);
 
 
-  \node (m23) at (7* .9, 1.9) {};
+  \node (m23) at (7* .9 + .3, 1.9 + .4) {};
   \path[draw=black,-] (h_f_7.north) -- (m23.center);
   \path[draw=black,-] (h_r_7.north) -- (m23.center);
-  \path[draw=black,->] (m23.center) -- (attn3.south);
+  \path[draw=black,->] (m23.center) -- (attn3.east);
   \path[draw=black,->] (m23.center) -- (h3.south);
 
 

@@ -1,24 +1,15 @@
 
 The introduction of the CNN-DailyMail corpus by \citet{nips15_hermann} 
-%\hal{bad citation style, be sure these are all fixed. (i fixed this one and will fix others that i notice.)}
-allowed for the application of large-scale training of deep learning models for summarization.
-%\kathy{This is a wordy way to cite. Couldn't you just put the citation after the appropriate pphrase? If you say ``by'' then I think you have to use \citet so that the name appears in the text.}
-\citet{cheng2016neural} %wpresent both a sentence and word
-%extractive model of single document summarization
-developed a sentence extractive
-%KM2  - Now I have defined the abbreviation in intro so you don't need it here.
-model that uses a word level 
-%convolutional neural network (
-CNN to encode 
-sentences and a sentence level sequence-to-sequence model to predict 
-which sentences to include in the summary. Subsequently, 
-\citet{nallapati2017summarunner}
-proposed a different model using word-level bidirectional recurrent neural 
-networks (RNNs) along with a sentence level bidirectinoal RNN for 
-predicting which sentences should be extracted. 
-Their sentence
-extractor creates representations of the whole document and computes 
-separate scores for salience, novelty, and location.
+allowed for the application of large-scale training of deep learning models 
+for summarization.
+\citet{cheng2016neural} developed a sentence extractive model that uses a 
+word level CNN to encode sentences and a sentence level sequence-to-sequence 
+model to predict which sentences to include in the summary. Subsequently, 
+\citet{nallapati2017summarunner} proposed a different model using word-level 
+bidirectional recurrent neural networks (RNNs) along with a sentence level 
+bidirectinoal RNN for predicting which sentences should be extracted. 
+Their sentence extractor creates representations of the whole document and 
+computes separate scores for salience, novelty, and location.
 These works represent the state-of-the-art for deep learning-based extractive
 summarization and we analyze them further in this paper.
 
@@ -99,7 +90,9 @@ of summarization. In particular, we explore
 personal narrative summarization based on stories shared
 on Reddit \cite{ouyang2017crowd}, workplace meeting summarization
 \cite{carletta2005ami}, and medical journal article summarization 
-\cite{mishra2014text}. While most work on these summarization tasks
+\cite{mishra2014text}. 
+
+While most work on these summarization tasks
  often exploit domain-specific features (e.g. speaker identification in meeting summarization \cite{galley2006skip,gillick2009global}),
 %\kathy{``eschew'' has a negative connotation. Implies you think this is the wrong way to go. I don't think you mean that. I think what you really mean is you want to understand whether general neural net features can control content selection without adding domain specific features. People will otherwise argue with ``understand generally'' since such features may play an important role.}
 we purposefully avoid such features in this work in order to understand 

@@ -1,17 +1,17 @@
-\begin{figure*}
-  \center
-  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
-  \includegraphics[scale=.7]{figures/s2s_extractor.pdf}
-  \includegraphics[scale=.7]{figures/clextractor.pdf}
-  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
-  \caption{Sentence extractor architectures: a) RNN, b) Seq2Seq,
-  c) Cheng \& Lapata, and d) SummaRunner. The $\bigoplus$ indicates 
-  attention. Green repesents sentence encoder output, yellow and orange
-  indicates
-  extractor encoder and decoder hidden states respectively, and red indicates
-  learned ``begin decoding'' embeddings. }
-  \label{fig:extractors}
-\end{figure*}
+%\begin{figure*}
+%  \center
+%  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
+%  \includegraphics[scale=.7]{figures/s2s_extractor.pdf}
+%  \includegraphics[scale=.7]{figures/clextractor.pdf}
+%  \includegraphics[scale=.7]{figures/rnnextractor.pdf}
+%  \caption{Sentence extractor architectures: a) RNN, b) Seq2Seq,
+%  c) Cheng \& Lapata, and d) SummaRunner. The $\bigoplus$ indicates 
+%  attention. Green repesents sentence encoder output, yellow and orange
+%  indicates
+%  extractor encoder and decoder hidden states respectively, and red indicates
+%  learned ``begin decoding'' embeddings. }
+%  \label{fig:extractors}
+%\end{figure*}
 
 Given a sequence of sentence embeddings $\sentEmb = \sentEmb[1], \ldots, \sentEmb[\docSize]$ produced by a sentence encoder, 
 a sentence extractor defines a conditional distribution $p(\slabel|\sentEmb)$
@@ -43,7 +43,7 @@ four sentence extractor architectures.
     Our first proposed model is a very simple bidirectional
 RNN based tagging model. As in the RNN sentence encoder we use a GRU cell.
 The  forward and backward outputs of each sentence are passed through a 
-multi-layer perceptron with a logsitic sigmoid output (denoted by $\sigma$)
+multi-layer perceptron with a logistic sigmoid output (denoted by $\sigma$)
 to predict the probability
 of extracting each sentence. See details in Appendix~\ref{app:rnnextractor}
 
