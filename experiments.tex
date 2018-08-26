@@ -26,9 +26,9 @@ $\omega(0)=1$ and $\omega(1) = N_0/N_1$ where $N_y$ is the number of
 training examples with label $y$.
     We trained for a maximum of 50 epochs and the best
     model was selected with early stopping on the validation set according
-    to ROUGE-2. {\color{red}{Each epoch constitutes a full pass through the
+    to ROUGE-2. Each epoch constitutes a full pass through the
     dataset. The average stopping epoch was: CNN-DailyMail, 16.2; NYT, 21.36; DUC, 37.11; Reddit, 36.59; AMI, 19.58; PubMed, 19.84.
-    }} All experiments were repeated with five random
+     All experiments were repeated with five random
     %\hal{there's prolly a bunch here that could go to the appendix}
     initializations.     Unless specified, word embeddings were initialized 
     using pretrained GloVe embeddings \cite{pennington2014glove} and we did 
@@ -36,7 +36,6 @@ training examples with label $y$.
     embedding.
     See \autoref{app:optset} for more optimization and training details.
 
-{\color{red}
 \subsection{Baselines}
 \paragraph{Lead} As a baseline we include the lead summary, i.e. taking the first 
 $x$ words of the document as summary, where $x$ is the target summary length for each dataset (see the 
@@ -50,7 +49,6 @@ of the human reference summary, the oracle system achieves the (approximate)
 maximum possible ROUGE scores. 
 See \autoref{app:oracle} for a detailed
 description of the oracle algorithm.
-}
 %We choose ROUGE-2
 %recall as our main evaluation metric since it has the strongest correlation
 %to human content selection decisions.
