@@ -194,21 +194,56 @@ of sentence encoders.
 
 
 \section{Ground Truth Extract Summary Algorithm} \label{app:oracle}
-\begin{algorithmic}
 
-    \State \textbf{data:} $I = \{\sent[1], \ldots, \sent[n]\}$;
-    \State $y_i = 0 \quad \forall i \in 1, \ldots, n$;
-\State    empty summary $\summary = \emptyset$; ~~word budget $c$
-\While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$} 
-\State $\hat{i} = {\argmax}_{ i \in \{j \in [n]| \sent[j] \notin \summary\}} \rouge(\summary \cup \{\sent[i]\})$
-\If {$\rouge(\summary \cup \{ \sent[\hat{i}] \} ) > \rouge(\summary)$}
-\State $\summary \gets \summary \cup \{ \sent[\hat{i}] \}; \quad y_{\hat{i}} = 1$
-        \Else
-        \State \textbf{break} 
-       \EndIf
-\EndWhile
-\State \Return $y=y_1, \ldots, y_n$
-\end{algorithmic}
+\begin{algorithm}[H]
+    \DontPrintSemicolon
+    \KwData{input document sentences $\sent[1], \sent[2], \ldots, \sent[n]$, 
+            \\~~~~~~~~~~$\,$human reference summary $R$, 
+            \\~~~~~~~~~~$\,$summary word budget $c$.}
+   $y_i := 0 \quad \forall i \in 1, \ldots, n$ 
+   \tcp*{Initialize extract labels to be 0.}
+   $S := [\;]$ 
+   \tcp*{Initialize summary as empty list.}
+
+   \While(\tcp*[f]{While summary word count $\le$ word budget.}){$\sum_{\sent \in \summary} \textsc{WordCount}(\sent) \le c \;$}{
+  ~ \\
+\tcc*[l]{Add the next best sentence to the summary if it will improve the ROUGE score otherwise no improvement can be made so break.}
+
+  ~ \\
+        $\hat{i} = {\argmax}_{\substack{ i \in \{1, \ldots, n\}, \\ y_i \ne 1 }} 
+        \textsc{Rouge}(\summary + [\sent[i]], R)$
+        
+  ~ \\
+  \eIf{$\textsc{Rouge}(\summary + [ \sent[\hat{i}] ], R ) > \textsc{Rouge}(\summary, R)$}{
+            $\summary := \summary + [ \sent[\hat{i}] ]$
+        \tcp*{Add $s_{\hat{i}}$ to the summary sentence list.}
+        $y_{\hat{i}} := 1$ 
+        \tcp*{Set the $\hat{i}$-th extract label to indicate extraction.}
+        }{ \textbf{break}}
+        
+    
+    }
+    
+    \KwResult{extract summary labels $y_1, \ldots, y_n$}
+    \caption{\textsc{OracleExtractSummaryLabels}}
+\end{algorithm}
+
+
+%\begin{algorithmic}
+%
+%    \State \textbf{data:} $I = \{\sent[1], \ldots, \sent[n]\}$;
+%    \State $y_i = 0 \quad \forall i \in 1, \ldots, n$;
+%\State    empty summary $\summary = \emptyset$; ~~word budget $c$
+%\While{$\sum_{\sent[i] \in \summary} |\sent[i]| \le c \;$} 
+%\State $\hat{i} = {\argmax}_{ i \in \{j \in [n]| \sent[j] \notin \summary\}} \rouge(\summary \cup \{\sent[i]\})$
+%\If {$\rouge(\summary \cup \{ \sent[\hat{i}] \} ) > \rouge(\summary)$}
+%\State $\summary \gets \summary \cup \{ \sent[\hat{i}] \}; \quad y_{\hat{i}} = 1$
+%        \Else
+%        \State \textbf{break} 
+%       \EndIf
+%\EndWhile
+%\State \Return $y=y_1, \ldots, y_n$
+%\end{algorithmic}
 \hal{is this right? this could yield something longer than the budget size because what if the last step selects a really long sentence.
   i think you want the argmax over $\{j \in [n] - S : \sum \dots \leq c\}$ to make things brief maybe define $\textit{len}$ to be the current summary length? or $\textit{len}(S)$? also minor quibble but i like $S \cup \{s_i\}$ better than without the braces. CK this is what I did. I saved all summary length constraint for the eval, e.g. rouge just chops things off at 100 words. Not ideal but in practice i think it helps to have more to predict, ie less positive label sparseness, since we are no where near accurately predicting these labels anyway.}
 
