@@ -12,9 +12,14 @@
 \usepackage{xspace}
 \usepackage{bbm}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 %\usepackage[]{algorithm2e}
 %\usepackage{algorithmic}
-\usepackage{algpseudocode} 
+%\usepackage{algpseudocode} 
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily{#1}}
+\SetCommentSty{mycommfont}
+
 
 \usepackage{ifthen}
 \newcolumntype{g}{>{\columncolor{black!5}}c}
@@ -24,7 +29,7 @@
 \newcolumntype{L}[1]{>{\columncolor{black!5}}m{#1}}
 
 \aclfinalcopy % Uncomment this line for the final submission
-\def\aclpaperid{***} %  Enter the acl Paper ID here
+\def\aclpaperid{2164} %  Enter the acl Paper ID here
 
 %\setlength\titlebox{5cm}
 % You can expand the titlebox if you need extra space
@@ -49,8 +54,8 @@
 \title{Content Selection in Deep Learning Models of Summarization}
 
 \author{Chris Kedzie \and Kathleen McKeown\\
+  Department of Computer Science \\
   Columbia University \\
-  Computer Science Dept. \\
   {\tt \{kedzie,kathy\}@cs.columbia.edu} \\\And
   Hal Daum\'e III  \\
   University of Maryland, College Park \\
