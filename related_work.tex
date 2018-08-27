@@ -6,8 +6,8 @@ for summarization.
 word level CNN to encode sentences and a sentence level sequence-to-sequence 
 model to predict which sentences to include in the summary. Subsequently, 
 \citet{nallapati2017summarunner} proposed a different model using word-level 
-bidirectional recurrent neural networks (RNNs) along with a sentence level 
-bidirectinoal RNN for predicting which sentences should be extracted. 
+bidirectional RNNs along with a sentence level 
+bidirectional RNN for predicting which sentences should be extracted. 
 Their sentence extractor creates representations of the whole document and 
 computes separate scores for salience, novelty, and location.
 These works represent the state-of-the-art for deep learning-based extractive
@@ -96,12 +96,12 @@ While most work on these summarization tasks
  often exploit domain-specific features (e.g. speaker identification in meeting summarization \cite{galley2006skip,gillick2009global}),
 %\kathy{``eschew'' has a negative connotation. Implies you think this is the wrong way to go. I don't think you mean that. I think what you really mean is you want to understand whether general neural net features can control content selection without adding domain specific features. People will otherwise argue with ``understand generally'' since such features may play an important role.}
 we purposefully avoid such features in this work in order to understand 
-the extent to which deep learning models can learn useful content 
-selection features.
-Summarization of academic literature (including medical journals), has a long 
-been a research topic
-\cite{kupiec1995trainable,elhadad2005customization}, but much of the work on this topic has
-focused on facet-based summarization \cite{jaidka2017insights}, which is not the focus of our work.
+the extent to which deep learning models can perform content 
+selection using only surface lexical features.
+Summarization of academic literature (including medical journals), has long 
+been a research topic in NLP
+\cite{kupiec1995trainable,elhadad2005customization}, but most approaches have
+explored facet-based summarization \cite{jaidka2017insights}, which is not the focus of our work.
 
 
 %generally how content selection is learned.

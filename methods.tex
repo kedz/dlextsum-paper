@@ -98,7 +98,7 @@ A simpler approach that does not allow interaction among the $y_{1:n}$
 is to 
 %\hal{a simpler approach (explain why simpler) is a fully factored representation 
   model $p(\slabel_{1:n}|\sentEmb) = \prod_{i=1}^n p(y_i|h)$, 
-  which we explore in two proposed extractor models the we refer to as the RNN 
+  which we explore in two proposed extractor models that we refer to as the RNN 
   and Seq2Seq extractors.
 Implementation details for all extractors are in \autoref{app:sentextractors}.
 
@@ -138,7 +138,7 @@ from different sources.
 First, a bidirectional RNN is run over the sentence embeddings\footnote{\citet{nallapati2017summarunner}
     use an RNN sentence encoder with 
 this extractor architecture; in this work we pair the SummaRunner extractor
-with different encoders. } and the output
+with different encoders. } and the output is
 concatenated. A representation of the whole document is made by 
 averaging the RNN output. A summary representation is also constructed 
 by taking the sum of the previous RNN outputs weighted by their extraction
