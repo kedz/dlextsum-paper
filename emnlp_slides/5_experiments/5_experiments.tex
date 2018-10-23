@@ -1,0 +1,46 @@
+
+\section{Experiments}
+
+\begin{frame}{Experiments}
+%
+    \alert<4>{\textbf{Main Experiment}}\\
+    Evaluate encoder/extractor pairs using ROUGE-2 recall.\\
+%
+  \begin{columns}
+    \begin{column}{0.3\textwidth}
+    \uncover<5->{\textbf{Additional Experiments}}    
+      \begin{itemize}
+        \uncover<5->{\item \alert<5>{fine-tuned embeddings}}
+        \uncover<6->{\item \alert<6>{word class ablations}}
+        \uncover<7->{\item \alert<7>{sentence order shuffling}}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.7\textwidth}
+        \input{5_experiments/emb_experiments_pic.tex} 
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Model Training}
+
+    Maximum Likelihood training using gold extract summaries.
+
+    \[\max_{\theta} \frac{1}{|\mathcal{D}|} \sum_{(s,y^*)\in \mathcal{D}} 
+    \log p(y^*| s) \]
+
+   
+    ~\\
+
+    Gold extract summaries $y^*$ heuristically created by maximizing ROUGE-1 recall.
+
+\end{frame}
+
+\begin{frame}{Summary Generation}
+
+    \begin{enumerate}
+        \item Rank sentences $s_i$ in decreasing order by $p(y_i=1|h)$.
+        \item Create a summary by extracting the top ranked sentences until a word length budget.
+    \end{enumerate}
+
+\end{frame}
+

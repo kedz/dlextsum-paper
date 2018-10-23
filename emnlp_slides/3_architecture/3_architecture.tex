@@ -1,0 +1,224 @@
+\section{Architecture}
+
+\begin{frame}{Summarizer Architecture}
+  \begin{center}
+    \begin{tikzpicture}
+      \node at (0.4,-.75) {Sentence 1};
+      \node at (4.9,-.75) {Sentence 2};
+      \node at (8.9,-.75) {Sentence 3};
+      \node (w1) at (0,0) 
+      {\large $\uncover<2->{\textsc{Enc}\left(}w^{(1)}_1,
+         w^{(1)}_2, w^{(1)}_3\uncover<2->{\right)}$};
+
+      \node (w2) at (4.5,0) 
+      {\large $\uncover<2->{\textsc{Enc}\left(}w^{(2)}_1, 
+         w^{(2)}_2, w^{(2)}_3\uncover<2->{ \right)}$};
+      \node (w3) at (8.6,0) 
+      {\large $\uncover<2->{\textsc{Enc}\left(}w^{(3)}_1, 
+         w^{(3)}_2\uncover<2->{\right)}$};
+
+      \node (s1) at (3,2) {\large $\uncover<3->{s_1}$};
+      \node (s2) at (4,2) {\large $\uncover<3->{s_2}$};
+      \node (s3) at (5,2) {\large $\uncover<3->{s_3}$};
+      \uncover<3->{  
+        \draw[->,thick] (w1.north) -- (s1.south); 
+        \draw[->,thick] (w2.north) -- (s2.south);
+        \draw[->,thick] (w3.north) -- (s3.south);
+      }
+
+      \uncover<4->{
+        \node (ext) at (3.6,2) {\large $\textsc{Ext}\Big( 
+        \quad\quad\quad\;\;\;\;\;\;\;\;\;\;\; \Big)$};
+      }
+      \uncover<5->{
+        \node (y1) at (3,3.5) {\large $y_1$};
+        \node (y2) at (4,3.5) {\large $y_2$};
+        \node (y3) at (5,3.5) {\large $y_3$};
+        \draw[->,thick] (s1.north) -- (y1.south);
+        \draw[->,thick] (s2.north) -- (y2.south);
+        \draw[->,thick] (s3.north) -- (y3.south);
+      }
+
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{Sentence Encoders}
+ \begin{columns}[t]
+  \column{.32\textwidth}
+   \centering
+   Averaging Encoder\\~\\
+   \includegraphics[]{images/avg_encoder.pdf}\\
+  \column{.32\textwidth}
+   \centering
+   RNN Encoder\\~\\
+   \includegraphics[]{images/rnn_encoder.pdf}\\
+  \column{.32\textwidth}
+   \centering
+   CNN Encoder\\~\\
+   \includegraphics[]{images/cnn_encoder.pdf}\\
+ \end{columns}
+
+~\\
+  Word embeddings are fixed Glove embeddings (trained on Wikipedia and 
+    Gigaword). 
+
+\end{frame}
+%
+%\begin{frame}{Sentence Extractor}
+%  \textbf{Previous Work}\\~\\
+%  ~~ -- \textbf{Cheng and Lapata Extractor} ~~ seq2seq inspired architecture 
+%                                               (Cheng and Lapata, 2016)\\
+%  ~~ -- \textbf{SummaRunner Extractor} ~~ RNN inspired architecture with 
+%                                          document and summary representations 
+%                                          (Nallapati et al., 2016)\\
+%  ~\\~\\
+%  \textbf{Our Extractors}\\~\\
+%  ~~ -- \alert<2>{\textbf{RNN Extractor}} ~~ Simplified version of SummaRunner \\
+%  ~~ -- \textbf{Seq2Seq Extractor} ~~ seq2seq (with attention) inspired 
+%                                      architecture \\
+%\end{frame}
+
+
+\begin{frame}{Sentence Extractors}
+ \begin{columns}[t]
+  \column{.4\textwidth}
+   \centering
+   SummaRunner Extractor\\
+   (Nallapati et al. 2016)\\
+   \includegraphics[scale=.65]{images/sr_extractor.pdf}\\
+   RNN Extractor (ours)\\
+   \includegraphics[scale=.65]{images/rnn_extractor.pdf}
+
+  \column{.6\textwidth}
+   \centering
+   Cheng \& Lapata Extractor\\
+   (Cheng and Lapata, 2016)\\
+   \includegraphics[scale=.65]{images/cl_extractor.pdf}\\
+   Seq2Seq Extractor (ours)\\
+   \includegraphics[scale=.65]{images/s2s_extractor.pdf}
+ \end{columns}
+
+\end{frame}
+
+
+%\begin{frame}{Sentence Encoder}
+%  \textbf{Averaging Encoder} ~~ $s = $ average of word embeddings \\
+%  ~\\
+%  \textbf{RNN Encoder} ~~ $s = $ final states of bi-directional GRU.\\
+%  ~\\
+%  \textbf{CNN Encoder} ~~ $s = $ 1-d convolutions over word embeddings.\\
+%  ~\\~\\
+%  * Word embeddings are fixed Glove embeddings (trained on Wikipedia and 
+%    Gigaword). 
+%\end{frame}
+%
+
+%
+%\begin{frame}{RNN Extractor}
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%      \input{3_architecture/models/rnn_extractor.tex}
+%    \end{column}
+%    \begin{column}{0.5\textwidth}
+%      \uncover<2->{
+%            $p(y|h) = \prod_{i=1}^n p(y_i|h)$ 
+%      }
+%    \end{column}
+%  \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Sentence Extractor}
+%  \textbf{Previous Work}\\~\\
+%  ~~ -- \textbf{Cheng and Lapata Extractor} ~~ seq2seq inspired architecture 
+%                                               (Cheng and Lapata, 2016)\\
+%  ~~ -- \textbf{SummaRunner Extractor} ~~ RNN inspired architecture with 
+%                                          document and summary representations 
+%                                          (Nallapati et al., 2016)\\
+%  ~\\~\\
+%  \textbf{Our Extractors}\\~\\
+%  ~~ -- \textbf{RNN Extractor} ~~ Simplified version of SummaRunner \\
+%  ~~ -- \alert{\textbf{Seq2Seq Extractor}} ~~ seq2seq (with attention) inspired
+%                                              architecture \\
+%\end{frame}
+%
+%
+%
+%\begin{frame}{Seq2Seq Extractor}
+%    \begin{columns}
+%        \begin{column}{0.5\textwidth}
+%            \input{3_architecture/models/s2s_extractor.tex}
+%        \end{column}
+%        \begin{column}{0.5\textwidth}
+%            \begin{align*}
+%                p(y|h) &= \prod_{i=1}^n p(y_i|h)\\
+%                p(y_i|h) &= \sigma\left(W \left[ \begin{array}{l} h_i^{(d)}\\
+%         \tilde{h}_i \end{array} \right]    + b \right) \\
+%         \tilde{h}_i & = \sum_{j=1}^{n} \alpha_{i,j} \cdot h^{(e)}_j\\
+%         \alpha_{i,j} & = \operatorname{Softmax}(h^{(e)}  \cdot h^{(d)}_i)_j \\
+%            & \propto \exp\left(h^{(e)}_j  \cdot h^{(d)}_i \right) \\
+%            \end{align*}
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Cheng \& Lapata Extractor}
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%        \input{3_architecture/models/cl_extractor.tex}
+%    \end{column}
+%    \begin{column}{0.5\textwidth}
+%      \begin{align*}
+%        \uncover<1->{p(y|h) &= \prod_{i=1}^n p(y_i|y_{<i}, h^{(d)}_{<i}, 
+%                                                       h^{(e)} )}\\
+%        \uncover<2->{p_i & \triangleq p(y_i=1|h) = 
+%                            \textsc{Mlp}([h^{(e)}_i; h^{(d)}_i])}\\
+%        \uncover<3->{h^{(d)}_i &= \textsc{Gru}\left(h_{i-1}^{(d)},  
+%                                 \alert<5->{p_{i-1} \cdot  s_{i-1}}\right)}
+%      \end{align*}
+%    \end{column}
+%  \end{columns}
+%\end{frame}
+%
+%\begin{frame}{Sentence Extractor}
+%  \textbf{Previous Work}\\~\\
+%  ~~ -- \textbf{Cheng and Lapata Extractor} ~~ seq2seq inspired architecture 
+%                                               (Cheng and Lapata, 2016)\\
+%  ~~ -- \alert{\textbf{SummaRunner Extractor}} ~~ RNN inspired architecture 
+%                                                  with document and summary 
+%                                                  representations 
+%                                                  (Nallapati et al., 2016)\\
+%  ~\\~\\
+%  \textbf{Our Extractors}\\~\\
+%  ~~ -- \textbf{RNN Extractor} ~~ Simplified version of SummaRunner \\
+%  ~~ -- \textbf{Seq2Seq Extractor} ~~ seq2seq (with attention) inspired 
+%                                      architecture \\
+%\end{frame}
+%
+%
+%
+%\begin{frame}{SummaRunner Extractor}
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%      \input{3_architecture/models/sr_extractor.tex}
+%    \end{column}
+%    \begin{column}{0.5\textwidth}
+%      $d = \tanh\big(b_d + W_d \frac{1}{n} \sum_{i=1}^n h_i   \big) $\\
+%      $ g_i  = \sum_{j=1}^{i-1} p(y_j=1|y_{<j},h) \cdot h_j$\\
+%      \begin{align*}
+%        \textit{content}  \quad a^{(con)}_i & =W^{(con)} h_i \\
+%        \textit{salience} \quad a^{(sal)}_i & = h_i^TW^{(sal)} d \\
+%        \textit{novelty} \quad a^{(nov)}_i & = -h_i^TW^{(nov)} \tanh(g_i) 
+%                    \label{eq:srnov} \\
+%        \textit{position} \quad a^{(pos)}_i & = W^{(pos)} l_i \\
+%        \textit{quartile} \quad a^{(qrt)}_i & = W^{(qrt)} r_i
+%      \end{align*}
+%      $p(y_i|y_{<i}, h) = \sigma\left(\begin{array}{l} a^{(con)}_i 
+%        +a^{(sal)}_i + a^{(nov)}_i+ \\ a^{(pos)}_i + a^{(qrt)}_i + 
+%         b \end{array}\right) $ \\
+%    \end{column}
+%  \end{columns}
+%\end{frame}
+
+

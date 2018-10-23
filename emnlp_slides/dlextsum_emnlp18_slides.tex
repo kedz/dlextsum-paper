@@ -1,0 +1,164 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+\usefonttheme[onlymath]{serif}
+
+\mode<presentation> {
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{xspace}
+\usepackage{bbm}
+\usepackage{amsfonts}
+
+\newcolumntype{g}{>{\columncolor{black!5}}c}
+\newcolumntype{f}{>{\columncolor{black!5}}r}
+\newcolumntype{L}[1]{>{\columncolor{black!5}}m{#1}}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+
+
+\title[Content in DL Sum.]{Content Selection in Deep Learning Models of Summarization} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author[Chris Kedzie]{\textbf{Chris Kedzie}, Kathy McKeown, and Hal Daum\'e III (UMD/MSR)} % Your name
+\institute[Columbia U.] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+Columbia University \\ % Your institution for the title page
+\medskip
+\textit{kedzie@cs.columbia.edu} % Your email address
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+
+\begin{frame}
+\titlepage 
+\end{frame}
+
+\input{1_intro/1_intro.tex}
+\input{2_problem_definition/2_problem_definition.tex}
+
+\AtBeginSection[]{
+    \begin{frame}<beamer>
+        \frametitle{Talk Outline}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\input{3_architecture/3_architecture.tex}
+\input{4_data/4_data.tex}
+\input{5_experiments/5_experiments.tex}
+\input{6_results/6_results.tex}
+
+\begin{frame}
+
+    Summary of Findings:
+    \begin{itemize}
+        \item<1-> Sentence position dominates the learning signal. 
+        \item<2-> Word/Sentence embeddings contain shallow semantics; need better representation for summarization task.
+        \item<4-> Richer features are better than richer models.
+        \item<5-> Simpler is good enough:
+            \begin{itemize}
+        \item<6-> Averaging sentence encoder is as good as RNNs or CNNs.
+        \item<7-> RNN extractor on par with more complicated models.
+    \end{itemize}
+    \end{itemize}
+
+    \uncover<8->{
+
+~\\
+
+~\\
+
+        \textbf{Thank you for listening! Ask me questions!}
+
+
+        ~\\
+        Code and data at: \url{https://github.com/kedz/nnsum/tree/emnlp18-release} \\
+        or \url{http://cs.columbia.edu/\~kedzie}
+
+    }
+
+
+\end{frame}
+
+
+
+\end{document} 

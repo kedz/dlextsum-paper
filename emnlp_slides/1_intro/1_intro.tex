@@ -1,0 +1,63 @@
+%\begin{frame}{Generic Single Document Summarization}
+%
+%  \textbf{Generic Single Document Summarization}
+%
+%  \begin{itemize}
+%    \item Most research has focused on news.
+%    \item Recent increased interest since 2016. \textbf{Why?}
+%      \begin{itemize}
+%        \item CNN/DailyMail Dataset (300k document summary pairs)
+%        \item More recently the Newsroom dataset offers 1.3 million training 
+%              examples
+%        \item General purpose sequence-to-sequence transduction models from the
+%              Neural Machine Translation community
+%      \end{itemize}
+%    \item <2-> Will this approach work?
+%      \begin{itemize}
+%        \item<2-> With enough data, we can treat the model as a black box.
+%        \item<2-> Avoid having to specify summarization model task which is 
+%                  complex/unknown/underspecified.
+%      \end{itemize}
+%    \item<3-> \textbf{This Talk:} Reasons to be skeptical that this will work.
+%  \end{itemize}      
+%\end{frame}
+%
+%
+%\begin{frame}{How do deep learning models learn what's important?}
+%    
+%    \begin{itemize}
+%        \item What sentence representations are best for content selection?
+%                \uncover<2->{\alert<2->{ Simpler is better.}}
+%        \item What sentence selection architectures are best for content selection?
+%                \uncover<2->{\alert<2->{ Simpler is better.}}
+%        \item What are the most significant learning signals in the data?\\
+%                \uncover<3->{\alert<3->{Word-level semantics only modestly useful. Structural/positional signals are more important. }}
+%    \end{itemize}
+%
+%\end{frame}
+
+\begin{frame}{Deep learning for Extractive Summarization}
+
+  \begin{itemize}
+    \item[--] Lots of recent research activity using deep learning for 
+              summarization!  \\
+              ~\\
+              ~\\
+              ~\\
+    \item[--] Unclear what model design choices are most effective.\\
+              \uncover<2>{\alert<2>{We perform a comparison of recent 
+              architectures and propose our own simplificiations.\\}}
+              ~\\
+    \item[--] Unclear what are the most important signals in the data for 
+              learning.\\
+              \uncover<2>{\alert<2>{We perform a several experimental probes
+              to understand the contributions of lexical semantics vs.
+              structure/discourse.}}
+  \end{itemize}
+  
+\end{frame}
+
+
+\begin{frame}{Talk Outline}
+  \tableofcontents
+\end{frame}
