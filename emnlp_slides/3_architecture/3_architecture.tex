@@ -61,8 +61,7 @@
  \end{columns}
 
 ~\\
-  Word embeddings are fixed Glove embeddings (trained on Wikipedia and 
-    Gigaword). 
+We use pretrained (Wikipedia/Gigaword) Glove word embeddings.
 
 \end{frame}
 %
@@ -84,20 +83,54 @@
 \begin{frame}{Sentence Extractors}
  \begin{columns}[t]
   \column{.4\textwidth}
+  \only<1,2,4>{
    \centering
    SummaRunner Extractor\\
    (Nallapati et al. 2016)\\
    \includegraphics[scale=.65]{images/sr_extractor.pdf}\\
    RNN Extractor (ours)\\
    \includegraphics[scale=.65]{images/rnn_extractor.pdf}
-
+}
+\only<3>{
+    Cheng \& Lapata Model
+    \begin{enumerate}
+        \item Offset encoder/decoder inputs, no attention
+        \item Complex interaction between previous extraction prediction and 
+            decoder input.
+    \end{enumerate}
+    ~\\~\\
+    Seq2Seq Model
+    \begin{enumerate}
+        \item Simple dot-product attention
+        \item \textbf{(Conditionally) independent} extraction decisions
+    \end{enumerate}
+}
   \column{.6\textwidth}
+  \only<1,3,4>{
    \centering
    Cheng \& Lapata Extractor\\
    (Cheng and Lapata, 2016)\\
    \includegraphics[scale=.65]{images/cl_extractor.pdf}\\
    Seq2Seq Extractor (ours)\\
    \includegraphics[scale=.65]{images/s2s_extractor.pdf}
+   }
+   \only<2>{
+        SummaRunner Model
+        \begin{itemize}
+        \item Internal representations of document similarity and summary novelty
+        \item Explicit representation of position
+        \item Complex dependencies between extraction decisions
+        \end{itemize}
+~\\
+~\\
+        RNN Model
+        \begin{itemize}
+            \item \sout{Internal representations of document similarity and summary novelty}
+            \item \sout{Explicit representation of position}
+            \item \textbf{(Conditionally) independent} extraction decisions
+        \end{itemize}
+
+   }
  \end{columns}
 
 \end{frame}

@@ -21,16 +21,17 @@
 
 \end{frame}
 
-\begin{frame}{Datasets - Personal Narratives/Office Meetings/Medical Journal Articles}
+\begin{frame}{Datasets - Non-News}
   \begin{center}
-    \begin{tabular}{ rfrfr }
+    \begin{tabular}{ rfrfrf }
       \toprule
-      \textbf{Dataset} & \textbf{Train} & \textbf{Valid} & \textbf{Test} &
+      \textbf{Dataset} & \textbf{Genre} & 
+        \textbf{Train} & \textbf{Valid} & \textbf{Test} &
         \textbf{Refs} \\
         \midrule
-      Reddit & 404 & 24 & 48 & 2 \\
-      AMI & 98 & 19 & 20 & 1 \\
-      PubMed & 21,250 & 1,250 & 2,500 & 1\\
+        Reddit & Personal Narratives & 404 & 24 & 48 & 2 \\
+        AMI & Office Meetings & 98 & 19 & 20 & 1 \\
+        PubMed & Medical Journal Articles& 21,250 & 1,250 & 2,500 & 1\\
       \bottomrule
     \end{tabular}
   \end{center} 
@@ -39,10 +40,5 @@
   Sizes of the training, validation, test splits for each dataset
   and the average number of test set human reference summaries per document.
 
-  \begin{itemize}
-      \item \textbf{Reddit} -- personal narratives (Ouyang et al. 2017)
-      \item \textbf{AMI} -- Work place meeting summarization  \\
-     \item \textbf{PubMed} -- a random sample of journal articles from the PMC Open Access subset.  \\
-  \end{itemize}
 
 \end{frame}

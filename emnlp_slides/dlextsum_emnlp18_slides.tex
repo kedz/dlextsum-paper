@@ -16,6 +16,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass{beamer}
+\usepackage{ulem}
 \usefonttheme[onlymath]{serif}
 
 \mode<presentation> {
@@ -74,7 +75,8 @@
 %\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
 %\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
 
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+
 }
 
 \usepackage{graphicx} % Allows including images
@@ -131,13 +133,15 @@ Columbia University \\ % Your institution for the title page
 
     Summary of Findings:
     \begin{itemize}
-        \item<1-> Sentence position dominates the learning signal. 
-        \item<2-> Word/Sentence embeddings contain shallow semantics; need better representation for summarization task.
-        \item<4-> Richer features are better than richer models.
-        \item<5-> Simpler is good enough:
+        \item<1-> Simpler is good enough:
             \begin{itemize}
-        \item<6-> Averaging sentence encoder is as good as RNNs or CNNs.
-        \item<7-> RNN extractor on par with more complicated models.
+        \item<2-> Averaging sentence encoder is as good as RNNs or CNNs.
+        \item<3-> \textsc{Seq2Seq} extractor on par with more complicated models, as is \textsc{Rnn} in many cases.
+    \end{itemize}
+        \item<4-> Richer features are needed.
+    \begin{itemize}
+        \item<5-> Sentence salience not fully captured by word embeddings/shallow lexical semantics
+        \item<6-> Sentence position dominates the learning signal. 
     \end{itemize}
     \end{itemize}
 

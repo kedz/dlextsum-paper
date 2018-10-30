@@ -1,7 +1,7 @@
 \section{Results}
 
 
-\begin{frame}{Choice of Sentence Encoder: News}
+\begin{frame}{Choice of Sentence \alert{Enc}oder: News}
   \begin{center}
   \input{6_results/6_encoder_results_news.tex}    
   \end{center}
@@ -12,7 +12,7 @@
 
 \end{frame}
 
-\begin{frame}{Choice of Sentence Encoder: Non-News}
+\begin{frame}{Choice of Sentence \alert{Enc}oder: Non-News}
   \begin{center}
     \input{6_results/6_encoder_results_nonnews.tex}    
   \end{center}
@@ -22,7 +22,7 @@
   \textbf{statistically indistinguishable} from the best encoder!
 \end{frame}
 
-\begin{frame}{Choice of Sentence Extractor: News}
+\begin{frame}{Choice of Sentence \alert{Ext}ractor: News}
     
  \begin{center}
    \input{6_results/6_extractor_results_news.tex}
@@ -41,7 +41,7 @@
 
 \end{frame}
 
-\begin{frame}{Choice of Sentence Extractor: Non-News}
+\begin{frame}{Choice of Sentence \alert{Ext}ractor: Non-News}
     
  \begin{center}
    \input{6_results/6_extractor_results_nonnews.tex}
@@ -59,36 +59,20 @@
 
 \begin{frame}{Word Embedding Fine-Tuning: (News)}
   \begin{center}
-    \begin{tabular}{ccccc}
- & & \multicolumn{3}{c}{\textbf{Rouge-2 Recall}}\\
-      \toprule
-        \textbf{Ext} & \textbf{Emb}  & 
-           \textbf{CNN/DM} & 
-           \textbf{NYT} & 
-           \textbf{DUC} \\
-      \midrule
-      \multirow{2}{*}{\textsc{Seq2Seq}} 
-        & Fixed & \textbf{25.6} & \textbf{35.7} & \textbf{22.8} \\
-        & Fine-Tuned &         25.3  & \textbf{35.7} & \textbf{22.9} \\
-      \hline
-      \multirow{2}{*}{\textsc{Cheng \& Lapata}} 
-        & Fixed & \textbf{25.3} & \textbf{35.6} & \textbf{23.1} \\
-        & Fine-Tuned &         24.9  &         35.4  & \textbf{23.0} \\
-      \bottomrule
-  \end{tabular}
+    \input{6_results/6_fine_tuning_news.tex}
  \end{center}
 
  ~\\
  
- Performance difference when using \textit{fixed} embeddings versus 
- \textit{fine-tuned} embeddings.
+% Performance difference when using \textit{fixed} embeddings versus 
+% \textit{fine-tuned} embeddings.
  
   ~\\
 
-  Models are using the \textsc{Avg} encoder and are initialized with 
-  Glove embeddings. 
+%  Models are using the \textsc{Avg} encoder and are initialized with 
+%  Glove embeddings. 
 
-  ~\\
+%  ~\\
 
   \textbf{No statistically significant improvement} on news with fine-tuning!
 
@@ -96,36 +80,25 @@
 
 \begin{frame}{Word Embedding Fine-Tuning: Non-News}
  \begin{center}
-  \begin{tabular}{ccccc}
-   \toprule
-   \textbf{Ext} & \textbf{Emb}  & 
-        \textbf{Reddit} & \textbf{AMI} & \textbf{PubMed} \\
-   \midrule
-   \multirow{2}{*}{\textsc{Seq2Seq}}
-      & Fixed & \textbf{13.6} &         5.5  & \textbf{17.7} \\
-      & Fine-Tuned & \textbf{13.8} & \textbf{5.8} &         16.9  \\
-   \hline
-   \multirow{2}{*}{\textsc{Cheng \& Lapata}} 
-      & Fixed & \textbf{13.6} & \textbf{6.1} & \textbf{17.7} \\
-      & Fine-Tuned & \textbf{13.4} & \textbf{6.2} & \textbf{16.4} \\
-   \bottomrule
-  \end{tabular}
+  \input{6_results/6_fine_tuning_nonnews.tex}
  \end{center}
 
  ~\\
  
- Performance difference when using \textit{fixed} embeddings versus 
- \textit{fine-tuned} embeddings.
+% Performance difference when using \textit{fixed} embeddings versus 
+% \textit{fine-tuned} embeddings.
  
  ~\\
 
- All models are using the \textsc{Avg} encoder and are initialized with 
- pretrained Glove embeddings from gigaword/wikipedia. 
+% All models are using the \textsc{Avg} encoder and are initialized with 
+% pretrained Glove embeddings from gigaword/wikipedia. 
 
- ~\\
+% ~\\
  \textbf{Statistically significant improvement} with \textsc{Seq2Seq} on AMI
- data.\\
- Otherwise, same trend as news, no improvement using fine-tuning.
+ data. (Caveat: only speech dataset)\\
+
+~\\
+Otherwise, same trend as news, \textbf{no stat. sig. improvement} using fine-tuning.
 
 \end{frame}
 
@@ -139,31 +112,41 @@
    \midrule
      All Words & $\mathbf{25.4}$ & $\mathbf{34.7}$ & $22.7$ &
                   $\mathbf{11.4}$ & $5.5$ & $\mathbf{17.0}$  \\
-     $-$ Nouns & $25.3^\dagger$  & $34.3^\dagger $ & $22.3^\dagger$  &
-   $10.3^\dagger$ & \alert<3>{$3.8^\dagger$} & \alert<3>{$15.7^\dagger$} \\
-     $-$ Verbs & $25.3^\dagger$  & $34.4^\dagger $ & $22.4^\dagger$ &
-            $10.8$ & $5.8$ & $16.6^\dagger$ \\
- $-$ Adj/Adv & 
-  $25.3^\dagger$ & $34.4^\dagger$ & $22.5$ &
-   \alert<4>{$9.5^\dagger$} & $5.4$ & $16.8^\dagger$ \\
-   $-$ Function & $25.2^\dagger$ & $34.6^\dagger$ & \alert<2>{$\mathbf{22.9}^\dagger$} &
-   $10.3^\dagger$ & \alert<2>{$\mathbf{6.3}^\dagger$} & $16.6^\dagger$ \\
+   \uncover<2->{$-$ Nouns & $25.3$  & $34.3 $ & $22.3$  &
+   \alert<2>{$10.3$} & \alert<2>{$3.8$} & \alert<2>{$15.7$}} \\
+   \uncover<2->{$-$ Verbs & $25.3$  & $34.4 $ & $22.4$ &
+            $10.8$ & $5.8$ & $16.6$ }\\
+   \uncover<3->{$-$ Adj/Adv & 
+  $25.3$ & $34.4$ & $22.5$ &
+   \alert<3>{$9.5$} & $5.4$ & $16.8$} \\
+   \uncover<4->{$-$ Function & $25.2$ & $34.6$ & \alert<4>{$\mathbf{22.9}$} &
+   $10.3$ & \alert<4>{$\mathbf{6.3}$} & $16.6$ }\\
    \bottomrule
   \end{tabular}
  \end{center}
 
+
+ %RNN extractor with Averaging encoder. 
+
+ %~\\
+
+
+ \uncover<2->{\textbf{-Nouns/Verbs} Doesn't decrease performance much on News. Non-News sees small performance drops. }
+
+~\\ 
+
+ \uncover<3->{\textbf{-Adj/Adv} Intensifiers are important in personal stories.
+ Signal climactic and important moments.}
+
+
  ~\\
 
- RNN extractor with Averaging encoder. 
+ \uncover<4->{\textbf{-Function} Possibly noisy signals on small datasets.}
+
+
 
  ~\\
-
- \textbf{Bold} is best performance. $\dagger$ indicates significant 
- difference from All Words, i.e. non-ablated model.
-
- ~\\
-
-
+ \uncover<1-5>{\tiny{\textbf{Bold} is best performance.}}
 
 \end{frame}
 
@@ -182,7 +165,6 @@
 %?       \textbf{25.4} & \textbf{34.7} & \textbf{22.7} \\
 %?       & Shuffled & 
 %?               22.8 &          25.0  &         18.2  \\
-   \hline
    \multirow{2}{*}{Seq2Seq}
        & In-Order & 
        \textbf{25.6} & \textbf{35.7} &  \textbf{22.8} \\
@@ -199,6 +181,10 @@
  ~\\
 
  Both models evaluated on in-order data.
+
+
+~\\ 
+ Large \textbf{performance drops} on news!
 
 \end{frame}
 
@@ -226,6 +212,10 @@
  ~\\
 
  Both models evaluated on in-order data.
+
+ ~\\
+
+ Small \textbf{performance increase} on AMI.
 
 \end{frame}
 
